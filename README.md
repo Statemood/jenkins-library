@@ -1,4 +1,4 @@
-# JenkinsPipelineSharedLibrary
+# jenkins-library
 Shared Library for Jenkins Pipeline
 
 # How to use ?
