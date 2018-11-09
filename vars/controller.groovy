@@ -1,4 +1,4 @@
-/* kubernetes.groovy
+/* controller.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -7,22 +7,17 @@
    ##################################################
 */
 
-package me.rulin.kubernetes
+import me.rulin.jenkins.Build
+import me.rulin.jenkins.Git
 
-class Command implements Serializable {
-    def apply() {
-        
-    }
+import me.rulin.docker.Dockerfile
+import me.rulin.docker.Registry
+import me.rulin.docker.Image
 
-    def create() {
+import me.rulin.kubernetes.kubernetes
 
-    }
+import me.rulin.file.OSS
 
-    def delete() {
 
-    }
 
-    def search() {
-        
-    }
-}
+return this

@@ -14,8 +14,6 @@ def generate() {
 
     // Test Dockerfile exist
     check.file('Dockerfile')
-
-
 }
 
 private def copyTemplate(list) {

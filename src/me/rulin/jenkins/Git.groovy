@@ -9,7 +9,7 @@
 
 package me.rulin.jenkins
 
-def checkoutCode(String GIT_REPO, SCM_REVISION) {
+def checkoutCode() {
     check.var(GIT_REPO)
     check.var(SCM_REVISION)
 
@@ -25,7 +25,7 @@ def checkoutCode(String GIT_REPO, SCM_REVISION) {
 
         return
     } catch (e) {
-        echo "Ops! Error occurred during git checkout"
+        log.error "Ops! Error occurred during git checkout"
         error e
     }
 }

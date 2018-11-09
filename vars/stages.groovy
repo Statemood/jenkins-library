@@ -7,20 +7,27 @@
    ##################################################
 */
 
-import me.rulin.jenkins.Build
-
-def controller() {
+def preProcess() {
     node(STAGE_PRE_PROCESS) {
+        // Set default info
 
+        // Set build info
+
+        // Check parameters
     }
+}
 
+def git(){
     node(STAGE_GIT) {
-
+        checkoutCode()
     }
+}
 
+def docker(){
     node(STAGE_DOCKER) {
 
     }
+}
 
     node(STAGE_KUBERNETES) {
 

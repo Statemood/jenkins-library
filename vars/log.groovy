@@ -20,7 +20,7 @@ def warning(String msg) {
 }
 
 def error(String msg) {
-    error msg
+    echo "ERROR: $msg"
 }
 
 return this

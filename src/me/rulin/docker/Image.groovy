@@ -20,7 +20,8 @@ private def build(image) {
         timeout(time: DOCKER_IMAGE_BP_TIMEOUT, unit: 'SECONDS') {
             sh("sudo docker build $DOCKER_IMAGE_BUILD_OPTIONS -t $image .")
         }
-    } catch (e) {
+    }
+    catch (e) {
         println "Error occurred during build image"
         error e
     }
@@ -33,7 +34,8 @@ def push(image) {
         timeout(time: DOCKER_IMAGE_BP_TIMEOUT, unit: 'SECONDS') {
             sh("sudo docker push $image")
         }
-    } catch (e) {
+    }
+    catch (e) {
         println "Error occurred during push image"
         error e
     }
