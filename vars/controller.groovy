@@ -7,6 +7,7 @@
    ##################################################
 */
 
+/*
 import me.rulin.jenkins.Build
 import me.rulin.jenkins.Git
 
@@ -17,7 +18,9 @@ import me.rulin.docker.Image
 import me.rulin.kubernetes.kubernetes
 
 import me.rulin.file.OSS
+*/
 
+import me.rulin.jenkins.Hello
 
 
 return this
