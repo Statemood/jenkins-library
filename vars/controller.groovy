@@ -20,10 +20,10 @@ import me.rulin.kubernetes.kubernetes
 import me.rulin.file.OSS
 */
 
-import me.rulin.jenkins.Hello
+import me.rulin.jenkins.Hello.*
 
 def testHello(t){
-    Hello.helloWorld(t)
+    helloWorld(t)
 }
 
 return this
