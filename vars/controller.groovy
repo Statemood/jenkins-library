@@ -7,23 +7,8 @@
    ##################################################
 */
 
-/*
-import me.rulin.jenkins.Build
-import me.rulin.jenkins.Git
-
-import me.rulin.docker.Dockerfile
-import me.rulin.docker.Registry
-import me.rulin.docker.Image
-
-import me.rulin.kubernetes.kubernetes
-
-import me.rulin.file.OSS
-*/
-
-import me.rulin.jenkins.Hello.*
-
-def testHello(t){
-    helloWorld(t)
+def controller(){
+    
 }
 
 return this

@@ -7,8 +7,6 @@
    ##################################################
 */
 
-package me.rulin.jenkins
-
 def build() {
     dir(BUILD_DIR) {
         try {
