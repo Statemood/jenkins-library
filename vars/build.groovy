@@ -7,7 +7,7 @@
    ##################################################
 */
 
-def build() {
+def controller() {
     dir(BUILD_DIR) {
         try {
             switch (PROJECT_LANG.toLowerCase()) {

@@ -21,12 +21,11 @@ node(STAGE_GIT) {
 }
 
 node(STAGE_BUILD) {
-    build.Build()
+    build.controller()
 }
 
 node(STAGE_DOCKER) {
-    docker.dockerfileGenerate()
-    
+    docker.controller()
 }
 
 node(STAGE_KUBERNETES) {

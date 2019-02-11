@@ -11,11 +11,14 @@ def controller(){
     dockerfileGenerate()
 
     base.gitCommitIDShort()
+    
     imageBuild()
 
     registryLogin()
 
     imagePush()
+
+    return
 }
 
 def dockerfileGenerate() {
