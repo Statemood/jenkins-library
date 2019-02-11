@@ -7,8 +7,41 @@
    ##################################################
 */
 
-def controller(){
-    
+def preProcess() {
+    node(STAGE_PRE_PROCESS) {
+        // Set default info
+
+        // Set build info
+
+        // Check parameters
+    }
+}
+
+def git(){
+    node(STAGE_GIT) {
+        checkoutCode()
+    }
+}
+
+def docker(){
+    node(STAGE_DOCKER) {
+
+    }
+}
+
+    node(STAGE_KUBERNETES) {
+
+    }
+
+    node(STAGE_POST_PROCESS) {
+
+    }
+}
+
+def stageBuild() {
+    node(STAGE_BUILD) {
+
+    }
 }
 
 return this

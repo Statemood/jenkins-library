@@ -7,40 +7,34 @@
    ##################################################
 */
 
-def preProcess() {
-    node(STAGE_PRE_PROCESS) {
-        // Set default info
 
-        // Set build info
+node(STAGE_PRE_PROCESS) {
+    // Set default info
 
-        // Check parameters
-    }
+    // Set build info
+
+    // Check parameters
 }
 
-def git(){
-    node(STAGE_GIT) {
-        checkoutCode()
-    }
+node(STAGE_GIT) {
+    base.gitCheckout()
 }
 
-def docker(){
-    node(STAGE_DOCKER) {
-
-    }
+node(STAGE_BUILD) {
+    build.Build()
 }
 
-    node(STAGE_KUBERNETES) {
-
-    }
-
-    node(STAGE_POST_PROCESS) {
-
-    }
+node(STAGE_DOCKER) {
+    docker.dockerfileGenerate()
+    
 }
 
-def stageBuild() {
-    node(STAGE_BUILD) {
+node(STAGE_KUBERNETES) {
 
-    }
 }
+
+node(STAGE_POST_PROCESS) {
+
+}
+
 return this

@@ -56,7 +56,6 @@ NPM_I               =  NPM_INSTALL
 // PHP (Composer)
 PHP_COMPOSER_CMD    = "composer install"
 
-
 // OSS
 OSS_ENDPOINT        = ""
 OSS_OPTIONS         = "-rf"
@@ -70,6 +69,7 @@ DOCKER_REGISTRY_USER            = ""
 DOCKER_REGISTRY_PASSWORD        = credentials('Docker-Registry')
 DOCKER_IMAGE_NAME               = ""
 DOCKER_IMAGE_TAG                = ""
+DOCKER_IMAGE_BUILD_TIMEOUT      = 300
 DOCKER_IMAGE_PUSH_TIMEOUT       = 300
 DOCKER_IMAGE_BUILD_OPTIONS      = ""
 

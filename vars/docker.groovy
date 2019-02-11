@@ -7,8 +7,19 @@
    ##################################################
 */
 
+def controller(){
+    dockerfileGenerate()
+
+    base.gitCommitIDShort()
+    imageBuild()
+
+    registryLogin()
+
+    imagePush()
+}
+
 def dockerfileGenerate() {
-    copyTemplate(DOCKERFILE_TEMPLATE_LIST)
+    dockerfileCopyTemplate(DOCKERFILE_TEMPLATE_LIST)
 
     // Test Dockerfile exist
     check.file('Dockerfile')
@@ -56,7 +67,7 @@ def imageBuild(image) {
     try {
         log.info "Build image: " + image
 
-        timeout(time: DOCKER_IMAGE_BP_TIMEOUT, unit: 'SECONDS') {
+        timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
             sh("sudo docker build $DOCKER_IMAGE_BUILD_OPTIONS -t $image .")
         }
     }
