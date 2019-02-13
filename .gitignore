@@ -24,3 +24,6 @@ hs_err_pid*
 
 # MindMap
 *.mindnode
+
+# MacOS
+.DS_Store
