@@ -105,16 +105,3 @@ K8S_MIN_READY_SECONDS           = 5   // Sec
 
 K8S_ALLOWED_COMMADS             = ["apply", "create", "delete", "get"]
 K8S_ALLOWED_COMMADS            += ["autoscale"]
-
-// ######################################################
-// # Define your own Settings in SETTINGS to REPLACE ME #
-// ######################################################
-// Load SETTINGS if defined
-if (SETTINGS) {
-    if (fileExists(SETTINGS)) {
-        log.notice "Loading $SETTINGS"
-        load(SETTINGS)
-    }
-}
-}
-return this

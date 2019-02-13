@@ -7,9 +7,14 @@
    ##################################################
 */
 
-def call(){
-    log.info "Loading config"
-    load("config.groovy")
+def settings(){
+    if(SETTINGS){
+        if(fileExists(SETTINGS)){
+            log.info "Loading local settings"
+
+            load(SETTINGS)
+        }
+    }
 }
 
 return this
