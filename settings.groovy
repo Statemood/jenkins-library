@@ -13,9 +13,16 @@
 env.WORKSPACE       = JENKINS_HOME + "/workspace/" + JOB_NAME
 env.WS              = WORKSPACE
 
-// Get User info
-wrap([$class: 'BuildUser']) { env.BUILD_USER    = BUILD_USER    }
-wrap([$class: 'BuildUser']) { env.BUILD_USER_ID = BUILD_USER_ID }
+try {
+    // Get User info
+    // Requeire 'build user vars' plugin
+    //  see https://plugins.jenkins.io/build-user-vars-plugin for more information
+    wrap([$class: 'BuildUser']) { env.BUILD_USER    = BUILD_USER    }
+    wrap([$class: 'BuildUser']) { env.BUILD_USER_ID = BUILD_USER_ID }
+}
+catch (e) {
+    log.warning "Requeire 'build user vars' plugin, see https://plugins.jenkins.io/build-user-vars-plugin for more information"
+}
 
 WEB_ROOT            = "/data/web/"
 
@@ -78,7 +85,7 @@ DOCKERIGNORE_FILE               = ".dockerignore"
 // Dockerfiles dir
 DOCKERFILES                     = "Dockerfiles"
 
-DOCKERFILE_TEMPLATE_LIST        = [DOCKERFILE_CUSTOMIZE, DOCKERFILE_LINK, DOCKERFILE_LANGUAGE, DOCKERFILE_DEFAULT]
+DOCKERFILE_TEMPLATE_LIST        = []
 
 ///////////////////////////////////////////////////////
 // kubernetes                                        //
