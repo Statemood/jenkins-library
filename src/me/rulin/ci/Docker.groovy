@@ -20,5 +20,7 @@ class Docker {
 */
 
 def images() {
-    echo "Test images"
+    msg = "Test images"
+
+    return msg
 }
