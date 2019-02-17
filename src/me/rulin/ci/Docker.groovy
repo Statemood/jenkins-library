@@ -7,8 +7,12 @@
    ##################################################
 */
 
-package me.rulin.ci.docker
+package me.rulin.ci
 
-class Name {
+class Docker {
     public static final String DOCKER_NAME = 'default docker name'
+
+    def images(){
+        return sh("sudo docker images")
+    }
 }
