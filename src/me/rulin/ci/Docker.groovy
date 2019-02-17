@@ -24,7 +24,7 @@ class Docker {
     }
 }*/
 
-void images() {
+String images() {
     sh "sudo docker images"
 }
 
