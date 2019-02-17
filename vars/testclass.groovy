@@ -2,7 +2,6 @@
 
 import me.rulin.ci.Docker
 
-
 def call(args) {
     docker_name = args
     //docker = new Docker()
@@ -14,5 +13,5 @@ def call(args) {
 
     //Docker.Version()
 
-    docker.images()
+    Docker.images()
 }
