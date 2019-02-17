@@ -10,7 +10,7 @@ def call(args) {
 
     echo "The name is: " + docker_name
 
-    Docker version = new Docker.Version()
+    version = new Docker.Version()
 
     version()
 }
