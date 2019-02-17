@@ -12,7 +12,7 @@ import me.rulin.ci.Settings
 
 echo "Call init"
 
-def call(args){
+def call(body){
     dockerCmd   = new Docker()
 
     echo "Workspace is : " Settings.WS
