@@ -8,15 +8,33 @@
 */
 
 import me.rulin.ci.Docker
-import me.rulin.ci.Settings
 
 def call(body){
     log.info "Initial Pipeline"
 
-    dockerCmd   = new Docker()
+    //dockerCmd   = new Docker()
+    //dockerCmd.images()
+    //dockerCmd.version()
 
-    echo "Workspace is : " + Settings.WS
+    loadLocalSettings()
 
-    dockerCmd.images()
-    dockerCmd.version()
+    echo "Workspace: " + WS
+}
+
+def loadLocalSettings(){
+    if (SETTINGS) {
+        try {
+            if (fileExists(SETTINGS)) {
+                log.info "Loading local settings"
+
+                load(SETTINGS)
+            }
+            else {
+                log.warning "File not found: $SETTINGS"
+            }
+        }
+        catch (e) {
+            throw e 
+        }
+    }
 }
