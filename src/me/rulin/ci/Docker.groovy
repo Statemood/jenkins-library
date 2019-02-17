@@ -9,16 +9,23 @@
 
 package me.rulin.ci
 
+/*
 class Docker {
     public static final String DOCKER_NAME = 'default docker name'
 
     def images(){
         try {
-            script.sh "sudo docker images"
+            sh "sudo docker images"
         }
         catch (e) {
             throw e
         }
         return true
     }
+}*/
+
+void images() {
+    sh "sudo docker images"
 }
+
+return this
