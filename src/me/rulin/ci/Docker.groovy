@@ -14,7 +14,7 @@ class Docker {
 
     def images(){
         try {
-            sh "sudo docker images"
+            script.sh "sudo docker images"
         }
         catch (e) {
             throw e
