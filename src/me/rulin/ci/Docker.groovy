@@ -13,7 +13,7 @@ class Docker {
     public static final String DOCKER_NAME = 'default docker name'
 
     def images(){
-        sh("sudo docker images")
+        sh("date")
         
     }
 }
