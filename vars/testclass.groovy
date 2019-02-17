@@ -9,4 +9,6 @@ def call(args) {
     }
 
     echo "The name is: " + docker_name
+
+    Docker.Version()
 }
