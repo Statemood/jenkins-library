@@ -13,6 +13,12 @@ class Docker {
     public static final String DOCKER_NAME = 'default docker name'
 
     def images(){
-        echo "12345"
+        try {
+            sh "sudo docker images"
+        }
+        catch (e) {
+            throw e
+        }
+        return true
     }
 }
