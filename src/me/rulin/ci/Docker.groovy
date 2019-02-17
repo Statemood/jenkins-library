@@ -16,7 +16,6 @@ class Docker implements Serializable {
 }
 
 class Version {
-    echo "docker version"
     sh("sudo docekr version")
 }
 /*
