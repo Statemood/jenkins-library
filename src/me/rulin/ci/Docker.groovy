@@ -19,6 +19,8 @@ class Version {
     def call(){
         sh("sudo docekr version")
     }
+
+    return
 }
 /*
 def Images(){
