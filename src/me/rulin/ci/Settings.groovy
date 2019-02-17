@@ -1,22 +1,15 @@
-/* init.groovy
+/* Settings.groovy
    ##################################################
-   # Created by Lin Ru at 2018.10.01 22:00          #
+   # Created by Lin Ru at 2019.02.17 22:55          #
    #                                                #
    # A Part of the Project jenkins-library          #
    #  https://github.com/Statemood/jenkins-library  #
    ##################################################
 */
 
-import me.rulin.ci.Docker
-import me.rulin.ci.Settings
+package me.rulin.ci
 
-echo "Call init"
-
-def call(args){
-    dockerCmd   = new Docker()
-
-    echo "Workspace is : " Settings.WS
-
-    dockerCmd.images()
-    dockerCmd.version()
+class Settings {
+    //public static WORKSPACE     = JENKINS_HOME + "/workspace/" + JOB_NAME
+    public static WS            = "WORKSPACE"
 }
