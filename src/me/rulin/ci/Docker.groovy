@@ -13,7 +13,6 @@ class Docker {
     public static final String DOCKER_NAME = 'default docker name'
 
     def images(){
-        sh("date")
-        
+        echo "12345"
     }
 }
