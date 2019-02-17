@@ -20,5 +20,5 @@ class Docker {
 */
 
 def images() {
-    return echo "Test images"
+    echo "Test images"
 }
