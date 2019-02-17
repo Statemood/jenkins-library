@@ -13,6 +13,6 @@ import me.rulin.ci.Git
 
 def run (){
     log.info "Git clone code"
-    Git.checkout()
+    Git.checkout(repo, SCM_REVISION)
 
 }
