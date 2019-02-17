@@ -20,7 +20,5 @@ class Docker {
 */
 
 def images() {
-    sh("sudo docker images")
-
-    return
+    return sh("sudo docker images")
 }
