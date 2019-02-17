@@ -21,3 +21,5 @@ def Images(){
     echo "List all docker images"
     sh("sudo docker images")
 }
+
+return this
