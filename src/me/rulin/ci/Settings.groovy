@@ -10,6 +10,6 @@
 package me.rulin.ci
 
 class Settings {
-    public static WORKSPACE     = JENKINS_HOME + "/workspace/" + JOB_NAME
+    public static WORKSPACE     = env.JENKINS_HOME + "/workspace/" + env.JOB_NAME
     public static WS            = WORKSPACE
 }
