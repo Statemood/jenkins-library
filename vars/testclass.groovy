@@ -1,16 +1,16 @@
 #! groovy
 
-import me.rulin.ci.Docker
+import me.rulin.ci.docker.Name
 
 def call(args) {
     docker_name = args
     if (args == null || (args instanceof String && args.trim().isEmpty())) {
-        docker_name = 'test123' //Docker.DOCKER_NAME 
+        docker_name = Name.DOCKER_NAME 
     }
 
     echo "The name is: " + docker_name
 
-    Docker.Version()
+    //Docker.Version()
 
     //version()
 }

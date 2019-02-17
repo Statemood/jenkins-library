@@ -7,20 +7,8 @@
    ##################################################
 */
 
-package me.rulin.ci
+package me.rulin.ci.docker
 
-
-class Version implements Serializable {
+class Name {
     public static final String DOCKER_NAME = 'default docker name'
-
-    static void main() {
-        sh("sudo docekr version")
-    }
 }
-/*
-def Images(){
-    echo "List all docker images"
-    sh("sudo docker images")
-}
-
-return this*/
