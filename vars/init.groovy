@@ -11,9 +11,10 @@ import me.rulin.ci.Docker
 
 echo "Call init"
 
+/*
 def call(args){
     dockerCmd = new Docker()
 
     dockerCmd.images()
     dockerCmd.version()
-}
+}*/
