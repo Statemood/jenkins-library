@@ -13,7 +13,7 @@ package me.rulin.ci
 class Docker implements Serializable {
     public static final String DOCKER_NAME = 'default docker name'
 
-    def images(){
+    String images(){
         try {
             sh "sudo docker images"
         }
