@@ -11,6 +11,8 @@ import me.rulin.ci.Docker
 import me.rulin.ci.Settings
 
 def call(body){
+    log.info "Initial Pipeline"
+
     dockerCmd   = new Docker()
 
     echo "Workspace is : " + Settings.WS
