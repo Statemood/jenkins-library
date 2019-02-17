@@ -1,6 +1,8 @@
 #! groovy
 
 import me.rulin.ci.docker.Name
+import me.rulin.ci.docker.Version
+
 
 def call(args) {
     docker_name = args
@@ -12,5 +14,5 @@ def call(args) {
 
     //Docker.Version()
 
-    //version()
+    Version()
 }
