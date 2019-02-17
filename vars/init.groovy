@@ -10,12 +10,10 @@
 import me.rulin.ci.Docker
 import me.rulin.ci.Settings
 
-echo "Call init"
-
 def call(body){
     dockerCmd   = new Docker()
 
-    echo "Workspace is : " Settings.WS
+    echo "Workspace is : " + Settings.WS
 
     dockerCmd.images()
     dockerCmd.version()
