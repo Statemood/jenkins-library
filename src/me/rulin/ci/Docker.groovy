@@ -10,7 +10,7 @@
 package me.rulin.ci
 
 
-class Docker {
+class Docker implements Serializable {
     public static final String DOCKER_NAME = 'default docker name'
 
     def images(){
