@@ -13,7 +13,7 @@ package me.rulin.ci
 class Docker {
     public static final String DOCKER_NAME = 'default docker name'
 */
-def Version(){
+void Version(){
     sh("sudo docekr version")
 }
 
