@@ -9,7 +9,7 @@
 
 package me.rulin.ci
 
-/*
+
 class Docker {
     public static final String DOCKER_NAME = 'default docker name'
 
@@ -22,10 +22,11 @@ class Docker {
         }
         return true
     }
-}*/
+}
 
+/*
 String images() {
     sh "sudo docker images"
 }
 
-return this
+return this*/
