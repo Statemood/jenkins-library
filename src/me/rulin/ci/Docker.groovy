@@ -13,9 +13,11 @@ package me.rulin.ci
 class Docker implements Serializable {
     public static final String DOCKER_NAME = 'default docker name'
 
-    def Version(){
-        sh("sudo docekr version")
-    }
+}
+
+class Version {
+    echo "docker version"
+    sh("sudo docekr version")
 }
 /*
 def Images(){
