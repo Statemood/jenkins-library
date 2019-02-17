@@ -24,15 +24,27 @@ private String cmd(String c){
 }
 
 def images() {
-    cmd("images")
+    check.file('Dockerfile')
+
+    try {
+        log.info "Build image: " + image
+
+        timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
+            cmd("build $DOCKER_IMAGE_BUILD_OPTIONS -t $image .")
+        }
+    }
+    catch (e) {
+        println "Error occurred during build image"
+        throw e
+    }
 }
 
 def version(){
     cmd("version")
 }
 
-def build(build_args){
-    sh("sudo docker build -t ")
+def images(build_args){
+    cmd("images")
 }
 
 def push(){

@@ -7,20 +7,6 @@
    ##################################################
 */
 
-def controller(){
-    dockerfileGenerate()
-
-    base.gitCommitIDShort()
-    
-    imageBuild()
-
-    registryLogin()
-
-    imagePush()
-
-    return
-}
-
 def dockerfileGenerate() {
     dockerfileCopyTemplate()
 
@@ -101,5 +87,3 @@ def registryLogin(){
 def registryLogout(){
     return 
 }
-
-return this

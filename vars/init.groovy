@@ -7,7 +7,7 @@
    ##################################################
 */
 
-import me.rulin.ci.Docker
+import me.rulin.ci.Controller
 
 def call(body){
     log.info "Initial Pipeline"
@@ -19,6 +19,8 @@ def call(body){
     loadLocalSettings()
 
     echo "Workspace: " + WS
+
+    Controller.run()
 }
 
 def loadLocalSettings(){

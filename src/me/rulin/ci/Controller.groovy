@@ -1,4 +1,4 @@
-/* Settings.groovy
+/* Controller.groovy
    ##################################################
    # Created by Lin Ru at 2019.02.17 22:55          #
    #                                                #
@@ -9,7 +9,10 @@
 
 package me.rulin.ci
 
-class Settings {
-    public static WORKSPACE     = env.JENKINS_HOME + "/workspace/" + env.JOB_NAME
-    public static WS            = WORKSPACE
+import me.rulin.ci.Git
+
+def run (){
+    log.info "Git clone code"
+    Git.checkout()
+
 }

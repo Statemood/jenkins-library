@@ -1,4 +1,4 @@
-/* base.groovy
+/* Git.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -7,14 +7,16 @@
    ##################################################
 */
 
-def gitCheckout() {
-    check.var(GIT_REPO)
-    check.var(SCM_REVISION)
+package me.rulin.ci
+
+def checkout(repo, revision) {
+    check.var(repo)
+    check.var(revision)
 
     try {
         checkout([$class: 'GitSCM',
-                branches: [[name: SCM_REVISION]],
-                userRemoteConfigs: [[url: GIT_REPO]]])
+                branches: [[name: revision]],
+                userRemoteConfigs: [[url: repo]]])
 
         return
     } catch (e) {
@@ -23,24 +25,23 @@ def gitCheckout() {
     }
 }
 
-def gitCommitID(){
+def commitID(){
     git_commit_id = sh(script: "git rev-parse HEAD", returnStdout: true).toString().trim()
     
     return git_commit_id
 }
 
-def gitCommitIDShort(){
-    git_commit_id_short = git_commit_id[0..GIT_COMMIT_ID_DISPLAY_LEN]
+def commitIDShort(){
+    git_commit_id_short = commitID()[0..GIT_COMMIT_ID_DISPLAY_LEN]
 
     return git_commit_id_short
 }
 
-def gitCommitMessage(){
+def commitMessage(){
+    git_c_id = commitID()
     git_commit_message = sh(script: "git log --oneline --pretty='%H ## %s' | \
-                                     grep $GIT_COMMIT_ID                   | \
+                                     grep $git_c_id                        | \
                                      awk -F ' ## ' '{print \$2}'", returnStdout: true).toString().trim()
     
     return git_commit_message
 }
-
-return this
