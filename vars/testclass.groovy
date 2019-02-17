@@ -13,5 +13,6 @@ def call(args) {
 
     //Docker.Version()
 
-    Docker.images()
+    Docker dockeri = Docker.images()
+    println dockeri
 }
