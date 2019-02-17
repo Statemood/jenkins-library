@@ -9,7 +9,7 @@
 
 import me.rulin.ci.Docker
 
-def call(){
+def call(args){
     dockerCmd = new Docker()
 
     dockerCmd.images()
