@@ -10,14 +10,11 @@
 package me.rulin.ci
 
 
-class Docker implements Serializable {
+class Version implements Serializable {
     public static final String DOCKER_NAME = 'default docker name'
 
-}
-
-class Version {
-    def call(){
-        return sh("sudo docekr version")
+    static void main() {
+        sh("sudo docekr version")
     }
 }
 /*
