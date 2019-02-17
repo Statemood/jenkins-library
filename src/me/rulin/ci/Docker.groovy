@@ -16,7 +16,9 @@ class Docker implements Serializable {
 }
 
 class Version {
-    sh("sudo docekr version")
+    def call(){
+        sh("sudo docekr version")
+    }
 }
 /*
 def Images(){
