@@ -4,7 +4,7 @@ import me.rulin.ci.Docker
 
 def call(args) {
     docker_name = args
-    //docker = new Docker()
+    dockers = new Docker()
     if (args == null || (args instanceof String && args.trim().isEmpty())) {
         docker_name = '123' //Docker.DOCKER_NAME 
     }
@@ -13,5 +13,5 @@ def call(args) {
 
     //Docker.Version()
 
-    Docker.images()
+    dockers.images()
 }
