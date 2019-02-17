@@ -12,3 +12,5 @@ def call(args) {
 
     Docker.Version()
 }
+
+return this
