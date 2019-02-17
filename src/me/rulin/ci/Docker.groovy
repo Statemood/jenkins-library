@@ -20,7 +20,7 @@ class Docker {
 */
 
 def images() {
-    msg = "Test images"
+    //msg = "Test images"
 
-    return msg
+    return true
 }
