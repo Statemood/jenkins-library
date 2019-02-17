@@ -10,7 +10,7 @@
 package me.rulin.ci.docker
 
 class Version {
-    static void main() {
-        sh("sudo docker version")
+    def getVersion() {
+        return sh("sudo docker version")
     }
 }
