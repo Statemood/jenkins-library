@@ -22,7 +22,7 @@ def command(String cmd, String target=null){
     log.info cmd.toUpperCase() + target
 
     try {
-        sh("kubectl $cmd -f ${target}.yaml")
+        sh(script: "kubectl $cmd -f ${target}.yaml", label: "Call kubectl for $cmd $target")
     }
 }
 

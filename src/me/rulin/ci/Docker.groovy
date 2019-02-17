@@ -1,23 +1,14 @@
-/* init.groovy
+/* Docker.groovy
    ##################################################
-   # Created by Lin Ru at 2018.10.01 22:00          #
+   # Created by Lin Ru at 2019.02.17 22:55          #
    #                                                #
    # A Part of the Project jenkins-library          #
    #  https://github.com/Statemood/jenkins-library  #
    ##################################################
 */
 
-def settings(){
-    if(SETTINGS){
-        if(fileExists(SETTINGS)){
-            log.info "Loading local settings"
+package me.rulin.ci
 
-            load(SETTINGS)
-        }
-    }
+class Docker {
+    public static final String DOCKER_NAME = 'default docker name'
 }
-
-def start(){
-}
-
-return this

@@ -29,6 +29,14 @@ WEB_ROOT            = "/data/web/"
 // GIT
 GIT_COMMIT_ID_DISPLAY_LEN = 6
 
+// Stage & Node
+STAGE_PRE_PROCESS   = "master"
+STAGE_GIT           = ""
+STAGE_BUILD         = 
+STAGE_DOCKER        =
+STAGE_TEST          =
+STAGE_K8S           = 
+
 // TRIGGERS
 SKIP_BUILD          = false
 SKIP_DOCKER         = false

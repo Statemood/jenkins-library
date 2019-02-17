@@ -22,7 +22,7 @@ def controller(){
 }
 
 def dockerfileGenerate() {
-    dockerfileCopyTemplate(DOCKERFILE_TEMPLATE_LIST)
+    dockerfileCopyTemplate()
 
     // Test Dockerfile exist
     check.file('Dockerfile')
