@@ -9,6 +9,40 @@
 
 package me.rulin.ci
 
+private String cmd(String c){
+    if(c) {
+        try {
+            sh("sudo docker $c")
+        }
+        catch (e) {
+            throw e
+        }
+    }
+    else {
+        error "No docker cmd input"
+    }
+}
+
 def images() {
-    sh "sudo docker images"
+    cmd("images")
+}
+
+def version(){
+    cmd("version")
+}
+
+def build(build_args){
+    sh("sudo docker build -t ")
+}
+
+def push(){
+    cmd("push ")
+}
+
+def login(){
+    cmd("login")
+}
+
+def logout(){
+    cmd("logout")
 }

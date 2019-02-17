@@ -7,17 +7,11 @@
    ##################################################
 */
 
-def settings(){
-    if(SETTINGS){
-        if(fileExists(SETTINGS)){
-            log.info "Loading local settings"
+import me.rulin.ci.Docker
 
-            load(SETTINGS)
-        }
-    }
+def call(){
+    dockerCmd = new Docker()
+
+    dockerCmd.images()
+    dockerCmd.version()
 }
-
-def start(){
-}
-
-return this
