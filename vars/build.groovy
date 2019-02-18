@@ -19,13 +19,16 @@ def controller() {
                     } else {
                         log.notice "Skip build for the general PHP project"
                     }
-                
-                case "nodejs":
-                    if (fileExists('package.json')) {
-                        log.info "Build NodeJS project with '$NPM_I'"
 
-                        sh(NPM_I)
-                    }
+                case "java":
+                    check.file("pom.xml")
+                    maven()
+
+                case "nodejs":
+                    check.file('package.json')
+                    log.info "Build NodeJS project with '$NPM_I'"
+
+                    sh(NPM_I)
             }
 
             if (BUILD_COMMAND) {
@@ -39,4 +42,8 @@ def controller() {
             error e
         }
     }
+}
+
+def maven(){
+    sh("$MAVEN_CMD $MAVEN_OPTS")
 }

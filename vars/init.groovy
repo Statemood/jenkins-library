@@ -7,20 +7,13 @@
    ##################################################
 */
 
-def call(body){
+def initial(){
     log.info "Initial Pipeline"
 
-    //dockerCmd   = new Docker()
-    //dockerCmd.images()
-    //dockerCmd.version()
-
-
     loadLocalSettings()
+}
 
-    echo "Workspace: " + WS
-    echo "GOPATH: " + GOPATH
-    echo "Stage: " + STAGE_PRE_PROCESS 
-
+def startup(){
     stages.controller()
 }
 
@@ -31,6 +24,8 @@ def loadLocalSettings(){
                 log.info "Loading local settings"
 
                 load(SETTINGS)
+
+                log.info "Local settings loaded"
             }
             else {
                 log.warning "File not found: $SETTINGS"

@@ -1,4 +1,4 @@
-/* config.groovy
+/* settings.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
