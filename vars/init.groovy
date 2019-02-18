@@ -16,7 +16,7 @@ def call(body){
 
     loadLocalSettings()
 
-    echo "Workspace: " + WS
+    echo "STAGE: " + STAGE_PRE_PROCESS
 
     stages.controller()
 }
