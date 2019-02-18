@@ -18,6 +18,8 @@ def call(body){
     loadLocalSettings()
 
     echo "Workspace: " + WS
+    echo "GOPATH: " + GOPATH
+    echo "MAVEN_Cmd: " + MAVEN_CMD 
 
     stages.controller()
 }
