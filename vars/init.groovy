@@ -20,7 +20,7 @@ def call(body){
 
     echo "Workspace: " + WS
 
-    Controller.run()
+    Controller.controller()
 }
 
 def loadLocalSettings(){
