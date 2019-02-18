@@ -31,11 +31,11 @@ env.GIT_COMMIT_ID_DISPLAY_LEN = 6
 
 // Stage & Node
 env.STAGE_PRE_PROCESS   = "master"
-env.STAGE_GIT           = ""
-env.STAGE_BUILD         = 
-env.STAGE_DOCKER        =
-env.STAGE_TEST          =
-env.STAGE_K8S           = 
+env.STAGE_GIT           = "master"
+env.STAGE_BUILD         = "master"
+env.STAGE_DOCKER        = "master"
+env.STAGE_TEST          = "master"
+env.STAGE_K8S           = "master"
 
 // TRIGGERS
 env.SKIP_BUILD          = false
