@@ -20,6 +20,8 @@ def controller() {
                         log.notice "Skip build for the general PHP project"
                     }
 
+                    return
+
                 case "java":
                     log.info "Preparing Java build"
                     check.file("pom.xml")

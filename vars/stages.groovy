@@ -13,12 +13,14 @@ def controller(){
     preProcess()
     git()
     if (APP_LANG == "java") {
-        build(3)
+        compile(3)
         //sonar(4)
+        test(4)
     }
     else {
         //sonar()
-        build()
+        compile()
+        test()
     }
 }
 
@@ -54,10 +56,24 @@ def sonar(stage_id=3) {
     }
 }
 
-def build(stage_id=4) {
+def compile(stage_id=4) {
     node(STAGE_BUILD) {
         stage("Stage $stage_id: Build Code") {
             build.controller()
+        }
+    }
+}
+
+def test(stage_id=5) {
+    node(STAGE_TEST) {
+        stage("Stage $stage_id: Test") {
+            if (test_cmd) {
+                log.info "Test by command: $test_cmd"
+
+                sh(test_cmd)
+            }
+
+            return
         }
     }
 }
