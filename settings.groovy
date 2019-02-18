@@ -30,8 +30,8 @@ WEB_ROOT            = "/data/web/"
 GIT_COMMIT_ID_DISPLAY_LEN = 6
 
 // Stage & Node
-STAGE_PRE_PROCESS   = "master"
-STAGE_GIT           = ""
+env.STAGE_PRE_PROCESS   = "master"
+env.STAGE_GIT           = ""
 STAGE_BUILD         = 
 STAGE_DOCKER        =
 STAGE_TEST          =
@@ -81,7 +81,7 @@ OSS_OPTIONS         = "-rf"
 DOCKER_REGISTRY                 = ""
 DOCKER_REGISTRY_USER            = ""
 // Saved in the Jenkins credentials with name 'Docker-Registry'
-DOCKER_REGISTRY_PASSWORD        = credentials('Docker-Registry')
+env.DOCKER_REGISTRY_PASSWORD        = credentials('Docker-Registry')
 DOCKER_IMAGE_NAME               = ""
 DOCKER_IMAGE_TAG                = ""
 DOCKER_IMAGE_BUILD_TIMEOUT      = 300
