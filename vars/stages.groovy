@@ -7,40 +7,87 @@
    ##################################################
 */
 
-def preProcess() {
+import me.rulin.ci.Git 
+
+def controller(){
+    preProcess()
+    git()
+    if (APP_LANG == "java") {
+        compile(3)
+        //sonar(4)
+        test(4)
+    }
+    else {
+        //sonar()
+        compile()
+        test()
+    }
+}
+
+def preProcess(stage_id=1) {
     node(STAGE_PRE_PROCESS) {
-        // Set default info
+        stage("Stage $stage_id: Pre-Process") {
+            // Set default info
 
-        // Set build info
+            // Set build info
 
-        // Check parameters
+            // Check parameters
+
+            echo "Stage Pre-Process OK"
+        }
     }
 }
 
-def git(){
+def git(stage_id=2) {
     node(STAGE_GIT) {
-        checkoutCode()
+        stage("Stage $stage_id: Git Checkout") {
+
+            scmGit = new Git()
+            scmGit.checkout(repo, SCM_REVISION)
+        }
     }
 }
 
-def docker(){
-    node(STAGE_DOCKER) {
-
+def sonar(stage_id=3) {
+    node(STAGE_SONAR) {
+        stage("Stage $stage_id: SonarQube Scanner") {
+            sonar.scanner()
+        }
     }
 }
 
-    node(STAGE_KUBERNETES) {
-
-    }
-
-    node(STAGE_POST_PROCESS) {
-
-    }
-}
-
-def stageBuild() {
+def compile(stage_id=4) {
     node(STAGE_BUILD) {
-
+        stage("Stage $stage_id: Build Code") {
+            build.controller()
+        }
     }
 }
+
+def test(stage_id=5) {
+    node(STAGE_TEST) {
+        stage("Stage $stage_id: Test") {
+            if (test_cmd) {
+                log.info "Test by command: $test_cmd"
+
+                sh(test_cmd)
+            }
+
+            return
+        }
+    }
+}
+
+node(STAGE_DOCKER) {
+    docker.controller()
+}
+
+node(STAGE_KUBERNETES) {
+
+}
+
+node(STAGE_POST_PROCESS) {
+
+}
+
 return this

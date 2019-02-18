@@ -7,16 +7,14 @@
    ##################################################
 */
 
-package me.rulin.docker
-
-def generate() {
-    copyTemplate(DOCKERFILE_TEMPLATE_LIST)
+def dockerfileGenerate() {
+    dockerfileCopyTemplate()
 
     // Test Dockerfile exist
     check.file('Dockerfile')
 }
 
-private def copyTemplate(list) {
+def dockerfileCopyTemplate(list) {
     // Remove old files first
     try {
         if (fileExists(DOCKERFILES)) {
@@ -25,7 +23,7 @@ private def copyTemplate(list) {
         }
     } 
     catch (e) {
-        log.error e
+        throw e
     }
 
     // Process dockerignore file
@@ -48,6 +46,44 @@ private def copyTemplate(list) {
         }
     } 
     catch (e) {
-        log.error e
+        throw e
     }
+}
+
+def imageBuild(image) {
+    check.file('Dockerfile')
+
+    try {
+        log.info "Build image: " + image
+
+        timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
+            sh("sudo docker build $DOCKER_IMAGE_BUILD_OPTIONS -t $image .")
+        }
+    }
+    catch (e) {
+        println "Error occurred during build image"
+        throw e
+    }
+}
+
+def imagePush(image) {
+    try {
+        log.info "Push image " + image
+
+        timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
+            sh("sudo docker push $image")
+        }
+    }
+    catch (e) {
+        println "Error occurred during push image"
+        throw e
+    }
+}
+
+def registryLogin(){
+    return 
+}
+
+def registryLogout(){
+    return 
 }
