@@ -14,12 +14,10 @@ def call(body){
     //dockerCmd.images()
     //dockerCmd.version()
 
+
     loadLocalSettings()
 
-    echo "Settings loaded"
-
-    echo "Registry Password: " + DOCKER_REGISTRY_PASSWORD
-    echo "STAGE: " + STAGE_PRE_PROCESS
+    echo "Workspace: " + WS
 
     stages.controller()
 }
