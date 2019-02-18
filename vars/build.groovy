@@ -25,9 +25,10 @@ def controller() {
                     check.file("pom.xml")
 
                     try {
-                        log.info "Build command: $MAVEN_CMD $MAVEN_OPTS"
+                        m_cmd = "$MAVEN_CMD $MAVEN_OPTS"
+                        log.info "Build command: $m_cmd"
 
-                        sh("$MAVEN_CMD $MAVEN_OPTS")
+                        sh(m_cmd)
                     }
                     catch (e) {
                         throw e
