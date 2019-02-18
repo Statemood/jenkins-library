@@ -17,12 +17,12 @@ def call(body){
     //dockerCmd.version()
 
     stages = new Stages()
-    
+
     loadLocalSettings()
 
     echo "Workspace: " + WS
 
-    stages.run()
+    stages.controller()
 }
 
 def loadLocalSettings(){

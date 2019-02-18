@@ -11,7 +11,7 @@ package me.rulin.ci
 
 import me.rulin.ci.Git
 
-def run() {
+def controller() {
     log.info "Git clone code"
     Git.checkout(repo, SCM_REVISION)
 }
