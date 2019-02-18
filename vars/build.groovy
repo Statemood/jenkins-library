@@ -25,12 +25,9 @@ def controller() {
                     check.file("pom.xml")
 
                     try {
-                        m_cmd = "$MAVEN_CMD $MAVEN_OPTS"
+                        m_cmd = "$MAVEN_CMD $MAVEN_ARGS"
                         log.info "Build command: $m_cmd"
-                        sh("date")
-                        sh("whoami")
-                        sh(mvn_cmd)
-                        //sh('mvn -U clean -Dmaven.test.skip=true package dependency:tree')
+                        sh(m_cmd)
                     }
                     catch (e) {
                         throw e
