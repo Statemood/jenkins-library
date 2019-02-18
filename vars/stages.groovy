@@ -7,15 +7,17 @@
    ##################################################
 */
 
+import me.rulin.ci.Git 
+
 def controller(){
     preProcess()
     git()
     if (APP_LANG == "java") {
         build(3)
-        sonar(4)
+        //sonar(4)
     }
     else {
-        sonar()
+        //sonar()
         build()
     }
 }
@@ -28,13 +30,17 @@ def preProcess(stage_id=1) {
         // Set build info
 
         // Check parameters
+
+        echo "Stage Pre-Process OK"
     }
 }
 
 def git(stage_id=2) {
     node(STAGE_GIT) {
         stage("Stage $stage_id: Git Checkout") {
-            base.gitCheckout()
+
+            scmGit = new Git()
+            scmGit.checkout(repo, SCM_REVISION)
         }
     }
 }

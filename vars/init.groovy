@@ -7,16 +7,12 @@
    ##################################################
 */
 
-import me.rulin.ci.Stages
-
 def call(body){
     log.info "Initial Pipeline"
 
     //dockerCmd   = new Docker()
     //dockerCmd.images()
     //dockerCmd.version()
-
-    stages = new Stages()
 
     loadLocalSettings()
 
