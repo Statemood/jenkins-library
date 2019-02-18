@@ -16,7 +16,10 @@ def call(body){
 
     loadLocalSettings()
 
+    echo "Settings loaded"
+
     echo "STAGE: " + STAGE_PRE_PROCESS
+    echo "Registry Password: " + DOCKER_REGISTRY_PASSWORD
 
     stages.controller()
 }
