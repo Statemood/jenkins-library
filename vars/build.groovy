@@ -21,8 +21,9 @@ def controller() {
                     }
 
                 case "java":
+                    log.info "Preparing Java build"
                     check.file("pom.xml")
-                    maven()
+                    sh("$MAVEN_CMD $MAVEN_OPTS")
 
                 case "nodejs":
                     check.file('package.json')
@@ -42,8 +43,4 @@ def controller() {
             error e
         }
     }
-}
-
-def maven(){
-    sh("$MAVEN_CMD $MAVEN_OPTS")
 }
