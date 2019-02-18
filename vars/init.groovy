@@ -18,8 +18,8 @@ def call(body){
 
     echo "Settings loaded"
 
-    echo "STAGE: " + STAGE_PRE_PROCESS
     echo "Registry Password: " + DOCKER_REGISTRY_PASSWORD
+    echo "STAGE: " + STAGE_PRE_PROCESS
 
     stages.controller()
 }
