@@ -29,8 +29,8 @@ def controller() {
                         log.info "Build command: $m_cmd"
                         sh("date")
                         sh("whoami")
-                        sh("mvn --help")
-                        sh('mvn -U clean -Dmaven.test.skip=true package dependency:tree')
+                        sh(mvn_cmd)
+                        //sh('mvn -U clean -Dmaven.test.skip=true package dependency:tree')
                     }
                     catch (e) {
                         throw e
