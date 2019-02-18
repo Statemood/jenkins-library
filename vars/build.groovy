@@ -23,7 +23,15 @@ def controller() {
                 case "java":
                     log.info "Preparing Java build"
                     check.file("pom.xml")
-                    sh("$MAVEN_CMD $MAVEN_OPTS")
+
+                    try {
+                        log.info "Build command: $MAVEN_CMD $MAVEN_OPTS"
+
+                        sh("$MAVEN_CMD $MAVEN_OPTS")
+                    }
+                    catch (e) {
+                        throw e
+                    }
 
                 case "nodejs":
                     check.file('package.json')
