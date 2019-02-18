@@ -28,7 +28,7 @@ def controller() {
                         m_cmd = "$MAVEN_CMD $MAVEN_OPTS"
                         log.info "Build command: $m_cmd"
 
-                        sh("mvn -U clean -Dmaven.test.skip=true package dependency:tree")
+                        sh('mvn -U clean -Dmaven.test.skip=true package dependency:tree')
                     }
                     catch (e) {
                         throw e
