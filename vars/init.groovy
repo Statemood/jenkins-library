@@ -7,7 +7,7 @@
    ##################################################
 */
 
-import me.rulin.ci.Controller
+import me.rulin.ci.Stages
 
 def call(body){
     log.info "Initial Pipeline"
@@ -16,11 +16,13 @@ def call(body){
     //dockerCmd.images()
     //dockerCmd.version()
 
+    stages = new Stages()
+    
     loadLocalSettings()
 
     echo "Workspace: " + WS
 
-    Controller.controller()
+    stages.run()
 }
 
 def loadLocalSettings(){
