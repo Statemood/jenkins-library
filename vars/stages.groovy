@@ -7,7 +7,8 @@
    ##################################################
 */
 
-import me.rulin.ci.Git 
+import me.rulin.ci.Git
+import me.rulin.ci.SonarQube
 
 def controller(){
     preProcess()
@@ -42,8 +43,8 @@ def git(stage_id=2) {
     node(STAGE_GIT) {
         stage("Stage $stage_id: Git Checkout") {
 
-            scmGit = new Git()
-            scmGit.checkout(repo, SCM_REVISION)
+            git = new Git()
+            git.checkout(repo, SCM_REVISION)
         }
     }
 }
@@ -51,7 +52,8 @@ def git(stage_id=2) {
 def sonar(stage_id=3) {
     node(STAGE_SONAR) {
         stage("Stage $stage_id: SonarQube Scanner") {
-            sonar.scanner()
+            sonar = new SonarQube()
+            sonar.scan()
         }
     }
 }
