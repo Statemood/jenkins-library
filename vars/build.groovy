@@ -28,6 +28,8 @@ def controller() {
                         m_cmd = "$MAVEN_CMD $MAVEN_ARGS"
                         log.info "Build command: $m_cmd"
                         sh(m_cmd)
+
+                        return
                     }
                     catch (e) {
                         throw e
