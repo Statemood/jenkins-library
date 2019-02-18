@@ -19,7 +19,7 @@ def call(body){
 
     echo "Workspace: " + WS
     echo "GOPATH: " + GOPATH
-    echo "MAVEN_Cmd: " + MAVEN_CMD 
+    echo "Stage: " + STAGE_PRE_PROCESS 
 
     stages.controller()
 }
