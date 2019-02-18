@@ -24,14 +24,15 @@ def controller(){
 
 def preProcess(stage_id=1) {
     node(STAGE_PRE_PROCESS) {
-        stage("Stage $stage_id: Pre-Process")
-        // Set default info
+        stage("Stage $stage_id: Pre-Process") {
+            // Set default info
 
-        // Set build info
+            // Set build info
 
-        // Check parameters
+            // Check parameters
 
-        echo "Stage Pre-Process OK"
+            echo "Stage Pre-Process OK"
+        }
     }
 }
 
