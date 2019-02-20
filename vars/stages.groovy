@@ -10,7 +10,7 @@
 import me.rulin.ci.Git
 import me.rulin.ci.SonarQube
 
-def controller(){
+def controller(parameters){
     preProcess()
     git()
     if (APP_LANG == "java") {

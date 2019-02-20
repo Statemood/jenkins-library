@@ -15,7 +15,7 @@ def go(Map parameters = [:]){
 
 def startup(){
 
-    stages.controller()
+    stages.controller(parameters)
 }
 
 def loadLocalSettings(){
