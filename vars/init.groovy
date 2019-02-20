@@ -10,8 +10,8 @@
 def initial(Map parameters = [:]){
     log.info "Initial Pipeline"
 
-    echo parameters
-    
+    println parameters
+
     loadLocalSettings()
 }
 
