@@ -11,7 +11,7 @@ def call(Map args = [:]){
     log.info "Pipeline Go!"
 
     settings.parameters = args
-    //loadLocalSettings()
+    loadLocalSettings()
 
     echo "Print parameters"
     println settings.parameters
