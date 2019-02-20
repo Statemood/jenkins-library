@@ -22,7 +22,7 @@ def go(Map parameters = [:]){
 
     //parameters.put('repo', git_defined)
 
-    parameters = settings + parameters
+    parameters = parameters + settings
 
     println parameters
 
