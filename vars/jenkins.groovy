@@ -1,4 +1,4 @@
-/* go.groovy
+/* jenkins.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -7,10 +7,10 @@
    ##################################################
 */
 
-class Go implements Serializable {
+class Jenkins implements Serializable {
     private  Map args
     def call(Map args = [:]){
-        log.info "Pipeline Go!"
+        echo "Pipeline Go!"
 
         settings.parameters = args
         loadLocalSettings()
