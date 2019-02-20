@@ -7,15 +7,28 @@
    ##################################################
 */
 
-def initial(Map parameters = [:]){
+def go(Map parameters = [:]){
     log.info "Initial Pipeline"
 
-    println parameters['git']['repo']
+    def Map settings = [:]
+    settings = ["git": ["repo": "123.git"]]
+
+    git_defined = settings['git']['repo']
+
+    git_new = parameters['git']['repo']
+
+    echo "Defined git: " + git_defined
+    echo "New git: " + git_new
+
+    parameters['git']['repo'] = git_new
+
+    println parameters
 
     loadLocalSettings()
 }
 
 def startup(){
+
     stages.controller()
 }
 
