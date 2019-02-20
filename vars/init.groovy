@@ -7,13 +7,14 @@
    ##################################################
 */
 
-def go(Map parameters = [:]){
+def go(private Map args = [:]){
     log.info "Pipeline Go!"
 
-    environment.parameters = parameters
+    settings.parameters = args
     loadLocalSettings()
 
-    println environment.parameters
+    echo "Print paraemters"
+    println settings.parameters
 
     //stages.controller(parameters)
 }
