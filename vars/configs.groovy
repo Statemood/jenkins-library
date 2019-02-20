@@ -7,7 +7,7 @@
    ##################################################
 */
 
-class Config implements Serializable {
+class Configs implements Serializable {
     // Local Settings
     Map config      = [:]
 

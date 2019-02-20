@@ -44,7 +44,7 @@ def git(stage_id=2) {
         stage("Stage $stage_id: Git Checkout") {
 
             echo "stage git"
-            println config.parameters
+            println configs.parameters
             echo "echo done"
             git = new Git()
             git.checkout(repo, SCM_REVISION)
