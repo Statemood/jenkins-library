@@ -19,7 +19,7 @@ def call(Map args = [:]){
     stages.controller()
 }
 
-/*
+
     def loadLocalSettings(){
         if (SETTINGS) {
             try {
@@ -39,4 +39,3 @@ def call(Map args = [:]){
             }
         }
     }
-}*/
