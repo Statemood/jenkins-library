@@ -23,7 +23,7 @@ private String cmd(String c){
     }
 }
 
-def images() {
+private build(String build_args) {
     check.file('Dockerfile')
 
     try {
@@ -43,7 +43,7 @@ def version(){
     cmd("version")
 }
 
-def images(build_args){
+def images(){
     cmd("images")
 }
 

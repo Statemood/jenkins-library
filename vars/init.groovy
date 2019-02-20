@@ -7,9 +7,11 @@
    ##################################################
 */
 
-def initial(){
+def initial(Map parameters = [:]){
     log.info "Initial Pipeline"
 
+    echo parameters
+    
     loadLocalSettings()
 }
 
