@@ -11,16 +11,16 @@ def go(Map parameters = [:]){
     log.info "Initial Pipeline"
 
     def Map settings = [:]
-    settings = ["git": ["repo": "123.git"]]
+    settings = ["repo": "123.git"]
 
-    git_defined = settings['git']['repo']
+    git_defined = settings['repo']
 
-    git_new = parameters['git']['repo']
+    git_new = parameters['repo']
 
     echo "Defined git: " + git_defined
     echo "New git: " + git_new
 
-    parameters.put(['git']['repo'], git_new)
+    parameters.put('repo', git_new)
 
     println parameters
 
