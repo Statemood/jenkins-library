@@ -1,4 +1,4 @@
-/* settings.groovy
+/* Config.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -7,7 +7,7 @@
    ##################################################
 */
 
-class Settings implements Serializable {
+class Config implements Serializable {
     // Local Settings
     Map config      = [:]
 
