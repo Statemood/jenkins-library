@@ -20,7 +20,7 @@ def go(Map parameters = [:]){
     echo "Defined git: " + git_defined
     echo "New git: " + git_new
 
-    parameters['git']['repo'].put(git_new)
+    parameters.put(['git']['repo'], git_new)
 
     println parameters
 
