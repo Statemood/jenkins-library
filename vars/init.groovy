@@ -7,16 +7,10 @@
    ##################################################
 */
 
-import me.rulin.ci.Git
-
 def go(Map parameters = [:]){
     log.info "Pipeline Go!"
 
-    git = new Git()
-    
-    git.test(parameters)
-
-    //loadLocalSettings()
+    loadLocalSettings()
 }
 
 def startup(){

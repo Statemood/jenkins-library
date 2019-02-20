@@ -43,6 +43,9 @@ def git(stage_id=2) {
     node(STAGE_GIT) {
         stage("Stage $stage_id: Git Checkout") {
 
+            echo "stage git"
+            println parameters
+            echo "echo done"
             git = new Git()
             git.checkout(repo, SCM_REVISION)
         }

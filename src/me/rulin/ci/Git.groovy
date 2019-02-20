@@ -9,11 +9,6 @@
 
 package me.rulin.ci
 
-def test(p){
-    echo "git test"
-    println p
-}
-
 def checkout(repo, revision) {
     check.var(repo)
     check.var(revision)
