@@ -17,7 +17,7 @@ def scan() {
 
         generateProperties()
 
-        
+    
 
     }
     catch (e) {

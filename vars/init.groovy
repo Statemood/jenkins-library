@@ -7,26 +7,16 @@
    ##################################################
 */
 
+import me.rulin.ci.Git
+
 def go(Map parameters = [:]){
-    log.info "Initial Pipeline"
+    log.info "Pipeline Go!"
 
-    def Map settings = [:]
-    settings = ["repo": "123.git", "cmd": "mvn test"]
+    git = new Git()
+    
+    git.test()
 
-    git_defined = settings['repo']
-
-    git_new = parameters['repo']
-
-    echo "Defined git: " + git_defined
-    echo "New git: " + git_new
-
-    //parameters.put('repo', git_defined)
-
-    parameters = parameters + settings
-
-    println parameters
-
-    loadLocalSettings()
+    //loadLocalSettings()
 }
 
 def startup(){
