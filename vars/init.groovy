@@ -10,9 +10,12 @@
 def go(Map parameters = [:]){
     log.info "Pipeline Go!"
 
+    environment.parameters = parameters
     loadLocalSettings()
-    
-    stages.controller(parameters)
+
+    println environment.parameters
+
+    //stages.controller(parameters)
 }
 
 def loadLocalSettings(){
