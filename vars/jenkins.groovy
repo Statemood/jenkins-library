@@ -7,20 +7,19 @@
    ##################################################
 */
 
-class Jenkins implements Serializable {
-    private  Map args
-    def call(Map args = [:]){
-        echo "Pipeline Go!"
+def call(Map args = [:]){
+    log.info "Pipeline Go!"
 
-        settings.parameters = args
-        loadLocalSettings()
+    settings.parameters = args
+    //loadLocalSettings()
 
-        echo "Print paraemters"
-        println settings.parameters
+    echo "Print paraemters"
+    println settings.parameters
 
-        //stages.controller(parameters)
-    }
+    //stages.controller(parameters)
+}
 
+/*
     def loadLocalSettings(){
         if (SETTINGS) {
             try {
@@ -40,4 +39,4 @@ class Jenkins implements Serializable {
             }
         }
     }
-}
+}*/
