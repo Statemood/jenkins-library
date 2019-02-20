@@ -11,6 +11,8 @@ import me.rulin.ci.Git
 import me.rulin.ci.SonarQube
 
 def controller(){
+    println ciConfig.parameters
+    
     preProcess()
     git()
     if (APP_LANG == "java") {
@@ -42,7 +44,6 @@ def preProcess(stage_id=1) {
 def git(stage_id=2) {
     node(STAGE_GIT) {
         stage("Stage $stage_id: Git Checkout") {
-
             echo "stage git"
             println ciConfig.parameters
             echo "echo done"
