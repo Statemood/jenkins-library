@@ -9,9 +9,9 @@
 
 package me.rulin.ci
 
-def test(){
+def test(p){
     echo "git test"
-    println parameters
+    println p
 }
 
 def checkout(repo, revision) {

@@ -14,7 +14,7 @@ def go(Map parameters = [:]){
 
     git = new Git()
     
-    git.test()
+    git.test(parameters)
 
     //loadLocalSettings()
 }
