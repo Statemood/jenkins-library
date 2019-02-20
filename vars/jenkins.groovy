@@ -10,11 +10,11 @@
 def call(Map args = [:]){
     log.info "Pipeline Go!"
 
-    configs.parameters = args
+    ciConfig.parameters = args
     loadLocalSettings()
 
     echo "Print parameters"
-    println configs.parameters
+    println ciConfig.parameters
 
     stages.controller()
 }
