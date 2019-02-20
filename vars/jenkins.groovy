@@ -13,10 +13,10 @@ def call(Map args = [:]){
     settings.parameters = args
     //loadLocalSettings()
 
-    echo "Print paraemters"
+    echo "Print parameters"
     println settings.parameters
 
-    //stages.controller(parameters)
+    stages.controller()
 }
 
 /*

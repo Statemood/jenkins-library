@@ -10,7 +10,7 @@
 import me.rulin.ci.Git
 import me.rulin.ci.SonarQube
 
-def controller(Map parameters = [:]){
+def controller(){
     preProcess()
     git()
     if (APP_LANG == "java") {
@@ -44,7 +44,7 @@ def git(stage_id=2) {
         stage("Stage $stage_id: Git Checkout") {
 
             echo "stage git"
-            println parameters
+            println settings.parameters
             echo "echo done"
             git = new Git()
             git.checkout(repo, SCM_REVISION)
