@@ -10,7 +10,7 @@
 def initial(Map parameters = [:]){
     log.info "Initial Pipeline"
 
-    println parameters['git']
+    println parameters['git']['repo']
 
     loadLocalSettings()
 }
