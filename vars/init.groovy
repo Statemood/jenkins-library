@@ -11,10 +11,7 @@ def go(Map parameters = [:]){
     log.info "Pipeline Go!"
 
     loadLocalSettings()
-}
-
-def startup(){
-
+    
     stages.controller(parameters)
 }
 
