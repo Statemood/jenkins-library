@@ -1,4 +1,4 @@
-/* Config.groovy
+/* Settings.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -7,9 +7,9 @@
    ##################################################
 */
 
-class ciConfig implements Serializable {
+class Settings implements Serializable {
     // Local Settings
-    Map config      = [:]
+    static Map config      = [:]
 
     // Job input parameters
     static Map parameters  = [:]
