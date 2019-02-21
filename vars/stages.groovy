@@ -11,6 +11,7 @@ import me.rulin.ci.Git
 import me.rulin.ci.SonarQube
 
 def controller(){
+    echo "Stage controller"
     println settings.parameters
 
     preProcess()
