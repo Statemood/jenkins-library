@@ -15,8 +15,10 @@ def call(Map args = [:]){
     Config.args = args
     Config.data = Config.data + Config.args
 
+    Config.setData("user", "rulin")
+    println Config.data
+    
     loadLocalSettings()
-
     preProcess()
     git()
     if (Config.data['lang'] == "java") {
