@@ -1,4 +1,4 @@
-/* Configuration.groovy
+/* userConfig.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -7,7 +7,7 @@
    ##################################################
 */
 
-class Arguments implements Serializable {
+class userConfifg implements Serializable {
     // Local Settings
     static Map config      = [:]
 
