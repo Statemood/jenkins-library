@@ -12,7 +12,7 @@ import me.rulin.ci.SonarQube
 
 def call(Map args = [:]){
 
-    ciConfig.data = args
+    ciConfig.config = args
     loadLocalSettings()
 
     echo "Stage controller"
