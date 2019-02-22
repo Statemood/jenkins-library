@@ -9,14 +9,8 @@
 
 class ciConfig implements Serializable {
     // Local Settings
-    Map config   = [:]
+    static Map data = [:]
 
     // Job input parameters
-    static Map data     = [:]
-
-    def call() {
-        log.info "Setting data"
-
-        static Map data = config + data
-    }
+    static Map args = [:]
 }
