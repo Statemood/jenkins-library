@@ -13,7 +13,7 @@ class Config implements Serializable {
 
     Map data = [:]
 
-    def merge(Map d1, Map d2) {
-        static Map data = d1 + d2
+    def merge(Map d) {
+        static Map data = data + d
     }
 }
