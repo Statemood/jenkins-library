@@ -12,5 +12,8 @@ class Config implements Serializable {
     static Map args = [:]
 
     static Map data = [:]
-    
+
+    def call() {
+        echo "hello"
+    }
 }
