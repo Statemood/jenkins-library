@@ -7,19 +7,7 @@
    ##################################################
 */
 
-def call(Map args = [:]){
-    log.info "Pipeline Go!"
-
-    ciConfig.data = args
-    loadLocalSettings()
-
-    echo "Print parameters"
-    println ciConfig.data
-
-    stages.controller()
-}
-
-    def loadLocalSettings(){
+    def call(){
         if (SETTINGS) {
             try {
                 if (fileExists(SETTINGS)) {

@@ -10,7 +10,11 @@
 import me.rulin.ci.Git
 import me.rulin.ci.SonarQube
 
-def controller(){
+def call(Map args = [:]){
+
+    ciConfig.data = args
+    loadLocalSettings()
+
     echo "Stage controller"
     println ciConfig.data
 
@@ -45,11 +49,9 @@ def preProcess(stage_id=1) {
 def git(stage_id=2) {
     node(STAGE_GIT) {
         stage("Stage $stage_id: Git Checkout") {
-            echo "stage git"
             println ciConfig.data
-            echo "echo done"
             git = new Git()
-            git.checkout(repo, SCM_REVISION)
+            git.checkout(ciConfig.data['repo'], ciConfig.data['revision'])
         }
     }
 }
