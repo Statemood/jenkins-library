@@ -7,7 +7,7 @@
    ##################################################
 */
 
-class cic implements Serializable {
+class ciC implements Serializable {
     static Map args = [:]
 
     static Map data = [:]
