@@ -7,9 +7,9 @@
    ##################################################
 */
 
-class Config implements Serializable {
+class Configs implements Serializable {
     // Local Settings
-    static Map configs     = [:]
+    static Map config     = [:]
 
     // Job input parameters
     static Map parameters  = [:]
