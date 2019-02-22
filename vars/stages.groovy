@@ -16,11 +16,11 @@ def call(Map args = [:]){
     loadLocalSettings()
 
     echo "Stage controller"
-    println ciConfig.args
+    println ciConfig.data
 
     preProcess()
     git()
-    if (ciConfig.args['lang'] == "java") {
+    if (ciConfig.data['lang'] == "java") {
         compile(3)
         //sonar(4)
         test(4)
@@ -51,7 +51,7 @@ def git(stage_id=2) {
         stage("Stage $stage_id: Git Checkout") {
             git = new Git()
 
-            git.checkout(ciConfig.args['repo'], ciConfig.args['revision'])
+            git.checkout(ciConfig.data['repo'], ciConfig.data['revision'])
         }
     }
 }
