@@ -14,7 +14,7 @@ def call(Map args = [:]) {
     Config.data   = Config.data + args
 
     Map u = ["user": "rulin"]
-    Config.merge(u)
+    Config.mergeData(u)
 
     println Config.data
 
