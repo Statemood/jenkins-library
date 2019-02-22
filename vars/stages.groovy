@@ -12,14 +12,14 @@ import me.rulin.ci.SonarQube
 
 def call(Map args = [:]){
 
-    cic.args = args
-    cic.data = cic.data + cic.args
+    CIC.args = args
+    CIC.data = CIC.data + CIC.args
 
     loadLocalSettings()
 
     preProcess()
     git()
-    if (cic.data['lang'] == "java") {
+    if (CIC.data['lang'] == "java") {
         compile(3)
         //sonar(4)
         test(4)
@@ -50,7 +50,7 @@ def git(stage_id=2) {
         stage("Stage $stage_id: Git Checkout") {
             git = new Git()
 
-            git.checkout(cic.data['repo'], cic.data['revision'])
+            git.checkout(CIC.data['repo'], CIC.data['revision'])
         }
     }
 }

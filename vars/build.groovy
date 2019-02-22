@@ -10,7 +10,7 @@
 def controller() {
     dir(BUILD_DIR) {
         try {
-            switch (cic.data['lang'].toLowerCase()) {
+            switch (CIC.data['lang'].toLowerCase()) {
                 case "php":
                     if (fileExists('composer.lock') || fileExists('composer.json')) {
                         log.info "Build PHP project with '$PHP_COMPOSER_CMD'"
