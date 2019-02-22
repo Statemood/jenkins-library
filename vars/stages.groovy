@@ -12,7 +12,7 @@ import me.rulin.ci.SonarQube
 
 def controller(){
     echo "Stage controller"
-    println settings.parameters
+    println config.parameters
 
     preProcess()
     git()
@@ -46,7 +46,7 @@ def git(stage_id=2) {
     node(STAGE_GIT) {
         stage("Stage $stage_id: Git Checkout") {
             echo "stage git"
-            println settings.parameters
+            println config.parameters
             echo "echo done"
             git = new Git()
             git.checkout(repo, SCM_REVISION)
