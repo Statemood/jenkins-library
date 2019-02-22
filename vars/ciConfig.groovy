@@ -1,4 +1,4 @@
-/* userConfig.groovy
+/* ciConfig.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -7,7 +7,7 @@
    ##################################################
 */
 
-class userConfifg implements Serializable {
+class ciConfifg implements Serializable {
     // Local Settings
     static Map config      = [:]
 
