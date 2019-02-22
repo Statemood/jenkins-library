@@ -7,6 +7,7 @@
    ##################################################
 */
 
+// CI Config
 class ciC implements Serializable {
     static Map args = [:]
 

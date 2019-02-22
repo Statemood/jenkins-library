@@ -13,16 +13,9 @@ import me.rulin.ci.SonarQube
 def call(Map args = [:]){
 
     cic.args = args
-
     cic.data = cic.data + cic.args
 
-    println "cic"
-    println cic.data
-
     loadLocalSettings()
-
-    echo "Stage controller"
-    println cic.data
 
     preProcess()
     git()
@@ -57,7 +50,7 @@ def git(stage_id=2) {
         stage("Stage $stage_id: Git Checkout") {
             git = new Git()
 
-            git.checkout(ciConfig.data['repo'], ciConfig.data['revision'])
+            git.checkout(cic.data['repo'], cic.data['revision'])
         }
     }
 }
