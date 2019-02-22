@@ -14,7 +14,7 @@ def call(Map args = [:]){
 
     cic.args = args
 
-    cic.data = ciConfig.data + ciConfig.args
+    cic.data = cic.data + cic.args
 
     println "cic"
     println cic.data
@@ -22,11 +22,11 @@ def call(Map args = [:]){
     loadLocalSettings()
 
     echo "Stage controller"
-    println ciConfig.data
+    println cic.data
 
     preProcess()
     git()
-    if (ciConfig.data['lang'] == "java") {
+    if (cic.data['lang'] == "java") {
         compile(3)
         //sonar(4)
         test(4)
