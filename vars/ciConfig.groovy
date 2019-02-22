@@ -8,8 +8,7 @@
 */
 
 class ciConfig implements Serializable {
-    // Job input parameters
-    static Map args = [:]
+    static Map data   = [:]
 
-    static Map data = args
+    static Map config = [:]
 }
