@@ -7,8 +7,8 @@
    ##################################################
 */
 
-class ciConfig implements Serializable {
-    static Map data   = [:]
+class cic implements Serializable {
+    static Map args = [:]
 
-    static Map config = [:]
+    static Map data = [:]
 }
