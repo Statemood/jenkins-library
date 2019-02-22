@@ -14,6 +14,6 @@ class Config implements Serializable {
     Map data = [:]
 
     def merge(Map d) {
-        static Map data = d
+        static data = d
     }
 }
