@@ -9,9 +9,9 @@
 
 // CI Config
 class Config implements Serializable {
-    Map args = [:]
+    static Map args = [:]
 
-    Map data = [:]
+    static Map data = [:]
 
     def merge(Map d) {
         static data = d
