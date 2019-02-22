@@ -9,8 +9,8 @@
 
 class ciConfig implements Serializable {
     // Local Settings
-    static Map config      = [:]
+    static Map config   = [:]
 
     // Job input parameters
-    static Map data  = [:]
+    static Map data     = [:]
 }

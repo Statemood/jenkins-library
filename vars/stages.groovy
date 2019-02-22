@@ -49,8 +49,8 @@ def preProcess(stage_id=1) {
 def git(stage_id=2) {
     node(STAGE_GIT) {
         stage("Stage $stage_id: Git Checkout") {
-            println ciConfig.data
             git = new Git()
+
             git.checkout(ciConfig.data['repo'], ciConfig.data['revision'])
         }
     }
