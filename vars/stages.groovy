@@ -20,7 +20,7 @@ def call(Map args = [:]){
 
     preProcess()
     git()
-    if (APP_LANG == "java") {
+    if (ciConfig.data['lang'] == "java") {
         compile(3)
         //sonar(4)
         test(4)
