@@ -14,6 +14,8 @@ def checkout(repo, revision) {
     check.var(revision)
 
     try {
+        log.info "Git checkout $revision ($repo)"
+        
         checkout([$class: 'GitSCM',
                 branches: [[name: revision]],
                 userRemoteConfigs: [[url: repo]]])

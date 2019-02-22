@@ -7,12 +7,19 @@
    ##################################################
 */
 
-import me.rulin.ci.Git 
+import me.rulin.ci.Git
+import me.rulin.ci.SonarQube
 
-def controller(){
+def call(Map args = [:]){
+
+    Config.args = args
+    Config.data = Config.data + Config.args
+
+    loadLocalSettings()
+
     preProcess()
     git()
-    if (APP_LANG == "java") {
+    if (Config.data['lang'] == "java") {
         compile(3)
         //sonar(4)
         test(4)
@@ -41,9 +48,9 @@ def preProcess(stage_id=1) {
 def git(stage_id=2) {
     node(STAGE_GIT) {
         stage("Stage $stage_id: Git Checkout") {
+            git = new Git()
 
-            scmGit = new Git()
-            scmGit.checkout(repo, SCM_REVISION)
+            git.checkout(Config.data['repo'], Config.data['revision'])
         }
     }
 }
@@ -51,7 +58,8 @@ def git(stage_id=2) {
 def sonar(stage_id=3) {
     node(STAGE_SONAR) {
         stage("Stage $stage_id: SonarQube Scanner") {
-            sonar.scanner()
+            sonar = new SonarQube()
+            sonar.scan()
         }
     }
 }
@@ -67,6 +75,7 @@ def compile(stage_id=4) {
 def test(stage_id=5) {
     node(STAGE_TEST) {
         stage("Stage $stage_id: Test") {
+            test_cmd = Config.data['test_cmd']
             if (test_cmd) {
                 log.info "Test by command: $test_cmd"
 
