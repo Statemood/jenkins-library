@@ -14,6 +14,7 @@ def call(Map args = [:]) {
     //Config.args   = args
     //Config.data   = Config.data + Config.args
 
+    println args
     Config.merge(args)
 
     println Config.data
