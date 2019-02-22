@@ -11,11 +11,10 @@ import me.rulin.ci.Git
 import me.rulin.ci.SonarQube
 
 def call(Map args = [:]) {
-    //Config.args   = args
+    Config.args   = args
     //Config.data   = Config.data + Config.args
 
-    println args
-    Config.merge(args)
+    Config.merge(Config.args)
 
     println Config.data
 
