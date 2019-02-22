@@ -11,5 +11,5 @@
 class CIC implements Serializable {
     static Map args = [:]
 
-    static Map data = [:]
+    public static Map data = [:]
 }
