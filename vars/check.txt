@@ -1,0 +1,8 @@
+<p>
+    <li>file</li>
+    <li>dir</li>
+    <li>exist</li>
+    <li>var</li>
+</p>
+
+<!-- vim: ft=html -->

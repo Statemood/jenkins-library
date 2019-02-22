@@ -13,11 +13,6 @@ import me.rulin.ci.SonarQube
 def call(Map args = [:]) {
     Config.data   = Config.data + args
 
-    Map u = ["user": "rulin"]
-    Config.mergeData(u)
-
-    println Config.data
-
     loadLocalSettings()
     preProcess()
     git()

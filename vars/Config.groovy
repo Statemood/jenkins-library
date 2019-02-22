@@ -12,10 +12,4 @@ class Config implements Serializable {
     static Map args = [:]
 
     static Map data = [:]
-
-    def mergeData(d) {
-        static Map s = d
-        println "print s"
-        println s
-    }
 }
