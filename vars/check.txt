@@ -1,8 +1,8 @@
 <p>
-    <li>file</li>
-    <li>dir</li>
-    <li>exist</li>
-    <li>var</li>
+    file
+    dir
+    exist
+    var
 </p>
 
 <!-- vim: ft=html -->
