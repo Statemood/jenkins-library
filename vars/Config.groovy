@@ -15,5 +15,6 @@ class Config implements Serializable {
 
     def call() {
         echo "hello"
+        
     }
 }
