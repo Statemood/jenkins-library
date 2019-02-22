@@ -75,7 +75,7 @@ def compile(stage_id=4) {
 def test(stage_id=5) {
     node(STAGE_TEST) {
         stage("Stage $stage_id: Test") {
-            test_cmd = Cconfig.data['test_cmd']
+            test_cmd = Config.data['test_cmd']
             if (test_cmd) {
                 log.info "Test by command: $test_cmd"
 

@@ -11,5 +11,6 @@
 class Config implements Serializable {
     static Map args = [:]
 
-    public static Map data = [:]
+    static Map data = [:]
+    
 }
