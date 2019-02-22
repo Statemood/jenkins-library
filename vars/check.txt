@@ -1,8 +1,0 @@
-<p>
-    file
-    dir
-    exist
-    var
-</p>
-
-<!-- vim: ft=html -->
