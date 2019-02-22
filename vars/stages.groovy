@@ -10,12 +10,12 @@
 import me.rulin.ci.Git
 import me.rulin.ci.SonarQube
 
-def call(Map args = [:]){
+def call(Map args = [:]) {
+    Config.args   = args
+    //Config.data   = Config.data + Config.args
 
-    Config.args = args
-    Config.data = Config.data + Config.args
+    Config.merge(Config.data, Config.args)
 
-    Config.setData("user", "rulin")
     println Config.data
     
     loadLocalSettings()
@@ -83,7 +83,6 @@ def test(stage_id=5) {
 
                 sh(test_cmd)
             }
-
             return
         }
     }
