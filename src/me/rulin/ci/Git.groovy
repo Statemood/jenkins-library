@@ -28,9 +28,7 @@ def checkout(repo, revision) {
 }
 
 def commitID(){
-    git_commit_id = sh(script: "git rev-parse HEAD", returnStdout: true).toString().trim()
-    
-    return git_commit_id
+    println "git rev-parse HEAD".execute().text
 }
 
 def commitIDShort(){
