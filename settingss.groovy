@@ -63,6 +63,10 @@ env.GOPATH          =  WORKSPACE
 env.MAVEN_CMD           = "mvn"
 env.MAVEN_ARGS          = "-U clean -Dmaven.test.skip=true package dependency:tree"
 
+//Gradle
+env.GRADLE_CMD          = "gradle"
+env.GRADLE_ARGS         = "clean build"
+
 // NodeJS
 env.NPM_REGISTRY        = "https://registry.npm.taobao.org/"
 env.NPM_INSTALL         = "npm -i " + NPM_REGISTRY
