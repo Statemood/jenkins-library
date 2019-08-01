@@ -8,6 +8,7 @@
 */
 
 import me.rulin.ci.Git
+import me.rulin.ci.lang
 import me.rulin.ci.SonarQubeScanner
 
 def call(Map args = [:]) {
@@ -53,7 +54,9 @@ def sonar(stage_id=3) {
 
 def compile(stage_id=4) {
     stage("Stage $stage_id: Build Code") {
-        build.controller()
+        java = new Java()
+
+        java.mavenBuild()
     }
 }
 
