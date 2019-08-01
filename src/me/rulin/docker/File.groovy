@@ -1,4 +1,4 @@
-/* Dockerfile.groovy
+/* File.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -6,6 +6,8 @@
    #  https://github.com/Statemood/jenkins-library  #
    ##################################################
 */
+
+package me.rulin.docker
 
 def dockerfileGenerate() {
     dockerfileCopyTemplate()

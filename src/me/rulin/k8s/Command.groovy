@@ -8,11 +8,13 @@
 */
 
 // Usage: 
-//      kubernetes.command("create", "deployment")
+//      k8s.command("create", "deployment")
+
+package me.rulin.k8s
 
 def command(String cmd, String target=null){
     if (!cmd in K8S_ALLOWED_COMMANDS) {
-        log.error "Command not allowed: " + cmd
+        log.err "Command not allowed: " + cmd
     }
 
     if (target != null) {
@@ -25,5 +27,3 @@ def command(String cmd, String target=null){
         sh(script: "kubectl $cmd -f ${target}.yaml", label: "Call kubectl for $cmd $target")
     }
 }
-
-return this

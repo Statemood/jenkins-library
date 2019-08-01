@@ -9,7 +9,7 @@
 
 package me.rulin.ci
 
-import me.rulin.ci.Git
+import  me.rulin.ci.Git
 
 def scan() {
     try {

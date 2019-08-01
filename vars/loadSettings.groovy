@@ -10,51 +10,49 @@
 def call(){
     local_data = readFromYaml()
 
-        if (SETTINGS) {
-            try {
-                if (fileExists(SETTINGS)) {
-                    log.info "Loading local settings"
+    if (SETTINGS) {
+        try {
+            if (fileExists(SETTINGS)) {
+                log.i "Loading local settings"
 
-                    load(SETTINGS)
-
-                    log.info "Local settings loaded"
-                }
-                else {
-                    log.warning "File not found: $SETTINGS"
-                }
+                load(SETTINGS)
             }
-            catch (e) {
-                throw e 
+            else {
+                log.w "File not found: " + SETTINGS
             }
         }
+        catch (e) {
+            throw e
+        }
+    }
 }
 
 def readFromYaml() {
-    private yf = 'ci.jenkins.yaml'
+    private yf = 'jenkins.yaml'
     if (fileExists(yf)) {
         try {
-            log.info "Read config from " + yf
+            log.i "Read config from " + yf
             yaml_data = readYaml file: yf
 
             return yaml_data
         }
         catch (e) {
-            return false
+            throw e
         }
     }
 }
 
 def readFromJson() {
-    private jf = 'ci.jenkins.json'
+    private jf = 'jenkins.json'
     if (fileExists(jf)) {
         try {
-            log.info "Read config from " + jf
+            log.i "Read config from " + jf
             json_data = readJSON file: jf
 
             return json_data
         }
         catch (e) {
-            return false
+            throw e
         }
     }
 }

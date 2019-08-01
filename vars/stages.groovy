@@ -11,9 +11,9 @@ import me.rulin.ci.Git
 import me.rulin.ci.SonarQube
 
 def call(Map args = [:]) {
-    Config.data   = Config.data + args
+    Config.data  += args
 
-    loadLocalSettings()
+    loadSettings()
     preProcess()
     git()
     if (Config.data['lang'] == "java") {

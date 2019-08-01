@@ -14,7 +14,7 @@ def checkout(repo, revision) {
     check.var(revision)
 
     try {
-        log.info "Git checkout $revision ($repo)"
+        log.i "Git checkout $revision ($repo)"
         
         checkout([$class: 'GitSCM',
                 branches: [[name: revision]],
@@ -22,7 +22,7 @@ def checkout(repo, revision) {
 
         return
     } catch (e) {
-        log.error "Ops! Error occurred during git checkout"
+        log.e "Ops! Error occurred during git checkout"
         throw e
     }
 }

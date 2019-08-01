@@ -1,4 +1,4 @@
-/* Docker.groovy
+/* Image.groovy
    ##################################################
    # Created by Lin Ru at 2019.02.17 22:55          #
    #                                                #
@@ -7,7 +7,7 @@
    ##################################################
 */
 
-package me.rulin.ci
+package me.rulin.docker
 
 private String cmd(String c){
     if(c) {
