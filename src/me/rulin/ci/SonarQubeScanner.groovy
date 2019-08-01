@@ -27,7 +27,8 @@ def scan() {
                 ssc_s = "-Dsonar.sources=."
                 ssc_b = "-Dsonar.java.binaries=."
 
-            sh(SONAR_BIN ssc_u ssc_p ssc_k ssc_n ssc_v ssc_d ssc_l ssc_s ssc_b)
+            sonar_opts = ssc_u + ssc_p + ssc_k + ssc_n + ssc_v + ssc_d + ssc_l + ssc_s + ssc_b
+            sh("$SONAR_BIN $sonar_opts")
         }
     }
     catch (e) {
