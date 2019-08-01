@@ -24,10 +24,13 @@ def controller() {
 
                 case "java":
                     log.info "Preparing Java build"
-                    check.file("pom.xml")
+                    if (fileExists('build.gradle')) {
+                       m_cmd = "$GRADLE_CMD $GRADLE_ARGS"
+                    } else {
+                       m_cmd = "$MAVEN_CMD $MAVEN_ARGS"
+                    }
 
                     try {
-                        m_cmd = "$MAVEN_CMD $MAVEN_ARGS"
                         log.info "Build command: $m_cmd"
                         sh(m_cmd)
 
