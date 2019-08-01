@@ -14,7 +14,7 @@ def initBuild(String b_file){
 
     private  bc = Config.data['build_command']
     private  bo = Config.data['build_options']
-    private cmd = bc + bo
+    private cmd = bc + " " + bo
 
     try {
         if (fileExists(b_file)){
