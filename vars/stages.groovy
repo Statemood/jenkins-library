@@ -18,11 +18,11 @@ def call(Map args = [:]) {
     gitClone()
     if (Config.data['lang'] == "java") {
         compile(3)
-        test(4)
+        testJunit(4)
     }
     else {
         compile()
-        test()
+        testJunit()
     }
 }
 
