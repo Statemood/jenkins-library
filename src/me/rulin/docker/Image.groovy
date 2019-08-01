@@ -1,42 +1,60 @@
 /* Image.groovy
    ##################################################
-   # Created by Lin Ru at 2018.10.01 22:00          #
+   # Created by Lin Ru at 2019.02.17 22:55          #
    #                                                #
    # A Part of the Project jenkins-library          #
    #  https://github.com/Statemood/jenkins-library  #
    ##################################################
 */
 
-// Docker image Build & Push
-
 package me.rulin.docker
 
-private def build(image) {
+private String cmd(String c){
+    if(c) {
+        try {
+            sh("sudo docker $c")
+        }
+        catch (e) {
+            throw e
+        }
+    }
+    else {
+        error "No docker cmd input"
+    }
+}
+
+private build(String build_args) {
     check.file('Dockerfile')
 
     try {
         log.info "Build image: " + image
 
-        timeout(time: DOCKER_IMAGE_BP_TIMEOUT, unit: 'SECONDS') {
-            sh("sudo docker build $DOCKER_IMAGE_BUILD_OPTIONS -t $image .")
+        timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
+            cmd("build $DOCKER_IMAGE_BUILD_OPTIONS -t $image .")
         }
     }
     catch (e) {
         println "Error occurred during build image"
-        error e
+        throw e
     }
 }
 
-def push(image) {
-    try {
-        log.info "Push image " + image
+def version(){
+    cmd("version")
+}
 
-        timeout(time: DOCKER_IMAGE_BP_TIMEOUT, unit: 'SECONDS') {
-            sh("sudo docker push $image")
-        }
-    }
-    catch (e) {
-        println "Error occurred during push image"
-        error e
-    }
+def images(){
+    cmd("images")
+}
+
+def push(){
+    cmd("push ")
+}
+
+def login(){
+    cmd("login")
+}
+
+def logout(){
+    cmd("logout")
 }

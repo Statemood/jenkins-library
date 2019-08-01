@@ -1,4 +1,4 @@
-/* controller.groovy
+/* kubernetes.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -7,23 +7,5 @@
    ##################################################
 */
 
-/*
-import me.rulin.jenkins.Build
-import me.rulin.jenkins.Git
+package me.rulin.cc
 
-import me.rulin.docker.Dockerfile
-import me.rulin.docker.Registry
-import me.rulin.docker.Image
-
-import me.rulin.kubernetes.kubernetes
-
-import me.rulin.file.OSS
-*/
-
-import me.rulin.jenkins.Hello.*
-
-def testHello(t){
-    helloWorld(t)
-}
-
-return this

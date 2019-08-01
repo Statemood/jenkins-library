@@ -7,12 +7,10 @@
    ##################################################
 */
 
-package me.rulin.jenkins
-
-def build() {
+def controller() {
     dir(BUILD_DIR) {
         try {
-            switch (PROJECT_LANG.toLowerCase()) {
+            switch (Config.data['lang'].toLowerCase()) {
                 case "php":
                     if (fileExists('composer.lock') || fileExists('composer.json')) {
                         log.info "Build PHP project with '$PHP_COMPOSER_CMD'"
@@ -21,13 +19,32 @@ def build() {
                     } else {
                         log.notice "Skip build for the general PHP project"
                     }
-                
-                case "nodejs":
-                    if (fileExists('package.json')) {
-                        log.info "Build NodeJS project with '$NPM_I'"
 
-                        sh(NPM_I)
+                    return
+
+                case "java":
+                    log.info "Preparing Java build"
+                    if (fileExists('build.gradle')) {
+                       m_cmd = "$GRADLE_CMD $GRADLE_ARGS"
+                    } else {
+                       m_cmd = "$MAVEN_CMD $MAVEN_ARGS"
                     }
+
+                    try {
+                        log.info "Build command: $m_cmd"
+                        sh(m_cmd)
+
+                        return
+                    }
+                    catch (e) {
+                        throw e
+                    }
+
+                case "nodejs":
+                    check.file('package.json')
+                    log.info "Build NodeJS project with '$NPM_I'"
+
+                    sh(NPM_I)
             }
 
             if (BUILD_COMMAND) {

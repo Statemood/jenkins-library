@@ -7,40 +7,68 @@
    ##################################################
 */
 
-def preProcess() {
-    node(STAGE_PRE_PROCESS) {
+import me.rulin.ci.Git
+import me.rulin.ci.lang.Java
+import me.rulin.ci.SonarQubeScanner
+
+def call(Map args = [:]) {
+    Config.data  += args
+
+    loadSettings()
+    preProcess()
+    gitClone()
+    if (Config.data['lang'] == "java") {
+        compile(3)
+        testJunit(4)
+    }
+    else {
+        compile()
+        testJunit()
+    }
+}
+
+def preProcess(stage_id=1) {
+    stage("Stage $stage_id: Pre-Process") {
         // Set default info
-
         // Set build info
-
         // Check parameters
+
+        log.i "Stage Pre-Process OK"
     }
 }
 
-def git(){
-    node(STAGE_GIT) {
-        checkoutCode()
+def gitClone(stage_id=2) {
+    stage("Stage $stage_id: Git Clone") {
+        gitco = new Git()
+
+        gitco.checkout(Config.data['repo'], Config.data['revision'])
     }
 }
 
-def docker(){
-    node(STAGE_DOCKER) {
-
+def sonar(stage_id=3) {
+    stage("Stage $stage_id: SonarQube Scanner") {
+        sonar = new SonarQubeScanner()
+        sonar.scan()
     }
 }
 
-    node(STAGE_KUBERNETES) {
+def compile(stage_id=4) {
+    stage("Stage $stage_id: Build Code") {
+        java = new Java()
 
+        java.mavenBuild()
     }
+}
 
-    node(STAGE_POST_PROCESS) {
+def testJunit(stage_id=5) {
+    private tcj = Config.data['test_cmd_junit']
+    if (tcj) {
+        stage("Stage $stage_id: Junit Test") {
+            log.i "Test by command: " + tcj
 
+            sh(tcj)
+        }
     }
 }
 
-def stageBuild() {
-    node(STAGE_BUILD) {
-
-    }
-}
 return this

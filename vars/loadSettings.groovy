@@ -1,0 +1,65 @@
+/* loadLocalSettings.groovy
+   ##################################################
+   # Created by Lin Ru at 2018.10.01 22:00          #
+   #                                                #
+   # A Part of the Project jenkins-library          #
+   #  https://github.com/Statemood/jenkins-library  #
+   ##################################################
+*/
+
+def call(){
+    local_data = readFromYaml()
+
+    if (SETTINGS) {
+        try {
+            if (fileExists(SETTINGS)) {
+                log.i "Loading local settings"
+
+                load(SETTINGS)
+            }
+            else {
+                log.w "File not found: " + SETTINGS
+            }
+        }
+        catch (e) {
+            throw e
+        }
+    }
+
+    log.i "Load Parameters"
+    parameters()
+}
+
+def readFromYaml() {
+    private yf = 'jenkins.yaml'
+    if (fileExists(yf)) {
+        try {
+            log.i "Read config from " + yf
+            yaml_data = readYaml file: yf
+
+            return yaml_data
+        }
+        catch (e) {
+            throw e
+        }
+    }
+}
+
+def readFromJson() {
+    private jf = 'jenkins.json'
+    if (fileExists(jf)) {
+        try {
+            log.i "Read config from " + jf
+            json_data = readJSON file: jf
+
+            return json_data
+        }
+        catch (e) {
+            throw e
+        }
+    }
+}
+
+def parameters(){
+    if (GIT_REVISION) { Config.data['revision'] = GIT_REVISION }
+}

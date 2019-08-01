@@ -1,4 +1,4 @@
-/* kubernetes.groovy
+/* Config.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -7,22 +7,9 @@
    ##################################################
 */
 
-package me.rulin.kubernetes
+// CI Config
+class Config implements Serializable {
+    static Map args = [:]
 
-class Command implements Serializable {
-    def apply() {
-        
-    }
-
-    def create() {
-
-    }
-
-    def delete() {
-
-    }
-
-    def search() {
-        
-    }
+    static Map data = [:]
 }

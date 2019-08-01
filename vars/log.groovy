@@ -7,6 +7,14 @@
    ##################################################
 */
 
+def i(String msg) { info(msg)   }
+
+def n(String msg) { notice(msg) } 
+
+def w(String msg) { warning(msg)}
+
+def e(String msg) { echo "$msg" }
+
 def info(String msg) {
     echo "INFO: $msg"
 }
@@ -19,8 +27,8 @@ def warning(String msg) {
     echo "WARNING: $msg"
 }
 
-def error(String msg) {
-    echo "ERROR: $msg"
+def err(String msg) {
+    error " $msg"
 }
 
 return this

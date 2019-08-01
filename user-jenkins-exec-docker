@@ -1,0 +1,9 @@
+# Save me to /etc/sudoers.d/user-jenkins-exec-docker
+# Path:         /etc/sudoers.d/user-jenkins-exec-docker
+# Owner:        root
+# Permission:   400
+
+# Set Alias
+Cmnd_Alias  DOCKER  = /usr/bin/docker 
+
+jenkins     ALL=(ALL) NOPASSWD: DOCKER 
