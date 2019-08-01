@@ -58,12 +58,12 @@ def compile(stage_id=4) {
 }
 
 def test(stage_id=5) {
-    stage("Stage $stage_id: Test") {
-        test_cmd = Config.data['test_cmd']
-        if (test_cmd) {
-            log.i "Test by command: $test_cmd"
+    stage("Stage $stage_id: Junit Test") {
+        test_cmd = Config.data['test_junit_cmd']
+        if (test_junit_cmd) {
+            log.i "Test by command: " + test_junit_cmd
 
-            sh(test_cmd)
+            sh(test_junit_cmd)
         }
         return
     }

@@ -25,6 +25,9 @@ def call(){
             throw e
         }
     }
+
+    log.i "Load Parameters"
+    parameters()
 }
 
 def readFromYaml() {
@@ -55,4 +58,8 @@ def readFromJson() {
             throw e
         }
     }
+}
+
+def parameters(){
+    if (GIT_REVISION) { Config.data['revision'] = GIT_REVISION }
 }
