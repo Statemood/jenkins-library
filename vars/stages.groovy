@@ -8,7 +8,7 @@
 */
 
 import me.rulin.ci.Git
-import me.rulin.ci.lang
+import me.rulin.ci.lang.Java
 import me.rulin.ci.SonarQubeScanner
 
 def call(Map args = [:]) {
