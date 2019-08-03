@@ -13,7 +13,6 @@ import  me.rulin.ci.lang.Language
 
 def mavenBuild(){
     mb = new Language()
-
     mb.executor('pom.xml')
 }
 

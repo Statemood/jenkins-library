@@ -9,7 +9,9 @@
 
 package me.rulin.ci.lang
 
+import  me.rulin.ci.lang.Language
+
 def npmBuild(){
-    check.file('package.json')
-    log.i ""
+    mb = new Language()
+    mb.executor('package.json')
 }
