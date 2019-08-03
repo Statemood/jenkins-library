@@ -10,8 +10,8 @@
 package me.rulin.ci
 
 def clone(repo, revision) {
-    check.var(repo)
-    check.var(revision)
+    if (!repo)      { log.err "Require git repo"        }
+    if (!revision)  { log.err "Require git revision"    }
 
     try {
         log.i "Git clone $revision ($repo)"
