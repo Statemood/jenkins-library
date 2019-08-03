@@ -12,6 +12,6 @@ package me.rulin.ci.lang
 import  me.rulin.ci.lang.Language
 
 def npmBuild(){
-    mb = new Language()
+    private mb = new Language()
     mb.executor('package.json')
 }
