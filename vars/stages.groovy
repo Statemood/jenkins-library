@@ -34,8 +34,7 @@ def preProcess(stage_id=1) {
 def gitClone(stage_id=2) {
     stage("Stage $stage_id: Git Clone") {
         gitco = new Git()
-
-        gitco.checkout(Config.data['app.repo'], Config.data['app.repo.revision'])
+        gitco.clone(Config.data['app.repo'], Config.data['app.repo.revision'])
     }
 }
 
