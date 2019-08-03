@@ -42,25 +42,31 @@ def seletor(String tl){
             switch(Config.data['app.build.command']) {
                 case "ant":
                     compile.build()
+                    return
 
                 case "gradle":
                     compile.build('build.gradle')
+                    return
 
                 case "mvn":
                     compile.build('pom.xml')
-                
+                    return
+
                 break
             }
         
         case "python":
             compile.build()
+            return
 
         case "golang":
             compile.build()
+            return
 
         case "nodejs":
             compile.build('package.json')
-
+            return
+            
         break
     }
 }
