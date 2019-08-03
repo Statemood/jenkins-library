@@ -8,8 +8,8 @@
 */
 
 import me.rulin.ci.Git
-import me.rulin.ci.lang.Java
-import me.rulin.ci.SonarQubeScanner
+import me.rulin.ci.Language
+import me.rulin.ci.SonarQube
 
 def call(Map args = [:]) {
     Config.data  += args
@@ -17,14 +17,8 @@ def call(Map args = [:]) {
     loadSettings()
     preProcess()
     gitClone()
-    if (Config.data['lang'] == "java") {
-        compile(3)
-        testJunit(4)
-    }
-    else {
-        compile()
-        testJunit()
-    }
+    compile()
+    testJunit()
 }
 
 def preProcess(stage_id=1) {
@@ -40,28 +34,26 @@ def preProcess(stage_id=1) {
 def gitClone(stage_id=2) {
     stage("Stage $stage_id: Git Clone") {
         gitco = new Git()
-
-        gitco.checkout(Config.data['repo'], Config.data['revision'])
+        gitco.clone(Config.data['app.repo'], Config.data['app.repo.revision'])
     }
 }
 
 def sonar(stage_id=3) {
     stage("Stage $stage_id: SonarQube Scanner") {
-        sonar = new SonarQubeScanner()
-        sonar.scan()
+        sonar = new SonarQube()
+        sonar.scanner()
     }
 }
 
 def compile(stage_id=4) {
     stage("Stage $stage_id: Build Code") {
-        java = new Java()
-
-        java.mavenBuild()
+        language = new Language()
+        language.seletor(Config.data['app.lang'])
     }
 }
 
 def testJunit(stage_id=5) {
-    private tcj = Config.data['test_cmd_junit']
+    private tcj = Config.data['app.build.command.test.junit']
     if (tcj) {
         stage("Stage $stage_id: Junit Test") {
             log.i "Test by command: " + tcj
