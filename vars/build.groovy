@@ -22,24 +22,6 @@ def controller() {
 
                     return
 
-                case "java":
-                    log.info "Preparing Java build"
-                    if (fileExists('build.gradle')) {
-                       m_cmd = "$GRADLE_CMD $GRADLE_ARGS"
-                    } else {
-                       m_cmd = "$MAVEN_CMD $MAVEN_ARGS"
-                    }
-
-                    try {
-                        log.info "Build command: $m_cmd"
-                        sh(m_cmd)
-
-                        return
-                    }
-                    catch (e) {
-                        throw e
-                    }
-
                 case "nodejs":
                     check.file('package.json')
                     log.info "Build NodeJS project with '$NPM_I'"

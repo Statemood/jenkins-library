@@ -9,3 +9,7 @@
 
 package me.rulin.ci.lang
 
+def npmBuild(){
+    check.file('package.json')
+    log.i ""
+}
