@@ -9,12 +9,12 @@
 
 package me.rulin.ci
 
-def checkout(repo, revision) {
+def clone(repo, revision) {
     check.var(repo)
     check.var(revision)
 
     try {
-        log.i "Git checkout $revision ($repo)"
+        log.i "Git clone $revision ($repo)"
         
         checkout([$class: 'GitSCM',
                 branches: [[name: revision]],
