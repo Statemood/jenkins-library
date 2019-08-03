@@ -35,7 +35,7 @@ def gitClone(stage_id=2) {
     stage("Stage $stage_id: Git Clone") {
         gitco = new Git()
 
-        gitco.checkout(Config.data['repo'], Config.data['revision'])
+        gitco.checkout(Config.data['app.repo'], Config.data['app.repo.revision'])
     }
 }
 
@@ -54,7 +54,7 @@ def compile(stage_id=4) {
 }
 
 def testJunit(stage_id=5) {
-    private tcj = Config.data['app.test.cmd.junit']
+    private tcj = Config.data['app.build.command.test.junit']
     if (tcj) {
         stage("Stage $stage_id: Junit Test") {
             log.i "Test by command: " + tcj

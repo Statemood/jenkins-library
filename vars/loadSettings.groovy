@@ -25,7 +25,9 @@ def call(){
             throw e
         }
     }
-
+    log.i "Load defaults"
+    defaults()
+    
     log.i "Load Parameters"
     parameters()
 }
@@ -60,6 +62,10 @@ def readFromJson() {
     }
 }
 
+def defaults(){
+    Config.data['app.build.command.test.junit']     = "mvn test"
+}
+
 def parameters(){
-    if (GIT_REVISION) { Config.data['revision'] = GIT_REVISION }
+    if (GIT_REVISION) { Config.data['app.repo.revision'] = GIT_REVISION }
 }
