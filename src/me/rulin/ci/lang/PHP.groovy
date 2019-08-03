@@ -9,3 +9,9 @@
 
 package me.rulin.ci.lang
 
+import  me.rulin.ci.lang.Language
+
+def composer(){
+    private pb = new Language()
+    pb.executor('composer.json')
+}

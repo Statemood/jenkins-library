@@ -12,12 +12,12 @@ package me.rulin.ci.lang
 import  me.rulin.ci.lang.Language
 
 def mavenBuild(){
-    mb = new Language()
+    private mb = new Language()
     mb.executor('pom.xml')
 }
 
 def gradleBuild(){
-    gb = new Language()
+    private gb = new Language()
     gb.executor('build.gradle')
 }
 
