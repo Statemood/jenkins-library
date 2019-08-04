@@ -11,16 +11,6 @@ import me.rulin.ci.Git
 import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
 
-def call(Map args = [:]) {
-    Config.data  += args
-
-    loadSettings()
-    preProcess()
-    gitClone()
-    compile()
-    testJunit()
-}
-
 def preProcess(stage_id=1) {
     stage("Stage $stage_id: Pre-Process") {
         // Set default info
