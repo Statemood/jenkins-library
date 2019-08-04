@@ -56,8 +56,8 @@ env.BUILD_COMMAND       = ""
 env.BUILD_LEGACY        = false
 
 // Golang
-env.GOROOT          = "/usr/lib/go"
-env.GOPATH          =  WORKSPACE
+env.GOROOT              = "/usr/lib/go"
+env.GOPATH              =  WORKSPACE
 
 // Maven
 env.MAVEN_CMD           = "mvn"
@@ -71,13 +71,6 @@ env.GRADLE_ARGS         = "clean build"
 env.NPM_REGISTRY        = "https://registry.npm.taobao.org/"
 env.NPM_INSTALL         = "npm -i " + NPM_REGISTRY
 env.NPM_I               =  NPM_INSTALL
-
-// PHP (Composer)
-env.PHP_COMPOSER_CMD    = "composer install"
-
-// OSS
-env.OSS_ENDPOINT        = ""
-env.OSS_OPTIONS         = "-rf"
 
 ///////////////////////////////////////////////////////
 // Docker                                            //

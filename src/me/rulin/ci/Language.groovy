@@ -8,63 +8,43 @@
 */
 
 package me.rulin.ci
-import  me.rulin.ci.Language
-
-def build(String b_file=null){
-    log.i "Preparing to build " + Config.data['app.lang'] + " project"
-
-    private  bc = Config.data['app.build.command']
-    private  bo = Config.data['app.build.options']
-    private cmd = bc + " " + bo
-
-    try {
-        if (b_file){
-            check.file(b_file)
-
-            log.i "Build with command: " + bc + ", options: " + bo
-            sh(cmd)
-        }
-    }
-    catch (e) {
-        throw e
-    }
-}
+import  me.rulin.ci.Build
 
 def seletor(String tl){
     // tl, target language
-    private compile = new Language()
+    private b = new Build()
 
     switch(tl){
         case "php":
-            compile.build('composer.json')
+            b.build('composer.json')
         
         case "java":
             switch(Config.data['app.build.command']) {
                 case "ant":
-                    compile.build()
+                    b.build()
                     return
 
                 case "gradle":
-                    compile.build('build.gradle')
+                    b.build('build.gradle')
                     return
 
                 case "mvn":
-                    compile.build('pom.xml')
+                    b.build('pom.xml')
                     return
 
                 break
             }
         
         case "python":
-            compile.build()
+            b.build()
             return
 
         case "golang":
-            compile.build()
+            b.build()
             return
 
         case "nodejs":
-            compile.build('package.json')
+            b.build('package.json')
             return
             
         break

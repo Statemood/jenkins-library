@@ -10,6 +10,7 @@
 package me.rulin.docker
 
 private String cmd(String c){
+    allowed_cmds = ['build', 'push', 'pull', 'images', 'login', 'logout']
     if(c) {
         try {
             sh("sudo docker $c")
