@@ -9,9 +9,9 @@
 
 def call(Map args = [:]) {
 
-    args.containsKey('repo')        ?: null
-    args.containsKey('revision')    ?: null
-    args.containsKey('lang')        ?: "java"
+    Config.data['repo']         = args.containsKey('repo')        ?: null
+    Config.data['revision']     = args.containsKey('revision')    ?: null
+    Config.data['lang']         = args.containsKey('lang')        ?: "java"
 
     Config.data += args 
 
