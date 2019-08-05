@@ -43,7 +43,7 @@ def compile(stage_id=4) {
 }
 
 def testJunit(stage_id=5) {
-    private tcj = Config.data['app_build_command_test_junit']
+    private tcj = Config.data['build_command_test_junit']
     if (tcj) {
         stage("Stage $stage_id: Junit Test") {
             log.i "Test by command: " + tcj

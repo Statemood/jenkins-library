@@ -10,10 +10,10 @@
 package me.rulin.ci
 
 def build(String b_file=null){
-    log.i "Preparing to build " + Config.data['app.lang'] + " project"
+    log.i "Preparing to build " + Config.data['lang'] + " project"
 
-    private  bc = Config.data['app.build.command']
-    private  bo = Config.data['app.build.options']
+    private  bc = Config.data['build.command']
+    private  bo = Config.data['build.options']
     private cmd = bc + " " + bo
 
     try {

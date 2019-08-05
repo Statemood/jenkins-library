@@ -19,7 +19,7 @@ def seletor(String tl){
             b.build('composer.json')
         
         case "java":
-            switch(Config.data['app.build.command']) {
+            switch(Config.data['build_command']) {
                 case "ant":
                     b.build()
                     return
