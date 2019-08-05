@@ -15,6 +15,9 @@ def call(Map args = [:]) {
 
     Config.data += args 
 
+    println Config.data 
+    println args 
+
     stages.loadSettings()
     stages.preProcess()
     stages.gitClone()
