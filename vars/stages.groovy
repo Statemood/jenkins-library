@@ -24,7 +24,7 @@ def preProcess(stage_id=1) {
 def gitClone(stage_id=2) {
     stage("Stage $stage_id: Git Clone") {
         gitco = new Git()
-        gitco.clone(Config.data['app.repo'], Config.data['app.repo.revision'])
+        gitco.clone(Config.data['repo'], Config.data['revision'])
     }
 }
 
@@ -38,12 +38,12 @@ def sonar(stage_id=3) {
 def compile(stage_id=4) {
     stage("Stage $stage_id: Build Code") {
         language = new Language()
-        language.seletor(Config.data['app.lang'])
+        language.seletor(Config.data['lang'])
     }
 }
 
 def testJunit(stage_id=5) {
-    private tcj = Config.data['app.build.command.test.junit']
+    private tcj = Config.data['app_build_command_test_junit']
     if (tcj) {
         stage("Stage $stage_id: Junit Test") {
             log.i "Test by command: " + tcj

@@ -8,7 +8,12 @@
 */
 
 def call(Map args = [:]) {
-    Config.data  += args
+
+    args.containsKey('repo')        ? args.repo: null
+    args.containsKey('revision')    ? args.revision: null
+    args.containsKey('lang')        ? args.lang: "java"
+
+    Config.data += args 
 
     stages.loadSettings()
     stages.preProcess()
