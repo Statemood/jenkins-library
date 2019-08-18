@@ -8,11 +8,10 @@ pipeline {
             steps {
                 script {
                     log.i "Acquire config data"
-                    node {
-                        set(["repo": 'https://github.com/Statemood/simple-java-maven-app.git',                       "lang": "java",
-                             "build_command": "mvn",
-                             "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])   
-                    }
+                    
+                    set(["repo": 'https://github.com/Statemood/simple-java-maven-app.git',                       "lang": "java",
+                         "build_command": "mvn",
+                         "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])   
                 }
             }
         }
