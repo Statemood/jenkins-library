@@ -10,6 +10,7 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
+    
     parameters {
         gitParameter(
             branch: '', branchFilter: 'origin/(.*)', defaultValue: '', listSize: '10', 
