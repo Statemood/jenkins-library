@@ -3,17 +3,18 @@
 pipeline {
     agent any
 
-    stage ("Initial Pipeline") {
-        steps{
-            script {
-                echo "Start Library"
-                    
-
-                println "hi"
-                node {
-                    set(["repo": 'https://github.com/Statemood/simple-java-maven-app.git',                         "lang": "java",
-                    "build_command": "mvn",
-                    "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
+    stages {
+        stage ("Initial Pipeline") {
+            steps {
+                script {
+                    echo "Start Library"
+                        
+                    println "hi"
+                    node {
+                        set(["repo": 'https://github.com/Statemood/simple-java-maven-app.git',                         "lang": "java",
+                        "build_command": "mvn",
+                        "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
+                    }
                 }
             }
         }
