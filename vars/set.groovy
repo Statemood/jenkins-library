@@ -18,11 +18,11 @@ def call(Map args = [:]) {
     println Config.data 
     println args 
 
-    stages.loadSettings()
-    stages.preProcess()
-    stages.gitClone()
-    stages.compile()
-    stages.testJunit()
+    stagesController.loadSettings()
+    stagesController.preProcess()
+    stagesController.gitClone()
+    stagesController.compile()
+    stagesController.testJunit()
 }
  
 return this

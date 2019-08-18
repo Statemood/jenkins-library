@@ -9,11 +9,11 @@
 
 package me.rulin.docker
 
-def dockerfileGenerate() {
+def dockerfileGenerate(String f='Dockerfile') {
     dockerfileCopyTemplate()
 
     // Test Dockerfile exist
-    check.file('Dockerfile')
+    check.file(f)
 }
 
 def dockerfileCopyTemplate(list) {
