@@ -21,12 +21,29 @@ pipeline {
     }
 
     post {
+        aborted {
+            echo "Post Action: aborted"
+        }
+
         always {
-            echo "Post Always action"
+            echo "Post Action: always"
+        }
+
+        changed {
+            echo "Post Action: changed"
         }
 
         failure {
-            echo "Post failure action"
+            currentBuild.result = "FAILED"
+            echo "Post Action: failure"  
         }
+
+        success {
+            echo "Post Action: success"
+        }
+
+        unstable {
+            echo "Post Action: unstable"
+        }  
     }
 }
