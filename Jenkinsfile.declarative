@@ -2,13 +2,16 @@ pipeline {
     agent any
 
     stages {
-        @Library('github.com/Statemood/jenkins-library@dev') _
+        stage{
+            @Library('github.com/Statemood/jenkins-library@dev') _
 
-        node {
-            set(["repo": 'https://github.com/Statemood/simple-java-maven-app.git', 
-                "lang": "java",
-                "build_command": "mvn",
-                "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
+            println "hi"
+            node {
+                set(["repo": 'https://github.com/Statemood/simple-java-maven-app.git', 
+                    "lang": "java",
+                    "build_command": "mvn",
+                    "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
+            }
         }
     }
 }
