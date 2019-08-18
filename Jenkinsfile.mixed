@@ -34,8 +34,10 @@ pipeline {
         }
 
         failure {
-            currentBuild.result = "FAILED"
-            echo "Post Action: failure"  
+            steps {
+                currentBuild.result = "FAILED"
+                echo "Post Action: failure"  
+            }
         }
 
         success {
