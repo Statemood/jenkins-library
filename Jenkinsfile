@@ -10,10 +10,10 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
-    
+
     parameters {
         gitParameter(
-            branch: '', branchFilter: 'origin/(.*)', defaultValue: '', listSize: '10', 
+            branch: '', branchFilter: 'origin/(.*)', defaultValue: 'master', listSize: '10', 
             name: 'GIT_REVISION', quickFilterEnabled: true, selectedValue: 'NONE', 
             sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_BRANCH_TAG', 
             description: 'Please select a branch or tag to build',
