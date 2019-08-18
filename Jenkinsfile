@@ -1,9 +1,11 @@
 @Library('github.com/Statemood/jenkins-library@dev') _
 
+def repo = 'https://github.com/Statemood/simple-java-maven-app.git'
+
 pipeline {
     agent any
 
-    def repo = 'https://github.com/Statemood/simple-java-maven-app.git'
+    
 
     options {
         timestamps()
