@@ -40,7 +40,11 @@ pipeline {
 
         success {
             echo "Post Action: success"
-            log.i "Success"
+            steps {
+                script {
+                    log.i "Success"
+                }
+            }
         }
 
         unstable {
