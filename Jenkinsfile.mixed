@@ -7,9 +7,7 @@ pipeline {
         stage ("Initial Pipeline") {
             steps {
                 script {
-                    echo "Start Library"
-                        
-                    println "hi"
+                    log.i "Acquire config data"
                     node {
                         set(["repo": 'https://github.com/Statemood/simple-java-maven-app.git',                       "lang": "java",
                              "build_command": "mvn",
@@ -22,31 +20,42 @@ pipeline {
 
     post {
         aborted {
-            echo "Post Action: aborted"
+            script {
+                log.i "Post Action: aborted"
+            }
         }
 
         always {
-            echo "Post Action: always"
+            script {
+                log.i "Post Action: always"
+            }
         }
 
         changed {
-            echo "Post Action: changed"
+            sctipt {
+                log.i "Post Action: changed"
+            }
         }
 
         failure {
-            //currentBuild.result = "FAILED"
-            echo "Post Action: failure"  
+            script {
+                currentBuild.result = "FAILURE"
+                log.i "Post Action: failure"  
+
+                // Send mail
+            }
         }
 
         success {
-            echo "Post Action: success"
             script {
-                log.i "Success"
+                log.i "Post Action: success"
             }
         }
 
         unstable {
-            echo "Post Action: unstable"
+            script {
+                log.i "Post Action: unstable"
+            }
         }  
     }
 }
