@@ -4,7 +4,7 @@ pipeline {
     agent any
 
     environment {
-        repo = 'https://github.com/Statemood/simple-java-maven-app.git'
+        REPO = 'https://github.com/Statemood/simple-java-maven-app.git'
     }
 
     options {
@@ -18,7 +18,7 @@ pipeline {
             name: 'GIT_REVISION', quickFilterEnabled: true, selectedValue: 'NONE', 
             sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_BRANCH_TAG', 
             description: 'Please select a branch or tag to build',
-            useRepository: repo)
+            useRepository: REPO)
     }
 
     stages {
@@ -27,7 +27,7 @@ pipeline {
                 script {
                     log.i "Acquire config data"
                     
-                    set(["repo": repo,                       
+                    set(["repo": REPO,                       
                          "lang": "java",
                          "build_command": "mvn",
                          "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])   
