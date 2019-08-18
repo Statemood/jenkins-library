@@ -10,7 +10,7 @@
 package me.rulin.ci
 
 def clone(repo, revision) {
-    if (!repo)      { log.err "Require git repo"        }
+    if (!repo)      { log.err "Require git repository"  }
     if (!revision)  { log.err "Require git revision"    }
 
     try {
