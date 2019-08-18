@@ -9,11 +9,11 @@
 
 package me.rulin.docker
 
-def dockerfileGenerate() {
+def dockerfileGenerate(String f='Dockerfile') {
     dockerfileCopyTemplate()
 
     // Test Dockerfile exist
-    check.file('Dockerfile')
+    check.file(f)
 }
 
 def dockerfileCopyTemplate(list) {
@@ -53,33 +53,11 @@ def dockerfileCopyTemplate(list) {
 }
 
 def imageBuild(image) {
-    check.file('Dockerfile')
 
-    try {
-        log.info "Build image: " + image
-
-        timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
-            sh("sudo docker build $DOCKER_IMAGE_BUILD_OPTIONS -t $image .")
-        }
-    }
-    catch (e) {
-        println "Error occurred during build image"
-        throw e
-    }
 }
 
 def imagePush(image) {
-    try {
-        log.info "Push image " + image
 
-        timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
-            sh("sudo docker push $image")
-        }
-    }
-    catch (e) {
-        println "Error occurred during push image"
-        throw e
-    }
 }
 
 def registryLogin(){

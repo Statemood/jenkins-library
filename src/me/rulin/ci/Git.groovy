@@ -10,8 +10,8 @@
 package me.rulin.ci
 
 def clone(repo, revision) {
-    check.var(repo)
-    check.var(revision)
+    if (!repo)      { log.err "Require git repo"        }
+    if (!revision)  { log.err "Require git revision"    }
 
     try {
         log.i "Git clone $revision ($repo)"
@@ -31,10 +31,11 @@ def commitID(){
     println "git rev-parse HEAD".execute().text
 }
 
-def commitIDShort(){
-    git_commit_id_short = commitID()[0..GIT_COMMIT_ID_DISPLAY_LEN]
+def commitIDShort(int len=GIT_COMMIT_ID_DISPLAY_LEN){
+    //git_commit_id_short = commitID()[0..len]
 
-    return git_commit_id_short
+    //return git_commit_id_short
+    return commitID()[0..len]
 }
 
 def commitMessage(){

@@ -10,6 +10,7 @@
 package me.rulin.docker
 
 private String cmd(String c){
+    allowed_cmds = ['build', 'push', 'pull', 'images', 'login', 'logout']
     if(c) {
         try {
             sh("sudo docker $c")
@@ -48,11 +49,34 @@ def images(){
 }
 
 def push(){
-    cmd("push ")
+    try {
+        log.info "Push image " + image
+
+        timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
+            cmd("push $image")
+        }
+    }
+    catch (e) {
+        println "Error occurred during push image"
+        throw e
+    }
 }
 
-def login(){
-    cmd("login")
+def login(String reg="" opt=null){
+    if(reg){
+        private r = 
+    }
+    try {
+        log.i "Login to "
+
+        timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
+            cmd("login ")
+        }
+    }
+    catch (e) {
+        println "Error occurred during push image"
+        throw e
+    }
 }
 
 def logout(){
