@@ -19,4 +19,14 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            echo "Post Always action"
+        }
+
+        failure {
+            echo "Post failure action"
+        }
+    }
 }
