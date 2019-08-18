@@ -5,14 +5,16 @@ pipeline {
 
     stage ("Initial Pipeline") {
         steps{
-            echo "Start Library"
-                
+            script {
+                echo "Start Library"
+                    
 
-            println "hi"
-            node {
-                set(["repo": 'https://github.com/Statemood/simple-java-maven-app.git',                         "lang": "java",
-                "build_command": "mvn",
-                "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
+                println "hi"
+                node {
+                    set(["repo": 'https://github.com/Statemood/simple-java-maven-app.git',                         "lang": "java",
+                    "build_command": "mvn",
+                    "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
+                }
             }
         }
     }
