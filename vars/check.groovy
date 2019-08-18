@@ -33,4 +33,10 @@ def var(v) {
     }
 }
 
+def isNull(String t, String ll, String msg) {
+    if (t == null) {
+        log.ll msg
+    }
+}
+
 return this

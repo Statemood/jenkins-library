@@ -24,6 +24,10 @@ def preProcess(stage_id=1) {
 def gitClone(stage_id=2) {
     stage("Stage $stage_id: Git Clone") {
         gitco = new Git()
+
+        check.isNull(Config.data['repo'])
+        check.isNull(Config.data['revision'])
+        
         gitco.clone(Config.data['repo'], Config.data['revision'])
     }
 }

@@ -27,9 +27,6 @@ def call(){
     }
     log.i "Load defaults"
     defaults()
-
-    log.i "Load Parameters"
-    parameters()
 }
 
 def readFromYaml() {
@@ -64,8 +61,4 @@ def readFromJson() {
 
 def defaults(){
     Config.data['build_command_test_junit']     = "mvn test"
-}
-
-def parameters(){
-    if (GIT_REVISION) { Config.data['revision'] = GIT_REVISION }
 }
