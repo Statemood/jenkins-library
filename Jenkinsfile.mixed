@@ -32,7 +32,7 @@ pipeline {
         }
 
         changed {
-            sctipt {
+            script {
                 log.i "Post Action: changed"
             }
         }
