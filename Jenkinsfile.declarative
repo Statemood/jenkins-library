@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage{
+        stage("master") {
             @Library('github.com/Statemood/jenkins-library@dev') _
 
             println "hi"
