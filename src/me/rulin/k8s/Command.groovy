@@ -18,12 +18,17 @@ def command(String cmd, String target=null){
     }
 
     if (target != null) {
-        check.file(target + ".yaml")
+        check.file(target)
     }
 
     log.info cmd.toUpperCase() + target
 
     try {
-        sh(script: "kubectl $cmd -f ${target}.yaml", label: "Call kubectl for $cmd $target")
+        sh(script: "kubectl $cmd -f ${target}", label: "Call kubectl for $cmd $target")
+    }
+    catch (e) {
+        log.e "Error occurred during exec 'kubectl' " + cmd + ' for target ' + target
+
+        throw e
     }
 }
