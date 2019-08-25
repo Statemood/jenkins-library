@@ -17,7 +17,8 @@ def seletor(String tl){
     switch(tl){
         case "php":
             b.build('composer.json')
-        
+            return
+            
         case "java":
             switch(Config.data['build_command']) {
                 case "ant":

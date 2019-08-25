@@ -30,10 +30,12 @@ def scanner(String sonar_opts=null) {
                 }
             
             sonar_opts = ssc_u + ssc_p + ssc_k + ssc_n + ssc_v + ssc_d + ssc_l + ssc_s + ssc_b
-            }
+        }
+
         sh("$SONAR_BIN $sonar_opts")
     }
     catch (e) {
-        log.err "Failed with Sonar Scanner"
+        log.e "Failed with Sonar Scanner"
+        throw e
     }
 }
