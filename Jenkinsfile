@@ -26,7 +26,7 @@ pipeline {
         
         choice(
             name: 'ACTION',
-            description: 'Please select action'
+            description: 'Please select action',
             choices: 'deploy\nrollback')
 
     }
