@@ -32,7 +32,7 @@ def call(Map args = [:]) {
 
 // Set build info
 def buildInfo(){
-    currentBuild.displayName = BUILD_NUMBER + "-" ENVIRONMENT
+    currentBuild.displayName = BUILD_NUMBER + "-" + ENVIRONMENT
     currentBuild.description = Config.data['action'] + " by user " + Config.data['build_user'] + ", version " + Config.data['revision'] 
 }
 
