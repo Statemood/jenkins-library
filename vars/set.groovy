@@ -8,6 +8,8 @@
 */
 
 def call(Map args = [:]) {
+    stagesController.loadSettings()
+
     if(!ACTION) { ACTION = "deploy" }
 
     Config.data['repo']         = args.containsKey('repo')        ?: null
@@ -21,7 +23,7 @@ def call(Map args = [:]) {
     println Config.data 
     println args 
 
-    stagesController.loadSettings()
+    buildInfo()
     stagesController.preProcess()
     stagesController.gitClone()
     stagesController.compile()
@@ -30,8 +32,8 @@ def call(Map args = [:]) {
 
 // Set build info
 def buildInfo(){
-    currentBuild.displayName = BUILD_NUMBER + "-"
-    currentBuild.description = Config.data['action'] + " by user " + Config.data['build_user']
+    currentBuild.displayName = BUILD_NUMBER + "-" ENVIRONMENT
+    currentBuild.description = Config.data['action'] + " by user " + Config.data['build_user'] + ", version " + Config.data['revision'] 
 }
 
 return this
