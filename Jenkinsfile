@@ -21,7 +21,7 @@ pipeline {
         choice(
             name: 'ENVIRONMENT',
             description: 'Please select environment',
-            choices: 'DEV\nTEST\nUAT\nPRE\PRD')
+            choices: 'DEV\nTEST\nUAT\nPRE\nPRD')
     }
 
     stages {
