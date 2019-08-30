@@ -18,10 +18,17 @@ pipeline {
             sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_BRANCH_TAG', 
             description: 'Please select a branch or tag to build',
             useRepository: repo)
+
         choice(
             name: 'ENVIRONMENT',
             description: 'Please select environment',
             choices: 'DEV\nTEST\nUAT\nPRE\nPRD')
+        
+        choice(
+            name: 'ACTION',
+            description: 'Please select action'
+            choices: 'deploy\nrollback')
+
     }
 
     stages {
