@@ -18,6 +18,10 @@ pipeline {
             sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_BRANCH_TAG', 
             description: 'Please select a branch or tag to build',
             useRepository: repo)
+        choice(
+            name: 'ENVIRONMENT',
+            description: 'Please select environment',
+            choices: 'DEV\nTEST\nUAT\nPRE\PRD')
     }
 
     stages {
@@ -25,7 +29,14 @@ pipeline {
             steps {
                 script {
                     log.i "Acquire config data"
+                    // Fecth data
+                    /*
                     
+                    fc = new FetchConfig(auto)
+                    
+                    fc.getConfig()
+                    */
+
                     set(["repo": repo,                       
                          "lang": "java",
                          "build_command": "mvn",
