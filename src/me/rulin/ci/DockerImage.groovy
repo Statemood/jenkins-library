@@ -64,7 +64,7 @@ def push(){
 
 def login(String reg="" opt=null){
     if(reg){
-        private r = 
+        private r = ""
     }
     try {
         log.i "Login to "
