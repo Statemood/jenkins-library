@@ -17,6 +17,7 @@ def call(Map args = [:]) {
     Config.data['lang']         = args.containsKey('lang')        ?: "java"
     Config.data['action']       = ACTION
     Config.data['build_user']   = BUILD_USER
+    Config.data['env']          = ENVIRONMENT
 
     Config.data += args 
 
@@ -32,7 +33,7 @@ def call(Map args = [:]) {
 
 // Set build info
 def buildInfo(){
-    currentBuild.displayName = BUILD_NUMBER + "-" + ENVIRONMENT
+    currentBuild.displayName = BUILD_NUMBER + "-" + Config.data['env']
     currentBuild.description = Config.data['action'] + " by user " + Config.data['build_user'] + ", version " + Config.data['revision'] 
 }
 

@@ -10,6 +10,7 @@
 import me.rulin.ci.Git
 import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
+import me.rulin.ci.DockerFile
 
 def preProcess(stage_id=1) {
     stage("Stage $stage_id: Pre-Process") {
@@ -52,6 +53,13 @@ def testJunit(stage_id=5) {
             sh(tcj)
         }
     }
+}
+
+def dockerStage(){
+    df = new DockerFile()
+
+    df.generate()
+    df.
 }
 
 return this

@@ -7,20 +7,22 @@
    ##################################################
 */
 
-package me.rulin.docker
+package me.rulin.ci
 
-def dockerfileGenerate(String f='Dockerfile') {
+def generate(String f='Dockerfile', String t='.', String d='/data/app', String e=null) {
     dockerfileCopyTemplate()
 
     // Test Dockerfile exist
     check.file(f)
+    sh("echo RUN mkdir -p $d >> $f")
+    sh("echo COPY $t $d      >> $f")
 }
 
-def dockerfileCopyTemplate(list) {
+def copyTemplate(list) {
     // Remove old files first
     try {
         if (fileExists(DOCKERFILES)) {
-            log.notice "Removing " + DOCKERFILES
+            log.i "Removing " + DOCKERFILES
             sh("rm -rf $DOCKERFILES")
         }
     } 
@@ -30,17 +32,18 @@ def dockerfileCopyTemplate(list) {
 
     // Process dockerignore file
     if (fileExists(DOCKERIGNORE_FILE)) {
-        log.notice "Copy dockerignore file"
+        log.i "Copy dockerignore file"
 
         sh("cp -rf $DOCKERIGNORE_FILE .")
-    } else {
-        log.warning "No $DOCKERIGNORE_FILE found, ignored"
+    } 
+    else {
+        log.w "File not found: $DOCKERIGNORE_FILE, ignored"
     }
 
     try {
         for (d in list) {
             if (fileExists(d)) {
-                log.notice "Use Dockerfiles $d" 
+                log.i "Use Dockerfiles $d" 
                 sh("cp -frH $d/* .")
 
                 return
@@ -50,14 +53,6 @@ def dockerfileCopyTemplate(list) {
     catch (e) {
         throw e
     }
-}
-
-def imageBuild(image) {
-
-}
-
-def imagePush(image) {
-
 }
 
 def registryLogin(){

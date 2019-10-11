@@ -7,7 +7,7 @@
    ##################################################
 */
 
-package me.rulin.docker
+package me.rulin.ci
 
 private String cmd(String c){
     allowed_cmds = ['build', 'push', 'pull', 'images', 'login', 'logout']

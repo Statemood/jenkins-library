@@ -6,16 +6,23 @@ pipeline {
     agent any
 
     options {
-        timestamps()
+        //timestamps()
         timeout(time: 30, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
 
     parameters {
         gitParameter(
-            branch: '', branchFilter: 'origin/(.*)', defaultValue: 'master', listSize: '10', 
-            name: 'GIT_REVISION', quickFilterEnabled: true, selectedValue: 'NONE', 
-            sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_BRANCH_TAG', 
+            branch: '', 
+            branchFilter: 'origin/(.*)', 
+            defaultValue: 'master', 
+            listSize: '10', 
+            name: 'GIT_REVISION', 
+            quickFilterEnabled: true, 
+            selectedValue: 'NONE', 
+            sortMode: 'DESCENDING_SMART', 
+            tagFilter: '*', 
+            type: 'PT_BRANCH_TAG', 
             description: 'Please select a branch or tag to build',
             useRepository: repo)
 
@@ -28,7 +35,6 @@ pipeline {
             name: 'ACTION',
             description: 'Please select action',
             choices: 'deploy\nrollback')
-
     }
 
     stages {
@@ -47,7 +53,7 @@ pipeline {
                     set(["repo": repo,                       
                          "lang": "java",
                          "build_command": "mvn",
-                         "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])   
+                         "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
                 }
             }
         }
