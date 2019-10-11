@@ -29,6 +29,7 @@ def call(Map args = [:]) {
     stagesController.gitClone()
     stagesController.compile()
     stagesController.testJunit()
+    stagesController.dockerStage()
 }
 
 // Set build info
