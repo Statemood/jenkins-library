@@ -24,7 +24,7 @@ private String cmd(String c){
     }
 }
 
-private build(String build_args) {
+private build(String build_args=null) {
     check.file('Dockerfile')
 
     try {

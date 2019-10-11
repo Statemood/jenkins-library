@@ -11,6 +11,7 @@ import me.rulin.ci.Git
 import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
 import me.rulin.ci.DockerFile
+import me.rulin.ci.DockerImage
 
 def preProcess(stage_id=1) {
     stage("Stage $stage_id: Pre-Process") {
@@ -57,9 +58,10 @@ def testJunit(stage_id=5) {
 
 def dockerStage(){
     df = new DockerFile()
+    di = new DockerImage()
 
     df.generate()
-    df.
+    di.build()
 }
 
 return this
