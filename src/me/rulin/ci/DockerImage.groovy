@@ -62,7 +62,7 @@ def push(){
     }
 }
 
-def login(String reg="" opt=null){
+def login(String reg="", String opt=null){
     if(reg){
         private r = ""
     }
