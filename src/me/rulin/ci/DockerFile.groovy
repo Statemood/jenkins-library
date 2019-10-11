@@ -10,7 +10,7 @@
 package me.rulin.ci
 
 def generate(String f='Dockerfile', String t='.', String d='/data/app', String e=null) {
-    dockerfileCopyTemplate()
+    copyTemplate()
 
     // Test Dockerfile exist
     check.file(f)
