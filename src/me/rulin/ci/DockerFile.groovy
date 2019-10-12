@@ -1,4 +1,4 @@
-/* File.groovy
+/* DockerFile.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -9,28 +9,7 @@
 
 package me.rulin.ci
 
-def generate(String f='Dockerfile', String t='.', String d='/data/app', String e=null) {
-    copyTemplate()
-
-    // Test Dockerfile exist
-    check.file(f)
-    sh("echo RUN mkdir -p $d >> $f")
-    sh("echo COPY $t $d      >> $f")
-}
-
-def copyTemplate(list) {
-    // Remove old files first
-    try {
-        if (fileExists(DOCKERFILES)) {
-            log.i "Removing " + DOCKERFILES
-            sh("rm -rf $DOCKERFILES")
-        }
-    } 
-    catch (e) {
-        throw e
-    }
-
-    // Process dockerignore file
+def generate(String f='Dockerfile', String t='.', String d='/data/app', String e=null){
     if (fileExists(DOCKERIGNORE_FILE)) {
         log.i "Copy dockerignore file"
 
@@ -39,20 +18,10 @@ def copyTemplate(list) {
     else {
         log.w "File not found: $DOCKERIGNORE_FILE, ignored"
     }
-
-    try {
-        for (d in list) {
-            if (fileExists(d)) {
-                log.i "Use Dockerfiles $d" 
-                sh("cp -frH $d/* .")
-
-                return
-            }
-        }
-    } 
-    catch (e) {
-        throw e
-    }
+    // Test Dockerfile exist
+    check.file(f)
+    sh("echo RUN mkdir -p $d >> $f")
+    sh("echo COPY $t $d      >> $f")
 }
 
 def registryLogin(){
