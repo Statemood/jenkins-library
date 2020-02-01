@@ -14,10 +14,10 @@ def file(String f) {
     }
 }
 
-def dir(String d) {
-    def d = new File(d)
-    if (!d.exists() || ! d.isDirectory()) {
-        log.err "$d does not exist or is not a directory"
+def isdir(String d) {
+    def directory = new File(d)
+    if (!directory.exists() || ! directory.isDirectory()) {
+        log.err "$directory does not exist or is not a directory"
     }
 }
 
