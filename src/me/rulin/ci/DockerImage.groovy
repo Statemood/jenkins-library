@@ -1,4 +1,4 @@
-/* Image.groovy
+/* DockerImage.groovy
    ##################################################
    # Created by Lin Ru at 2019.02.17 22:55          #
    #                                                #
@@ -24,9 +24,9 @@ private String cmd(String c){
     }
 }
 
-private build(String build_args=null) {
+private build(String image=null) {
+    
     check.file('Dockerfile')
-
     try {
         log.info "Build image: " + image
 

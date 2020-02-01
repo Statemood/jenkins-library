@@ -4,6 +4,6 @@
 # Permission:   400
 
 # Set Alias
-Cmnd_Alias  DOCKER  = /usr/bin/docker 
+Cmnd_Alias  DOCKER  = /usr/bin/docker
 
 jenkins     ALL=(ALL) NOPASSWD: DOCKER 

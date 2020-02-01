@@ -8,9 +8,9 @@
 */
 
 def call(){
-    local_data = readFromYaml()
+    def local_data = readFromYaml()
 
-    if (SETTINGS) {
+    if (SETTINGS != null) {
         try {
             if (fileExists(SETTINGS)) {
                 log.i "Loading local settings"
@@ -34,7 +34,7 @@ def readFromYaml() {
     if (fileExists(yf)) {
         try {
             log.i "Read config from " + yf
-            yaml_data = readYaml file: yf
+            def yaml_data = readYaml file: yf
 
             return yaml_data
         }

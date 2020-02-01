@@ -15,7 +15,7 @@ def file(String f) {
 }
 
 def dir(String d) {
-    d = new File(d)
+    def d = new File(d)
     if (!d.exists() || ! d.isDirectory()) {
         log.err "$d does not exist or is not a directory"
     }

@@ -10,8 +10,8 @@
 ///////////////////////////////////////////////////////
 // BASIC                                             //
 ///////////////////////////////////////////////////////
-env.WORKSPACE       = JENKINS_HOME + "/workspace/" + JOB_NAME
-env.WS              = WORKSPACE
+env.WORKSPACE = JENKINS_HOME + "/workspace/" + JOB_NAME
+env.WS        = WORKSPACE
 
 try {
     // Get User info
@@ -84,7 +84,6 @@ env.DOCKER_IMAGE_TAG                = ""
 env.DOCKER_IMAGE_BUILD_TIMEOUT      = 300
 env.DOCKER_IMAGE_PUSH_TIMEOUT       = 300
 env.DOCKER_IMAGE_BUILD_OPTIONS      = ""
-
 env.DOCKERIGNORE_FILE               = ".dockerignore"
 
 // Dockerfiles dir

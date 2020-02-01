@@ -25,7 +25,7 @@ def preProcess(stage_id=1) {
 
 def gitClone(stage_id=2) {
     stage("Stage $stage_id: Git Clone") {
-        gitco = new Git()
+        def gitco = new Git()
         
         gitco.clone(Config.data['repo'], Config.data['revision'])
     }
@@ -33,14 +33,14 @@ def gitClone(stage_id=2) {
 
 def sonar(stage_id=3) {
     stage("Stage $stage_id: SonarQube Scanner") {
-        sonar = new SonarQube()
+        def sonar = new SonarQube()
         sonar.scanner()
     }
 }
 
 def compile(stage_id=4) {
     stage("Stage $stage_id: Build Code") {
-        language = new Language()
+        def language = new Language()
         language.seletor(Config.data['lang'])
     }
 }
@@ -57,8 +57,8 @@ def testJunit(stage_id=5) {
 }
 
 def dockerStage(){
-    df = new DockerFile()
-    di = new DockerImage()
+    def df = new DockerFile()
+    def di = new DockerImage()
 
     df.generate()
     di.build()
