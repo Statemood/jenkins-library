@@ -12,7 +12,7 @@ pipeline {
     }
 
     parameters {
-        gitParameter(
+        gitParameter (
             branch: '', 
             branchFilter: 'origin/(.*)', 
             defaultValue: 'master', 

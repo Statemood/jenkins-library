@@ -13,10 +13,11 @@ def scanner(String o="") {
     try {
         log.i "Preparing SonarQube Scanner"
 
-        withCredentials([usernamePassword(
-            credentialsId: 'Sonar-Account',
-            passwordVariable: 'sonar_p',
-            usernameVariable: 'sonar_u')])
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'Sonar-Account',
+                passwordVariable: 'sonar_p',
+                usernameVariable: 'sonar_u')])
         {
             private ssc_u = "-Dsonar.login="            + sonar_u
             private ssc_p = "-Dsonar.password="         + sonar_p
@@ -31,9 +32,9 @@ def scanner(String o="") {
             
         sonar_opts  = ssc_u + ssc_p + ssc_k + ssc_n + ssc_v + ssc_d + ssc_l + ssc_s + ssc_b
         sonar_opts += o
-    }
 
         sh("$SONAR_BIN $sonar_opts")
+    }
     catch (e) {
         log.e "Failed with Sonar Scanner"
         throw e
