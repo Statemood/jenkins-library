@@ -23,15 +23,14 @@ private String cmd(String c){
     }
 }
 
-private build(String image_name=JOB_BASE_NAME) {
-    
+def private build(String image_name) {
     check.file('Dockerfile')
     try {
-        docker_image_name = DOCKER_REGISTRY + '/' + JOB_BASE_NAME.split('_')[0] + '/' + image_name + ':' + GIT_REVISION
-        log.info "Build image: " + docker_image_name
+        
+        log.info "Build image: " + image_name
 
         timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
-            cmd("build $DOCKER_IMAGE_BUILD_OPTIONS -t $docker_image_name .")
+            cmd("build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name .")
         }
     }
     catch (e) {
@@ -48,12 +47,12 @@ def images(){
     cmd("images")
 }
 
-def push(){
+def push(String image_name){
     try {
-        log.info "Push image " + image
+        log.info "Push image " + image_name
 
         timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
-            cmd("push $image")
+            cmd("push $image_name")
         }
     }
     catch (e) {
@@ -67,7 +66,7 @@ def login(String reg="", String opt=null){
         private r = ""
     }
     try {
-        log.i "Login to "
+        log.i "Login to Docker Registry $DOCKER_REGISTRY"
 
         timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
             cmd("login ")

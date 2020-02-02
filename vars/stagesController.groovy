@@ -57,11 +57,13 @@ def testJunit(stage_id=5) {
 }
 
 def dockerStage(){
-    def df = new DockerFile()
-    def di = new DockerImage()
+    def private df = new DockerFile()
+    def private di = new DockerImage()
 
+    def image = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME ':' + GIT_REVISION
     df.generate()
-    di.build()
+    di.build(image)
+    di.push(image)
 }
 
 return this
