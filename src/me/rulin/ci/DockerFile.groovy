@@ -9,7 +9,7 @@
 
 package me.rulin.ci
 
-def generate(String f='Dockerfile', String t='.', String d='/data/app', String e=null){
+def private generate(String f='Dockerfile', String t='.', String d='/data/app', String c=null){
     if (fileExists(DOCKERIGNORE_FILE)) {
         log.i "Copy dockerignore file"
 
@@ -20,8 +20,13 @@ def generate(String f='Dockerfile', String t='.', String d='/data/app', String e
     }
     // Test Dockerfile exist
     check.file(f)
-    sh("echo RUN mkdir -p $d >> $f")
-    sh("echo COPY $t $d      >> $f")
+
+    private image_labels  = "Created=Jenkins JobName=$JOB_NAME BuildUser=$BUILD_USER"
+    private image_labels += "BuildNumber=$BUILD_NUMBER"
+
+    sh("echo LABEL $image_labels    >> $f")
+    sh("echo RUN mkdir -p $d        >> $f")
+    sh("echo COPY $t $d             >> $f")
 }
 
 def registryLogin(){

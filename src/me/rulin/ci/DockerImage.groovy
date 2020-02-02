@@ -9,7 +9,7 @@
 
 package me.rulin.ci
 
-private String cmd(String c){
+def private String cmd(String c){
     if(c) {
         try {
             sh("sudo docker $c")
@@ -39,15 +39,15 @@ def private build(String image_name) {
     }
 }
 
-def version(){
+def private version(){
     cmd("version")
 }
 
-def images(){
+def private images(){
     cmd("images")
 }
 
-def push(String image_name){
+def private push(String image_name){
     try {
         log.info "Push image " + image_name
 
