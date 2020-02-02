@@ -21,7 +21,7 @@ try {
     wrap([$class: 'BuildUser']) { env.BUILD_USER_ID = BUILD_USER_ID }
 }
 catch (e) {
-    log.warning "Requeire 'build user vars' plugin, see https://plugins.jenkins.io/build-user-vars-plugin for more information"
+    log.warning "Requeire plugin 'build user vars', see https://plugins.jenkins.io/build-user-vars-plugin for more information"
 }
 
 env.WEB_ROOT            = "/data/web/"
@@ -59,9 +59,13 @@ env.BUILD_LEGACY        = false
 env.GOROOT              = "/usr/lib/go"
 env.GOPATH              =  WORKSPACE
 
-// Maven
+/* Maven
+    -ff,--fail-fast                 Stop at first failure in
+    -ntp,--no-transfer-progress     Do not display transfer progress
+                                    when downloading or uploading
+*/
 env.MAVEN_CMD           = "mvn"
-env.MAVEN_ARGS          = "-U clean -Dmaven.test.skip=true package dependency:tree"
+env.MAVEN_ARGS          = "-ff -ntp -U clean -Dmaven.test.skip=true package dependency:tree"
 
 //Gradle
 env.GRADLE_CMD          = "gradle"
@@ -81,8 +85,8 @@ env.DOCKER_REGISTRY_USER            = ""
 env.DOCKER_REGISTRY_PASSWORD        = credentials('Docker-Registry')
 env.DOCKER_IMAGE_NAME               = ""
 env.DOCKER_IMAGE_TAG                = ""
-env.DOCKER_IMAGE_BUILD_TIMEOUT      = 300
-env.DOCKER_IMAGE_PUSH_TIMEOUT       = 300
+env.DOCKER_IMAGE_BUILD_TIMEOUT      = 1800
+env.DOCKER_IMAGE_PUSH_TIMEOUT       = 600
 env.DOCKER_IMAGE_BUILD_OPTIONS      = ""
 env.DOCKERIGNORE_FILE               = ".dockerignore"
 
