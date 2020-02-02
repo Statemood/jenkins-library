@@ -80,9 +80,9 @@ env.NPM_I               =  NPM_INSTALL
 // Docker                                            //
 ///////////////////////////////////////////////////////
 env.DOCKER_REGISTRY                 = ""
-env.DOCKER_REGISTRY_USER            = ""
 // Saved in the Jenkins credentials with name 'Docker-Registry'
-env.DOCKER_REGISTRY_PASSWORD        = credentials('Docker-Registry')
+env.DOCKER_REGISTRY_ACCOUNT         = credentials('Docker-Registry')
+env.DOCKER_IMAGE_PROJECT            = 
 env.DOCKER_IMAGE_NAME               = ""
 env.DOCKER_IMAGE_TAG                = ""
 env.DOCKER_IMAGE_BUILD_TIMEOUT      = 1800

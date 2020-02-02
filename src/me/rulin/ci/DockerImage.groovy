@@ -10,7 +10,6 @@
 package me.rulin.ci
 
 private String cmd(String c){
-    allowed_cmds = ['build', 'push', 'pull', 'images', 'login', 'logout']
     if(c) {
         try {
             sh("sudo docker $c")
@@ -24,14 +23,15 @@ private String cmd(String c){
     }
 }
 
-private build(String image=JOB_BASE_NAME) {
+private build(String image_name=JOB_BASE_NAME) {
     
     check.file('Dockerfile')
     try {
-        log.info "Build image: " + image
+        docker_image_name = DOCKER_REGISTRY + '/' + JOB_BASE_NAME.split('_')[0] + '/' + image_name + ':' + GIT_REVISION
+        log.info "Build image: " + docker_image_name
 
         timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
-            cmd("build $DOCKER_IMAGE_BUILD_OPTIONS -t $image .")
+            cmd("build $DOCKER_IMAGE_BUILD_OPTIONS -t $docker_image_name .")
         }
     }
     catch (e) {
