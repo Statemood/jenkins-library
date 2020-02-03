@@ -13,8 +13,8 @@ import me.rulin.ci.SonarQube
 import me.rulin.ci.DockerFile
 import me.rulin.ci.DockerImage
 
-def preProcess(stage_id=1) {
-    stage("Stage $stage_id: Pre-Process") {
+def preProcess() {
+    stage("Pre-Process") {
         // Set default info
         // Set build info
         // Check parameters
@@ -23,32 +23,32 @@ def preProcess(stage_id=1) {
     }
 }
 
-def gitClone(stage_id=2) {
-    stage("Stage $stage_id: Git Clone") {
+def gitClone() {
+    stage("Git Clone") {
         def gitco = new Git()
         
         gitco.clone(Config.data['repo'], Config.data['revision'])
     }
 }
 
-def sonar(stage_id=3) {
-    stage("Stage $stage_id: SonarQube Scanner") {
+def sonar() {
+    stage("SonarQube Scanner") {
         def sonar = new SonarQube()
         sonar.scanner()
     }
 }
 
-def compile(stage_id=4) {
-    stage("Stage $stage_id: Build Code") {
+def compile() {
+    stage("Build Code") {
         def language = new Language()
-        language.seletor(Config.data['lang'])
+        language.seletor(Config.data['language'])
     }
 }
 
-def testJunit(stage_id=5) {
+def testJunit() {
     def private tcj = Config.data['build_command_test_junit']
     if (tcj) {
-        stage("Stage $stage_id: Junit Test") {
+        stage("Junit Test") {
             log.i "Test by command: " + tcj
 
             sh(tcj)

@@ -9,7 +9,7 @@
 
 package me.rulin.ci
 
-def clone(repo, revision) {
+def clone(repo, revision, cid='DefaultGitSCMCredentialsID') {
     if (!repo)      { log.err "Require git repository"  }
     if (!revision)  { log.err "Require git revision"    }
 
@@ -18,6 +18,7 @@ def clone(repo, revision) {
         
         checkout([$class: 'GitSCM',
                 branches: [[name: revision]],
+                credentialsId: cid,
                 userRemoteConfigs: [[url: repo]]])
 
         return
@@ -32,9 +33,6 @@ def commitID(){
 }
 
 def commitIDShort(int len=GIT_COMMIT_ID_DISPLAY_LEN){
-    //git_commit_id_short = commitID()[0..len]
-
-    //return git_commit_id_short
     return commitID()[0..len]
 }
 
