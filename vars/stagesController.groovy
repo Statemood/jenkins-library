@@ -59,9 +59,9 @@ def testJunit() {
 def dockerStage(){
     def private  df = new DockerFile()
     def private  di = new DockerImage()
-    def private gci = new Git()
+    def private git = new Git()
 
-    def private tag = GIT_REVISION + '-' + g.commitIDShort(8)
+    def private tag = GIT_REVISION + '-' + git.commitIDShort(8)
 
     def image = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
     
