@@ -59,8 +59,9 @@ def testJunit() {
 def dockerStage(){
     def private df = new DockerFile()
     def private di = new DockerImage()
+    def private  g = new Git()
 
-    def image = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + GIT_REVISION + '-' + Git.commitIDShort(8)
+    def image = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + GIT_REVISION + '-' + g.commitIDShort(8)
     df.generate()
     di.build(image)
     di.push(image)
