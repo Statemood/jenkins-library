@@ -15,11 +15,15 @@ def clone(repo, revision, cid='DefaultGitSCMCredentialsID') {
 
     try {
         log.i "Git clone $revision ($repo)"
-        
+        /*
         checkout([$class: 'GitSCM',
                 branches: [[name: revision]],
-                credentialsId: cid,
-                userRemoteConfigs: [[url: repo]]])
+                userRemoteConfigs: [[url: repo, credentialsId: cid]]])
+        */
+
+        git credentialsId: cid,
+            branch: revision,
+            url: repo
 
         return
     } catch (e) {
