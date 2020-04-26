@@ -32,13 +32,8 @@ def clone(repo, revision, cid='DefaultGitSCMCredentialsID') {
     }
 }
 
-def commitID(){
-    println "git rev-parse HEAD".execute().text
-    //sh("git rev-parse HEAD")
-}
-
-def commitIDShort(int len=GIT_COMMIT_ID_DISPLAY_LEN){
-    return sh(script: "git rev-parse HEAD", returnStdout: true).trim()[0..len]
+def commitID(int len=41){
+    sh(script: "git rev-parse HEAD", returnStdout: true).trim()[0..len]
 }
 
 def commitMessage(){
