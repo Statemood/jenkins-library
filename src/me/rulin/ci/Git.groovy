@@ -9,29 +9,6 @@
 
 package me.rulin.ci
 
-def clone(repo, revision, cid='DefaultGitSCMCredentialsID') {
-    if (!repo)      { log.err "Require git repository"  }
-    if (!revision)  { log.err "Require git revision"    }
-
-    try {
-        log.i "Git clone $revision ($repo)"
-        /*
-        checkout([$class: 'GitSCM',
-                branches: [[name: revision]],
-                userRemoteConfigs: [[url: repo, credentialsId: cid]]])
-        */
-
-        git credentialsId: cid,
-            branch: revision,
-            url: repo
-
-        return
-    } catch (e) {
-        log.e "Ops! Error occurred during git checkout"
-        throw e
-    }
-}
-
 def commitID(int len=41){
     sh(script: "git rev-parse HEAD", returnStdout: true).trim()[0..len]
 }

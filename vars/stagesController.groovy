@@ -25,9 +25,20 @@ def preProcess() {
 
 def gitClone() {
     stage("Git Clone") {
-        def gitco = new Git()
-        
-        gitco.clone(Config.data['repo'], Config.data['revision'])
+        //def private git = new Git()
+        //git.clone(Config.data['repo'], Config.data['revision'])
+        try {
+            log.i "Git clone $revision ($repo)"
+
+            git credentialsId: DefaultGitSCMCredentialsID,
+                branch: Config.data['revision'],
+                url: Config.data['repo']
+
+            return
+        } catch (e) {
+            log.e "Ops! Error occurred during git checkout"
+            throw e
+        }
     }
 }
 
@@ -45,13 +56,13 @@ def compile() {
     }
 }
 
-def testJunit() {
-    def private tcj = Config.data['build_command_test_junit']
-    if (tcj) {
-        stage("Junit Test") {
-            log.i "Test by command: " + tcj
+def unitTest() {
+    def private utc = Config.data['build_command_unit_test']
+    if (utc) {
+        stage("Unit Test") {
+            log.i "Test by command: " + utc
 
-            sh(tcj)
+            sh(utc)
         }
     }
 }
@@ -61,16 +72,12 @@ def dockerStage(){
     def private  di = new DockerImage()
     def private git = new Git()
 
-    def private tag = GIT_REVISION + '-' + git.commitID(8)
-
-    def image = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
-    
-    echo "Tag: " + tag 
-    echo "Img: " + image
+    def private tag = GIT_REVISION    + '-' + git.commitID(8)
+    def private img = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
 
     df.generate()
-    di.build(image)
-    di.push(image)
+    di.build(img)
+    di.push(img)
 }
 
 return this
