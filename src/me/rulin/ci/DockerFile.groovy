@@ -21,11 +21,23 @@ def private generate(String f='Dockerfile', String t='.', String d='/data/app', 
     // Test Dockerfile exist
     check.file(f)
 
-    def image_labels  = "created.by=Jenkins job.name=$JOB_NAME build.user=$BUILD_USER "
-        image_labels += "build.number=$BUILD_NUMBER"
+    def dfc = []
+    dfc.add("LABEL created.by=Jenkins job.name=$JOB_NAME build.user=$BUILD_USER build.number=$BUILD_NUMBER")
+    dfc.add("RUN mkdir -p $d")
+    dfc.add("COPY $t $d")
 
+    //writeFile file: f, text: image_labels
+    //writeFile file: f, text: "RUN mkdir -p $d"
+    for(s in dfc) {
+        echo "s: " + s
+        writeFile file: f, text: s
+    }
+
+
+    /*
     sh("echo                        >> $f")
     sh("echo LABEL $image_labels    >> $f")
     sh("echo RUN mkdir -p $d        >> $f")
     sh("echo COPY $t $d             >> $f")
+    */
 }

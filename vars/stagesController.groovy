@@ -25,13 +25,11 @@ def preProcess() {
 
 def gitClone() {
     stage("Git Clone") {
-        //def private git = new Git()
-        //git.clone(Config.data['repo'], Config.data['revision'])
-        def private revision = Config.data['revision']
-        def private     repo = Config.data['repo']
-
         try {
-            log.i "Git clone $revision ($repo)"
+            def private revision = Config.data['revision']
+            def private     repo = Config.data['repo']
+
+            log.i "Git clone " + revision + " " + repo
 
             git credentialsId: Config.data['credentials.id'],
                 branch: revision,
@@ -60,7 +58,7 @@ def compile() {
 }
 
 def unitTest() {
-    def private utc = Config.data['build_command_unit_test']
+    def private utc = Config.data['build.command.unit.test']
     if (utc) {
         stage("Unit Test") {
             log.i "Test by command: " + utc

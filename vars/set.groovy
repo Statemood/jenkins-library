@@ -36,14 +36,18 @@ def call(Map args = [:]) {
     stagesController.preProcess()
     stagesController.gitClone()
     stagesController.compile()
-    stagesController.testJunit()
+    stagesController.unitTest()
     stagesController.dockerStage()
+
 }
 
 // Set build info
 def buildInfo(){
-    currentBuild.displayName = BUILD_NUMBER + "-" + Config.data['env']
-    currentBuild.description = Config.data['action'] + " by user " + Config.data['build.user'] + ", version " + Config.data['revision'] 
+    def private name = BUILD_NUMBER + "-" + Config.data['env']
+    def private desc = Config.data['action'] + " by user " + Config.data['build.user'] + ", version " + Config.data['revision'] 
+
+    currentBuild.displayName = name 
+    currentBuild.description = desc 
 }
 
 return this

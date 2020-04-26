@@ -60,5 +60,5 @@ def readFromJson() {
 }
 
 def defaults(){
-    Config.data['build_command_test_junit']     = "mvn test"
+    Config.data['build.command.unit.test']     = "mvn test"
 }

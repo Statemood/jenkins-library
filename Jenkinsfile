@@ -52,8 +52,8 @@ pipeline {
 
                     set(["repo": repo,                       
                          "lang": "java",
-                         "build_command": "mvn",
-                         "build_options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
+                         "build.command": "mvn",
+                         "build.options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
                 }
             }
         }
