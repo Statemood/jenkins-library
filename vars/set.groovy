@@ -8,6 +8,13 @@
 */
 
 def call(Map args = [:]) {
+    /*
+    Order:
+        1. Local Settings
+        2. .jenkins.yaml
+        3. Config
+    */
+
     stagesController.loadSettings()
 
     if(!ACTION) { ACTION = "deploy" }
