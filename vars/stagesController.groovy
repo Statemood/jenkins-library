@@ -26,7 +26,7 @@ def preProcess() {
 def gitClone() {
     stage("Git Clone") {
         try {
-            def private      git = new Git()
+            def private      Git = new Git()
             def private revision = Config.data['revision']
             def private     repo = Config.data['repo']
 
@@ -37,7 +37,7 @@ def gitClone() {
                 url: repo
 
 
-            //Config.data['commit.id'] = git.commitID()
+            Config.data['commit.id'] = Git.commitID()
 
             return
         } catch (e) {
