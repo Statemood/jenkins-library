@@ -26,18 +26,11 @@ def private generate(String f='Dockerfile', String t='.', String d='/data/app', 
     dfc.add("RUN mkdir -p $d")
     dfc.add("COPY $t $d")
 
-    //writeFile file: f, text: image_labels
-    //writeFile file: f, text: "RUN mkdir -p $d"
+    sh("echo >> $f")
+
     for(s in dfc) {
-        echo "s: " + s
-        writeFile file: f, text: s
+        sh("echo $s >> $f")
     }
 
-
-    /*
-    sh("echo                        >> $f")
-    sh("echo LABEL $image_labels    >> $f")
-    sh("echo RUN mkdir -p $d        >> $f")
-    sh("echo COPY $t $d             >> $f")
-    */
+    sh("cat $f")
 }
