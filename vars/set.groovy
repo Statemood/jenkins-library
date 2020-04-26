@@ -19,12 +19,13 @@ def call(Map args = [:]) {
 
     if(!ACTION) { ACTION = "deploy" }
 
-    Config.data['repo']         = args.containsKey('repo')        ?: null
-    Config.data['revision']     = args.containsKey('revision')    ?: GIT_REVISION
-    Config.data['language']     = args.containsKey('language')    ?: "java"
-    Config.data['action']       = ACTION
-    Config.data['build_user']   = BUILD_USER
-    Config.data['env']          = ENVIRONMENT
+    Config.data['repo']             = args.containsKey('repo')              ?: null
+    Config.data['revision']         = args.containsKey('revision')          ?: GIT_REVISION
+    Config.data['language']         = args.containsKey('language')          ?: "java"
+    Config.data['action']           = ACTION
+    Config.data['build.user']       = BUILD_USER
+    Config.data['env']              = ENVIRONMENT
+    Config.data['credentials.id']   = args.containsKey('credentials.id')    ?: "DefaultGitSCMCredentialsID"
 
     Config.data += args 
 
@@ -42,7 +43,7 @@ def call(Map args = [:]) {
 // Set build info
 def buildInfo(){
     currentBuild.displayName = BUILD_NUMBER + "-" + Config.data['env']
-    currentBuild.description = Config.data['action'] + " by user " + Config.data['build_user'] + ", version " + Config.data['revision'] 
+    currentBuild.description = Config.data['action'] + " by user " + Config.data['build.user'] + ", version " + Config.data['revision'] 
 }
 
 return this

@@ -33,7 +33,7 @@ def gitClone() {
         try {
             log.i "Git clone $revision ($repo)"
 
-            git credentialsId: DefaultGitSCMCredentialsID,
+            git credentialsId: Config.data['credentials.id'],
                 branch: revision,
                 url: repo
 
