@@ -9,6 +9,8 @@
 
 package me.rulin.ci
 
+import  me.rulin.ci.Git
+
 def private generate(String f='Dockerfile', String t='.', String d='/data/app', String c=null){
     if (fileExists(DOCKERIGNORE_FILE)) {
         log.i "Copy dockerignore file"
@@ -20,9 +22,9 @@ def private generate(String f='Dockerfile', String t='.', String d='/data/app', 
     }
     // Test Dockerfile exist
     check.file(f)
-
-    def dfc = []
-    def cid = git.commitID()
+    def private dfc = []
+    def private git = new Git()
+    def private cid = git.commitID()
 
     dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user=$BUILD_USER build.number=$BUILD_NUMBER")
     dfc.add("LABEL git.commit.id=$cid")
