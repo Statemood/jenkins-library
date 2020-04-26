@@ -27,12 +27,15 @@ def gitClone() {
     stage("Git Clone") {
         //def private git = new Git()
         //git.clone(Config.data['repo'], Config.data['revision'])
+        def private revision = Config.data['revision']
+        def private     repo = Config.data['repo']
+
         try {
             log.i "Git clone $revision ($repo)"
 
             git credentialsId: DefaultGitSCMCredentialsID,
-                branch: Config.data['revision'],
-                url: Config.data['repo']
+                branch: revision,
+                url: repo
 
             return
         } catch (e) {
