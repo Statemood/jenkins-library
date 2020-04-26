@@ -38,7 +38,7 @@ def commitID(){
 }
 
 def commitIDShort(int len=GIT_COMMIT_ID_DISPLAY_LEN){
-    return println "git rev-parse HEAD".execute().text[0..len]
+    return sh(script: "git rev-parse HEAD", returnStdout: true).trim()[0..len]
 }
 
 def commitMessage(){
