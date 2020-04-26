@@ -26,7 +26,7 @@ def preProcess() {
 def gitClone() {
     stage("Git Clone") {
         try {
-            def private      Git = new Git()
+            def              Git = new Git()
             def private revision = Config.data['revision']
             def private     repo = Config.data['repo']
 
@@ -36,7 +36,7 @@ def gitClone() {
                 branch: revision,
                 url: repo
 
-            //Config.data['commit.id'] = Git.commitID()
+            Config.data['commit.id'] = Git.commitID()
 
             return
         } catch (e) {
@@ -75,7 +75,6 @@ def dockerStage(){
     def private  df = new DockerFile()
     def private  di = new DockerImage()
     
-
     def private tag = GIT_REVISION    + '-' + Config.data['commit.id'][0..8]
     def private img = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
 
