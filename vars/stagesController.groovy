@@ -37,7 +37,7 @@ def gitClone() {
                 url: repo
 
 
-            Config.data['commit.id'] = git.commitID()
+            //Config.data['commit.id'] = git.commitID()
 
             return
         } catch (e) {
