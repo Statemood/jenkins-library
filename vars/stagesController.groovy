@@ -71,7 +71,7 @@ def unitTest() {
 def dockerStage(){
     def private  df = new DockerFile()
     def private  di = new DockerImage()
-    def private git = new Git()
+    def         git = new Git()
 
     def private tag = GIT_REVISION    + '-' + git.commitID(8)
     def private img = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
