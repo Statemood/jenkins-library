@@ -26,7 +26,6 @@ def preProcess() {
 def gitClone() {
     stage("Git Clone") {
         try {
-            def              Git = new Git()
             def private revision = Config.data['revision']
             def private     repo = Config.data['repo']
 
@@ -36,10 +35,7 @@ def gitClone() {
                 branch: revision,
                 url: repo
 
-            def c_id = Git.commitID()
-            echo "cid: $c_id"
-
-            //Config.data['commit.id'] = 
+            Config.data['commit.id'] = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
 
             return
         } catch (e) {
