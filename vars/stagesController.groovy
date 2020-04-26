@@ -36,7 +36,8 @@ def gitClone() {
                 branch: revision,
                 url: repo
 
-            Config.data['git.commit.id'] = git.commitID()
+
+            Config.data['commit.id'] = git.commitID()
 
             return
         } catch (e) {
@@ -76,7 +77,7 @@ def dockerStage(){
     def private  di = new DockerImage()
     
 
-    def private tag = GIT_REVISION    + '-' + Config.data['git.commit.id'][0..8]
+    def private tag = GIT_REVISION    + '-' + Config.data['commit.id'][0..8]
     def private img = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
 
     df.generate()
