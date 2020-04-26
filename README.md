@@ -2,7 +2,7 @@
 Shared Library for Jenkins Pipeline
 
 - 关于Shared Library的更多信息请参考[Using libraries](https://jenkins.io/doc/book/pipeline/shared-libraries/#using-libraries) 
-  
+
 ## 配置 Jenkins 使用 Shared Library
 若要使用 Shared Library, 您可以通过两种方式进行配置:
 - Declarative Pipeline
