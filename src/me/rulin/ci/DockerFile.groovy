@@ -22,7 +22,10 @@ def private generate(String f='Dockerfile', String t='.', String d='/data/app', 
     check.file(f)
 
     def dfc = []
-    dfc.add("LABEL created.by=Jenkins job.name=$JOB_NAME build.user=$BUILD_USER build.number=$BUILD_NUMBER")
+    def cid = git.commitID()
+
+    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user=$BUILD_USER build.number=$BUILD_NUMBER")
+    dfc.add("LABEL git.commit.id=$cid")
     dfc.add("RUN mkdir -p $d")
     dfc.add("COPY $t $d")
 
@@ -31,6 +34,4 @@ def private generate(String f='Dockerfile', String t='.', String d='/data/app', 
     for(s in dfc) {
         sh("echo $s >> $f")
     }
-
-    sh("cat $f")
 }
