@@ -21,10 +21,10 @@ def private generate(String f='Dockerfile', String t='.', String d='/data/app', 
     // Test Dockerfile exist
     check.file(f)
     def private dfc = []
-    def private cid = Config.data['git.commit.id']
+    def private cid = Config.data['commit.id']
 
     dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user=$BUILD_USER build.number=$BUILD_NUMBER")
-    dfc.add("LABEL git.commit.id=$cid")
+    dfc.add("LABEL commit.id=$cid")
     dfc.add("RUN mkdir -p $d")
     dfc.add("COPY $t $d")
 
