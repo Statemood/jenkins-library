@@ -8,7 +8,7 @@
 */
 
 package me.rulin.docker
-
+import  groovy.text.GStringTemplateEngine
 import  me.rulin.docker.Command
 
 def private build(String image_name) {

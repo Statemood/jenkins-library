@@ -10,16 +10,9 @@
 package me.rulin.docker
 
 class Command implements Serializable {
-
-    private static Script script
-
-    Command(Script script) {
-        this.script = script
-    }
-
     static String cmd(c){
         try {
-            script.sh "sudo docker " + c
+            sh("sudo docker $c")
         }
         catch (e) {
             throw e
