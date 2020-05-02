@@ -17,8 +17,8 @@ def private build(String image_name) {
         log.info "Build image: " + image_name
 
         timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
-            String sc = "build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name ."
-            Command.cmd(sc)
+            //String sc = "build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name .".
+            Command.cmd("version")
         }
     }
     catch (e) {
