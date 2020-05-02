@@ -9,7 +9,7 @@
 
 package me.rulin.docker
 
-def call(c){
+def String command(String c){
     try {
         sh("sudo docker $c")
     }

@@ -12,8 +12,7 @@ package me.rulin.docker
 import  me.rulin.docker.Command
 
 def private build(String image_name) {
- 
-    def private cmd = new Command() 
+    def cmd = new Command()
 
     check.file('Dockerfile')
     try {
@@ -21,7 +20,7 @@ def private build(String image_name) {
 
         timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
             //String sc = "build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name .".
-            cmd("version")
+            cmd.command("version")
         }
     }
     catch (e) {
@@ -30,15 +29,12 @@ def private build(String image_name) {
     }
 }
 
-def private version(){
-    cmd.exec("version")
-}
-
 def private images(){
     cmd.exec("images")
 }
 
 def private push(String image_name){
+    def cmd = new Command()
     try {
         log.info "Push image " + image_name
 
@@ -53,6 +49,7 @@ def private push(String image_name){
 }
 
 def login(String reg=DOCKER_REGISTRY, String opt=null){
+    def cmd = new Command()
     if(reg){
         private r = ""
     }
