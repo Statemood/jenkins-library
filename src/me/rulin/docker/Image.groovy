@@ -11,7 +11,9 @@ package me.rulin.docker
 
 import  me.rulin.docker.Command
 
-def public cmd = new Command()
+def call(){
+    def public cmd = new Command()
+}
 
 def private build(String image_name) {
     //def cmd = new Command()
