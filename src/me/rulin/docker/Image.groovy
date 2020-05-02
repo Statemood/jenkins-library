@@ -11,6 +11,9 @@ package me.rulin.docker
 
 import  me.rulin.docker.Command
 
+def cmd = new Command()
+
+
 def private build(String image_name) {
     check.file('Dockerfile')
     try {
@@ -18,7 +21,7 @@ def private build(String image_name) {
         log.info "Build image: " + image_name
 
         timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
-            Command("build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name .")
+            cmd.exec("build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name .")
         }
     }
     catch (e) {
