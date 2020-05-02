@@ -8,17 +8,20 @@
 */
 
 package me.rulin.docker
-import  groovy.text.GStringTemplateEngine
+
 import  me.rulin.docker.Command
 
 def private build(String image_name) {
+ 
+    def private cmd = new Command() 
+
     check.file('Dockerfile')
     try {
         log.info "Build image: " + image_name
 
         timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
             //String sc = "build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name .".
-            Command.cmd("version")
+            cmd("version")
         }
     }
     catch (e) {

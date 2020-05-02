@@ -9,13 +9,11 @@
 
 package me.rulin.docker
 
-class Command implements Serializable {
-    static String cmd(c){
-        try {
-            sh("sudo docker $c")
-        }
-        catch (e) {
-            throw e
-        }
+def call(c){
+    try {
+        sh("sudo docker $c")
+    }
+    catch (e) {
+        throw e
     }
 }
