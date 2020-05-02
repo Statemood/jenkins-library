@@ -10,8 +10,8 @@
 import me.rulin.ci.Git
 import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
-import me.rulin.ci.DockerFile
-import me.rulin.ci.DockerImage
+import me.rulin.docker.File
+import me.rulin.docker.Image
 
 def preProcess() {
     stage("Pre-Process") {
@@ -71,8 +71,8 @@ def unitTest() {
 }
 
 def dockerStage(){
-    def private  df = new DockerFile()
-    def private  di = new DockerImage()
+    def private  df = new File()
+    def private  di = new Image()
     
     def private tag = GIT_REVISION    + '-' + Config.data['commit.id'][0..8]
     def private img = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
