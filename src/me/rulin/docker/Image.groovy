@@ -11,10 +11,8 @@ package me.rulin.docker
 
 import  me.rulin.docker.Command
 
-def cmd = new Command()
-
-
 def private build(String image_name) {
+    def cmd = new Command()
     check.file('Dockerfile')
     try {
         
