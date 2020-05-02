@@ -11,10 +11,10 @@ package me.rulin.docker
 
 class Command implements Serializable {
 
-    private static Cmds cmds
+    private static Script script
 
-    Command(Cmds cmds) {
-        this.cmds = cmds
+    Command(Script script) {
+        this.script = script
     }
 
     static String cmd(c){
