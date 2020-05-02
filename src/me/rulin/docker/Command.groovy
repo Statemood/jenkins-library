@@ -9,7 +9,7 @@
 
 package me.rulin.docker
 
-class Command implements Serializabe {
+class Command implements Serializable {
     static String cmd(String c){
         if(c) {
             try {
