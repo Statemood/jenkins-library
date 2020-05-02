@@ -10,6 +10,13 @@
 package me.rulin.docker
 
 class Command implements Serializable {
+
+    private static Cmds cmds
+
+    Command(Cmds cmds) {
+        this.cmds = cmds
+    }
+
     static String cmd(c){
         try {
             sh("sudo docker $c")
