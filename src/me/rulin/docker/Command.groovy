@@ -13,7 +13,8 @@ class Command implements Serializable {
     def String cmd(String c){
         if(c) {
             try {
-                sh("sudo docker $c")
+                def private dc = c.toString()
+                sh("sudo docker $dc")
             }
             catch (e) {
                 throw e
