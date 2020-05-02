@@ -97,6 +97,5 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
 }
 
 def logout(){
-    def cmd = new Command()
-    cmd.command("logout")
+    cmd("logout")
 }
