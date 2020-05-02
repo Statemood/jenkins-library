@@ -61,15 +61,23 @@ def private push(String image_name){
     }
 }
 
-def login(String reg="", String opt=null){
+def login(String reg=DOCKER_REGISTRY, String opt=null){
     if(reg){
         private r = ""
     }
     try {
-        log.i "Login to Docker Registry $DOCKER_REGISTRY"
+        log.i "Login to Docker Registry " + reg
 
         timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
-            cmd("login ")
+            withCredentials([
+                usernamePassword(
+                    credentialsId: 'Docker-Registry',
+                    passwordVariable: 'registry_password',
+                    usernameVariable: 'registry_username'
+                )
+            ]) {
+                cmd("login -u $registry_username -p $registry_password $reg")
+            }
         }
     }
     catch (e) {

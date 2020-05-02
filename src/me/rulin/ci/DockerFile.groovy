@@ -18,6 +18,7 @@ def private generate(String f='Dockerfile', String t='.', String d='/data/app', 
     else {
         log.w "File not found: $DOCKERIGNORE_FILE, ignored"
     }
+    
     // Test Dockerfile exist
     check.file(f)
     def private dfc = []

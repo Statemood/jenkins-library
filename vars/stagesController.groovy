@@ -79,6 +79,7 @@ def dockerStage(){
 
     df.generate()
     di.build(img)
+    di.login()
     di.push(img)
 }
 
