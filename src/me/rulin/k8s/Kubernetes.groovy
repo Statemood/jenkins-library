@@ -19,8 +19,8 @@ def updateYaml(String yaml_file="k8s.yaml"){
         println data
 
         println data.metadata.name
-        println data.spec.template.containers[]
-        println data.spec.template.containers[].image
+        println data.spec.template.spec.containers[0]
+        println data.spec.template.spec.containers[0].image
 
         //writeYaml file: yaml_file, data: yaml_data, overwrite: true
     }
