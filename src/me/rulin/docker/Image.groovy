@@ -19,8 +19,7 @@ def private build(String image_name) {
         log.info "Build image: " + image_name
 
         timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
-            //String sc = "build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name .".
-            cmd.command("version")
+            cmd.command("build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name .")
         }
     }
     catch (e) {
@@ -29,17 +28,13 @@ def private build(String image_name) {
     }
 }
 
-def private images(){
-    cmd.exec("images")
-}
-
 def private push(String image_name){
     def cmd = new Command()
     try {
         log.info "Push image " + image_name
 
         timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
-            cmd.exec("push $image_name")
+            cmd.command("push $image_name")
         }
     }
     catch (e) {
@@ -64,7 +59,7 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
                     usernameVariable: 'registry_username'
                 )
             ]) {
-                cmd.exec("login -u $registry_username -p $registry_password $reg")
+                cmd.command("login -u $registry_username -p $registry_password $reg")
             }
         }
     }
@@ -75,5 +70,6 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
 }
 
 def logout(){
-    cmd.exec("logout")
+    def cmd = new Command()
+    cmd.command("logout")
 }
