@@ -11,12 +11,8 @@ package me.rulin.docker
 
 import  me.rulin.docker.Command
 
-def call(){
-    def public cmd = new Command()
-}
-
 def private build(String image_name) {
-    //def cmd = new Command()
+    def cmd = new Command()
     check.file('Dockerfile')
     try {
         
@@ -33,15 +29,17 @@ def private build(String image_name) {
 }
 
 def private version(){
-    //def cmd = new Command()
+    def cmd = new Command()
     cmd.exec("version")
 }
 
 def private images(){
+    def public cmd = new Command()
     cmd.exec("images")
 }
 
 def private push(String image_name){
+    def public cmd = new Command()
     try {
         log.info "Push image " + image_name
 
@@ -56,6 +54,7 @@ def private push(String image_name){
 }
 
 def login(String reg=DOCKER_REGISTRY, String opt=null){
+    def public cmd = new Command()
     if(reg){
         private r = ""
     }
@@ -81,5 +80,6 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
 }
 
 def logout(){
+    def public cmd = new Command()
     cmd.exec("logout")
 }
