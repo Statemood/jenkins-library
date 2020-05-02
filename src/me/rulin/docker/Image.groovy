@@ -14,11 +14,11 @@ import  me.rulin.docker.Command
 def private build(String image_name) {
     check.file('Dockerfile')
     try {
-        
         log.info "Build image: " + image_name
 
         timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
-            Command.cmd("build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name .")
+            String sc = "build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name ."
+            Command.cmd(sc)
         }
     }
     catch (e) {
