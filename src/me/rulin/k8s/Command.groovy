@@ -9,6 +9,7 @@
 
 // Usage: 
 //      k8s.command("create", "deployment")
+//                             k8s.yaml
 
 package me.rulin.k8s
 

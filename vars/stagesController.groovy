@@ -11,6 +11,7 @@ import me.rulin.ci.Git
 import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
 import me.rulin.docker.Docker
+import me.rulin.k8s.Kubernetes
 
 def preProcess() {
     stage("Pre-Process") {
@@ -58,7 +59,7 @@ def compile() {
     }
 }
 
-def unitTest() {
+def test() {
     def private utc = Config.data['build.command.unit.test']
     if (utc) {
         stage("Unit Test") {
@@ -69,7 +70,7 @@ def unitTest() {
     }
 }
 
-def dockerStage(){
+def docker(){
     def private  docker = new Docker()
     
     def private tag = GIT_REVISION    + '-' + Config.data['commit.id'][0..8]
@@ -79,6 +80,12 @@ def dockerStage(){
     docker.build(img)
     docker.login()
     docker.push(img)
+}
+
+def kubernetes(){
+    def k8s = new Kubernetes()
+
+    k8s.updateYaml()
 }
 
 return this

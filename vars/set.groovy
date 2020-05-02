@@ -36,9 +36,9 @@ def call(Map args = [:]) {
     stagesController.preProcess()
     stagesController.gitClone()
     stagesController.compile()
-    stagesController.unitTest()
-    stagesController.dockerStage()
-
+    stagesController.test()
+    stagesController.docker()
+    stagesController.kubernetes()
 }
 
 // Set build info
