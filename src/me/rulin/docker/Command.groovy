@@ -10,18 +10,12 @@
 package me.rulin.docker
 
 class Command implements Serializable {
-    def String cmd(String c){
-        if(c) {
-            try {
-                def private dc = c.toString()
-                sh("sudo docker $dc")
-            }
-            catch (e) {
-                throw e
-            }
+    def String cmd(c){
+        try {
+            sh("sudo docker $dc")
         }
-        else {
-            error "No docker command input"
+        catch (e) {
+            throw e
         }
     }
 }
