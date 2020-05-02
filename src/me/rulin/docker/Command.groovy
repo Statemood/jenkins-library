@@ -19,7 +19,7 @@ class Command implements Serializable {
 
     static String cmd(c){
         try {
-            script.sh script: "sudo docker " + c
+            script.sh "sudo docker " + c
         }
         catch (e) {
             throw e
