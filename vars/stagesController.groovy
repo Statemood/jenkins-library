@@ -74,7 +74,7 @@ def docker(){
     def private  docker = new Docker()
     
     def private tag = GIT_REVISION    + '-' + Config.data['commit.id'][0..8]
-    def private img = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
+    def public  img = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
 
     docker.genDockerfile()
     docker.build(img)

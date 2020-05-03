@@ -15,12 +15,23 @@ package me.rulin.k8s
 def updateYaml(String yaml_file="k8s.yaml"){
     try {
         def private data = readYaml file: yaml_file
-
+        def c   = data.spec.template.spec.containers[0]
+        def res = c.resources
         println data
 
         println data.metadata.name
-        println data.spec.template.spec.containers[0]
-        println data.spec.template.spec.containers[0].image
+        println c 
+        println c.image
+
+        
+        c.image             = img
+        c.imagePullPolicy   = "Always"
+        res.requests.cpu    = K8S_REQUESTS_CPU
+        res.requests.memory = K8S_REQUESTS_MEMORY
+        res.limits.cpu      = K8S_LIMITS_CPU
+        res.limits.memory   = K8S_LIMITS_MEMORY
+
+        println data
 
         //writeYaml file: yaml_file, data: yaml_data, overwrite: true
     }
