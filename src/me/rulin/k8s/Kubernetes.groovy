@@ -19,17 +19,18 @@ def updateYaml(String yaml_file="k8s.yaml"){
         def res = c.resources
         println data
 
-        println data.metadata.name
-        println c 
-        println c.image
-
-        
+        /*
+        data.metadata.name  = APP_NAME
         c.image             = DOCKER_IMAGE
         c.imagePullPolicy   = "Always"
         res.requests.cpu    = K8S_REQUESTS_CPU
         res.requests.memory = K8S_REQUESTS_MEMORY
         res.limits.cpu      = K8S_LIMITS_CPU
         res.limits.memory   = K8S_LIMITS_MEMORY
+        */
+
+        data.replace("APP_NAME", APP_NAME)
+        
 
         println data
 
