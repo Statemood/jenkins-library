@@ -29,8 +29,8 @@ def updateYaml(String yaml_file="k8s.yaml"){
         res.limits.memory   = K8S_LIMITS_MEMORY
         */
 
-        data.replace("APP_NAME", APP_NAME)
-        
+        data.replaceAll("APP_NAME", APP_NAME)
+
 
         println data
 
