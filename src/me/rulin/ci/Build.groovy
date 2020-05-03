@@ -9,8 +9,13 @@
 
 package me.rulin.ci
 
+import  me.rulin.ci.RuLin 
+
 def build(String b_file=null){
     log.i "Preparing to build " + Config.data['language'].toUpperCase() + " project"
+
+    log.i "exec command whoami"
+    RuLin.execCommand("whoami")
 
     private  bc = Config.data['build_command']
     private  bo = Config.data['build_options']
