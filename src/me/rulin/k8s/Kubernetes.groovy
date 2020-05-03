@@ -24,7 +24,7 @@ def updateYaml(String yaml_file="k8s.yaml"){
         println c.image
 
         
-        c.image             = img
+        c.image             = DOCKER_IMAGE
         c.imagePullPolicy   = "Always"
         res.requests.cpu    = K8S_REQUESTS_CPU
         res.requests.memory = K8S_REQUESTS_MEMORY
