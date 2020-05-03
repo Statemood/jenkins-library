@@ -1,14 +1,16 @@
 package me.rulin.ci
 
-class RuLin {
-    private CMD cmd 
+import  me.rulin.ci.Command
 
-    RuLin(CMD cmd) {
-       this.cmd = cmd
+class RuLin {
+    private Command command
+
+    RuLin(Command command) {
+       this.command = command
     }
 
     static String execCommand(String c) {
-        cmd.sh(
+        command.sh(
             script: "$c"
         )
     }
