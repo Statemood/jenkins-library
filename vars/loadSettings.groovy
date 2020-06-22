@@ -10,8 +10,8 @@
 def call(){
     def local_data = readFromYaml()
 
-    if (SETTINGS != null) {
-        try {
+    try {
+        if (SETTINGS) {
             if (fileExists(SETTINGS)) {
                 log.i "Loading local settings"
 
@@ -21,10 +21,14 @@ def call(){
                 log.w "File not found: " + SETTINGS
             }
         }
-        catch (e) {
-            throw e
+        else {
+             log.w "Undefined 'SETTINGS'"
         }
     }
+    catch (e) {
+        log.e "Error occurred during detect 'SETTINGS'"
+    }
+
     log.i "Load defaults"
     defaults()
 }
