@@ -29,11 +29,8 @@ def call(Map args = [:]) {
 
     Config.data += args 
 
-    data = Config.data
-
     println Config.data 
     println args 
-    println data
 
     buildInfo()
     stagesController.preProcess()

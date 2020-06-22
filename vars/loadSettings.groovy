@@ -8,8 +8,6 @@
 */
 
 def call(){
-    def local_data = readFromYaml()
-
     try {
         if (SETTINGS) {
             if (fileExists(SETTINGS)) {
