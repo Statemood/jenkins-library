@@ -34,8 +34,8 @@ def call(){
     for (sf in sf_lists) {
         if (fileExists(sf)) {
             try {
-                log.i "Read config from " + yaml_file
-                def yaml_data = readYaml file: yaml_file
+                log.i "Read config from " + sf
+                def yaml_data = readYaml file: sf
 
                 Config.data += yaml_data
             }
