@@ -32,20 +32,16 @@ def call(){
 
     sf_lists = ['settings.yaml', '.jenkins.yaml']
     for (sf in sf_lists) {
-        readFromYaml(sf)
-    }
-}
+        if (fileExists(sf)) {
+            try {
+                log.i "Read config from " + yaml_file
+                def yaml_data = readYaml file: yaml_file
 
-def readFromYaml(yaml_file) {
-    if (fileExists(yaml_file)) {
-        try {
-            log.i "Read config from " + yaml_file
-            def yaml_data = readYaml file: yaml_file
-
-            return yaml_data
-        }
-        catch (e) {
-            throw e
+                Config.data += yaml_data
+            }
+            catch (e) {
+                throw e
+            }
         }
     }
 }
