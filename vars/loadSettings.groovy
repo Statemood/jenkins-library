@@ -26,36 +26,25 @@ def call(){
         }
     }
     catch (e) {
-        log.e "Error occurred during detect 'SETTINGS'"
+        log.w "Undefined 'SETTINGS'"
     }
 
     log.i "Load defaults"
     defaults()
-}
 
-def readFromYaml() {
-    private yf = 'jenkins.yaml'
-    if (fileExists(yf)) {
-        try {
-            log.i "Read config from " + yf
-            def yaml_data = readYaml file: yf
-
-            return yaml_data
-        }
-        catch (e) {
-            throw e
-        }
+    sf_lists = ['settings.yaml', '.jenkins.yaml']
+    for (sf in sf_lists) {
+        readFromYaml(sf)
     }
 }
 
-def readFromJson() {
-    private jf = 'jenkins.json'
-    if (fileExists(jf)) {
+def readFromYaml(yaml_file) {
+    if (fileExists(yaml_file)) {
         try {
-            log.i "Read config from " + jf
-            json_data = readJSON file: jf
+            log.i "Read config from " + yaml_file
+            def yaml_data = readYaml file: yaml_file
 
-            return json_data
+            return yaml_data
         }
         catch (e) {
             throw e

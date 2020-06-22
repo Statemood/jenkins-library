@@ -8,7 +8,7 @@
 */
 
 ///////////////////////////////////////////////////////
-// BASIC                                             //
+// Common                                            //
 ///////////////////////////////////////////////////////
 env.WORKSPACE = JENKINS_HOME + "/workspace/" + JOB_NAME
 env.WS        = WORKSPACE
@@ -26,8 +26,6 @@ try {
 catch (e) {
     log.warning "Requeire plugin 'build user vars', see https://plugins.jenkins.io/build-user-vars-plugin for more information"
 }
-
-env.WEB_ROOT            = "/data/web/"
 
 // GIT
 env.GIT_COMMIT_ID_DISPLAY_LEN = 6
@@ -107,7 +105,7 @@ env.K8S_REQUESTS_MEMORY = "512Mi"
 
 env.K8S_RUN_USER_ID                 = 
 env.K8S_NAMESPACE                   = 
-env.K8S_REPLICAS                    = 
+env.K8S_REPLICAS                    = 1
 
 env.K8S_AFFINITY_PROVIDER           = 
 env.K8S_AFFINITY_ROLE               =
