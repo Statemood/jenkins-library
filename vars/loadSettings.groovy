@@ -38,6 +38,10 @@ def call(){
                 def yaml_data = readYaml file: sf
 
                 Config.data += yaml_data
+
+                c = Config.data + yaml_data
+                print c
+                print yaml_data
             }
             catch (e) {
                 throw e
@@ -45,6 +49,8 @@ def call(){
         }
     }
     println Config.data
+    println '--------'
+    print Config.data
 }
 
 def defaults(){
