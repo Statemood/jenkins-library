@@ -44,6 +44,7 @@ def call(){
             }
         }
     }
+    println Config.data
 }
 
 def defaults(){
