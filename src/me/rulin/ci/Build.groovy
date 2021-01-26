@@ -18,8 +18,11 @@ def build(String b_node='master', String b_file=null){
             private  bo = Config.data['build_options']
             private cmd = bc + " " + bo
 
+            log.i "test 21"
             try {
+                log.i "test 22"
                 if (b_file){
+                    log.i "test 23"
                     check.file(b_file)
 
                     log.i "Build with command: " + bc + ", options: " + bo
@@ -27,6 +30,7 @@ def build(String b_node='master', String b_file=null){
                 }
             }
             catch (e) {
+                log.i "test 24"
                 throw e
             }
         }
