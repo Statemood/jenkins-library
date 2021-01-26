@@ -1,4 +1,4 @@
-def call(Config.users){
+def call(config){
     //def repo = 'https://github.com/Statemood/simple-java-maven-app.git'
 
     pipeline {
@@ -23,7 +23,7 @@ def call(Config.users){
                 tagFilter: '*', 
                 type: 'PT_BRANCH_TAG', 
                 description: 'Please select a branch or tag to build',
-                useRepository: repo)
+                useRepository: config.repo)
 
             choice(
                 name: 'ENVIRONMENT',
