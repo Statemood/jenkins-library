@@ -20,7 +20,7 @@ def build(String b_node='master', String b_file=null){
 
             log.i "test 21"
             try {
-                log.i "test 22"
+                log.i "test 22, bf=" + b_file + "."
                 if (b_file){
                     log.i "test 23"
                     check.file(b_file)
