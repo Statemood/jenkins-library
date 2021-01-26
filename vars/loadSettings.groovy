@@ -36,7 +36,7 @@ def call(){
             try {
                 log.i "Read config from " + sf
                 def yaml_data = readYaml file: sf
-
+                
                 Config.data += yaml_data
 
                 c = Config.data + yaml_data

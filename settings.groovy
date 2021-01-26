@@ -10,8 +10,8 @@
 ///////////////////////////////////////////////////////
 // Common                                            //
 ///////////////////////////////////////////////////////
-env.WORKSPACE = JENKINS_HOME + "/workspace/" + JOB_NAME
-env.WS        = WORKSPACE
+env.WORKSPACE    = JENKINS_HOME + "/workspace/" + JOB_NAME
+env.WS           = WORKSPACE
 
 env.PROJECT_NAME = JOB_BASE_NAME.split('_')[0].toLowerCase()
 env.APP_NAME     = JOB_BASE_NAME.split('_')[1].toLowerCase()
@@ -80,9 +80,7 @@ env.NPM_I               =  NPM_INSTALL
 ///////////////////////////////////////////////////////
 // Docker                                            //
 ///////////////////////////////////////////////////////
-env.DOCKER_REGISTRY                 = ""
-// Saved in the Jenkins credentials with name 'Docker-Registry'
-env.DOCKER_REGISTRY_ACCOUNT         = credentials('Docker-Registry')
+env.DOCKER_REGISTRY_ACCOUNT         = "Docker-Registry"
 env.DOCKER_IMAGE_NAME               = ""
 env.DOCKER_IMAGE_TAG                = ""
 env.DOCKER_IMAGE_BUILD_TIMEOUT      = 1800

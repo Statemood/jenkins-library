@@ -81,7 +81,7 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
         timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
             withCredentials([
                 usernamePassword(
-                    credentialsId: 'Docker-Registry',
+                    credentialsId: DOCKER_REGISTRY_ACCOUNT,
                     passwordVariable: 'registry_password',
                     usernameVariable: 'registry_username'
                 )

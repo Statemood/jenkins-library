@@ -31,7 +31,6 @@ def updateYaml(String yaml_file="k8s.yaml"){
 
         data.replaceAll("APP_NAME", APP_NAME)
 
-
         println data
 
         //writeYaml file: yaml_file, data: yaml_data, overwrite: true
