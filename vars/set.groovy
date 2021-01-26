@@ -32,17 +32,20 @@ def call(Map args = [:]) {
     println Config.data 
     println args 
 
-    buildInfo()
-    stagesController.preProcess()
-    stagesController.gitClone()
-    stagesController.compile()
-    stagesController.test()
-    stagesController.docker()
-    stagesController.kubernetes()
+    currentBuildInfo()
+    
+    dir(pwd()){
+        stagesController.preProcess()
+        stagesController.gitClone()
+        stagesController.compile()
+        stagesController.test()
+        stagesController.docker()
+        stagesController.kubernetes()
+    }
 }
 
 // Set build info
-def buildInfo(){
+def currentBuildInfo(){
     def private name = BUILD_NUMBER + "-" + Config.data['env']
     def private desc = Config.data['action'] + " by " + Config.data['build.user'] + ", version " + Config.data['revision'] 
 
