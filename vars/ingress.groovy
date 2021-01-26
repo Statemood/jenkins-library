@@ -1,5 +1,5 @@
-def call(){
-    def repo = 'https://github.com/Statemood/simple-java-maven-app.git'
+def call(Config.users){
+    //def repo = 'https://github.com/Statemood/simple-java-maven-app.git'
 
     pipeline {
         agent any
