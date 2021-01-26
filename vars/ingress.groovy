@@ -49,7 +49,7 @@ def call(config){
                         fc.getConfig()
                         */
 
-                        set(["repo": repo,                       
+                        set(["repo": config.repo,                       
                             "lang": "java",
                             "build.command": "mvn",
                             "build.options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
