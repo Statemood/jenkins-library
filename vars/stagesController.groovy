@@ -13,7 +13,16 @@ import me.rulin.ci.SonarQube
 import me.rulin.docker.Docker
 import me.rulin.k8s.Kubernetes
 
-def preProcess() {
+// Set build info
+def stageCurrentBuildInfo(){
+    def private name = BUILD_NUMBER + "-" + Config.data['env']
+    def private desc = Config.data['action'] + " by " + Config.data['build.user'] + ", version " + Config.data['revision'] 
+
+    currentBuild.displayName = name 
+    currentBuild.description = desc 
+}
+
+def stagePreProcess() {
     stage("Pre-Process") {
         // Set default info
         // Set build info
@@ -23,7 +32,7 @@ def preProcess() {
     }
 }
 
-def gitClone() {
+def stageGitClone() {
     stage("Git Clone") {
         try {
             def private revision = Config.data['revision']
@@ -45,21 +54,21 @@ def gitClone() {
     }
 }
 
-def sonar() {
+def stageSonar() {
     stage("SonarQube Scanner") {
         def sonar = new SonarQube()
         sonar.scanner()
     }
 }
 
-def compile() {
+def stageCompile() {
     stage("Build Code") {
         def language = new Language()
         language.seletor(Config.data['language'])
     }
 }
 
-def test() {
+def stageTest() {
     def private utc = Config.data['build.command.unit.test']
     if (utc) {
         stage("Unit Test") {
@@ -70,7 +79,7 @@ def test() {
     }
 }
 
-def docker(){
+def stageDocker(){
     node(STAGE_DOCKER) {
         def private  docker = new Docker()
         
@@ -84,7 +93,7 @@ def docker(){
     }
 }
 
-def kubernetes(){
+def stageKubernetes(){
     def k8s = new Kubernetes()
 
     k8s.updateYaml()

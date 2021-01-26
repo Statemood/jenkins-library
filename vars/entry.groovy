@@ -1,102 +1,50 @@
-def call(config){
-    //def repo = 'https://github.com/Statemood/simple-java-maven-app.git'
+/* entry.groovy
+   ##################################################
+   # Created by Lin Ru at 2018.10.01 22:00          #
+   #                                                #
+   # A Part of the Project jenkins-library          #
+   #  https://github.com/Statemood/jenkins-library  #
+   ##################################################
+*/
 
-    pipeline {
-        agent any
+def call(Map args = [:]) {
+    /*
+    Order:
+        1. Local Settings
+        2. .jenkins.yaml
+        3. Config
+    */
 
-        options {
-            //timestamps()
-            timeout(time: 30, unit: 'MINUTES')
-            buildDiscarder(logRotator(numToKeepStr: '10'))
-        }
+    loadSettings()
 
-        parameters {
-            gitParameter (
-                branch: '', 
-                branchFilter: 'origin/(.*)', 
-                defaultValue: 'master', 
-                listSize: '10', 
-                name: 'GIT_REVISION', 
-                quickFilterEnabled: true, 
-                selectedValue: 'NONE', 
-                sortMode: 'DESCENDING_SMART', 
-                tagFilter: '*', 
-                type: 'PT_BRANCH_TAG', 
-                description: 'Please select a branch or tag to build',
-                useRepository: config.repo)
+    if(!ACTION) { ACTION = "deploy" }
 
-            choice(
-                name: 'ENVIRONMENT',
-                description: 'Please select Environment',
-                choices: 'DEV\nTEST\nUAT\nPRE\nPRD')
+    Config.data['repo']             = args.containsKey('repo')              ?: null
+    Config.data['revision']         = args.containsKey('revision')          ?: GIT_REVISION
+    Config.data['language']         = args.containsKey('language')          ?: "java"
+    Config.data['action']           = ACTION
+    Config.data['build.user']       = BUILD_USER
+    Config.data['env']              = ENVIRONMENT
+    Config.data['credentials.id']   = args.containsKey('credentials.id')    ?: "DefaultGitSCMCredentialsID"
 
-            choice(
-                name: 'ACTION',
-                description: 'Please select action',
-                choices: 'deploy\nrollback')
-        }
+    Config.data += args 
 
-        stages {
-            stage ("Initial Stages") {
-                steps {
-                    script {
-                        log.i "Acquire config data"
-                        // Fecth data
-                        /*
-                        
-                        fc = new FetchConfig(auto)
-                        
-                        fc.getConfig()
-                        */
+    println Config.data 
+    println args 
 
-                        set(["repo": config.repo,                       
-                            "lang": "java",
-                            "build.command": "mvn",
-                            "build.options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
-                    }
-                }
-            }
-        }
+    stagesController.stageCurrentBuildInfo()
+    pipeline.standard()
+}
 
-        post {
-            aborted {
-                script {
-                    log.i "Post Action: aborted"
-                }
-            }
-
-            always {
-                script {
-                    log.i "Post Action: always"
-                }
-            }
-
-            changed {
-                script {
-                    log.i "Post Action: changed"
-                }
-            }
-
-            failure {
-                script {
-                    currentBuild.result = "FAILURE"
-                    log.i "Post Action: failure"  
-
-                    // Send mail
-                }
-            }
-
-            success {
-                script {
-                    log.i "Post Action: success"
-                }
-            }
-
-            unstable {
-                script {
-                    log.i "Post Action: unstable"
-                }
-            }  
-        }
+def gate(){
+    dir(FIRST_IMPRESSION){
+        stagesController.stagePreProcess()
+        stagesController.stageGitClone()
+        stagesController.stageCompile()
+        stagesController.stageTest()
+        stagesController.stageDocker()
+        stagesController.stageKubernetes()
     }
 }
+
+return this

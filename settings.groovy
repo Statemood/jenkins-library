@@ -10,11 +10,11 @@
 ///////////////////////////////////////////////////////
 // Common                                            //
 ///////////////////////////////////////////////////////
-env.WORKSPACE    = JENKINS_HOME + "/workspace/" + JOB_NAME
-env.WS           = WORKSPACE
-
-env.PROJECT_NAME = JOB_BASE_NAME.split('_')[0].toLowerCase()
-env.APP_NAME     = JOB_BASE_NAME.split('_')[1].toLowerCase()
+env.WORKSPACE           = JENKINS_HOME + "/workspace/" + JOB_NAME
+env.WS                  = WORKSPACE
+env.FIRST_IMPRESSION    = pwd()
+env.PROJECT_NAME        = JOB_BASE_NAME.split('_')[0].toLowerCase()
+env.APP_NAME            = JOB_BASE_NAME.split('_')[1].toLowerCase()
 
 try {
     // Get User info
