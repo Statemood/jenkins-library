@@ -20,7 +20,7 @@ def seletor(String tl){
             return
             
         case "java":
-            switch(Config.data['build_command']) {
+            switch(Config.data['build.command']) {
                 case "ant":
                     b.build(tl)
                     return
