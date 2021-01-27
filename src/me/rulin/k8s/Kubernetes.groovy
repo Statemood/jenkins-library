@@ -19,7 +19,7 @@ def updateYaml(String yaml_file="k8s.yaml"){
         def res = c.resources
         println data
 
-        /*
+        
         data.metadata.name  = APP_NAME
         c.image             = DOCKER_IMAGE
         c.imagePullPolicy   = "Always"
@@ -27,13 +27,13 @@ def updateYaml(String yaml_file="k8s.yaml"){
         res.requests.memory = K8S_REQUESTS_MEMORY
         res.limits.cpu      = K8S_LIMITS_CPU
         res.limits.memory   = K8S_LIMITS_MEMORY
-        */
+        
 
-        data.replaceAll("APP_NAME", APP_NAME)
+        //data.replaceAll("APP_NAME", APP_NAME)
 
         println data
 
-        //writeYaml file: yaml_file, data: yaml_data, overwrite: true
+        writeYaml file: yaml_file, data: yaml_data, overwrite: true
     }
     catch (e) {
         throw e

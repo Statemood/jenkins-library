@@ -86,7 +86,8 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
                     usernameVariable: 'registry_username'
                 )
             ]){
-                cmd("login -u $registry_username -p $registry_password $reg")
+                // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#string-interpolation
+                cmd('login -u $registry_username -p $registry_password $reg')
             }
         }
     }
