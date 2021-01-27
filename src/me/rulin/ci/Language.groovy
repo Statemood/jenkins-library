@@ -14,7 +14,7 @@ def seletor(String tl){
     // tl, target language
     private b = new Build()
 
-    switch(tl){
+    switch(tl.toLowerCase()){
         case "php":
             b.build(tl,'composer.json')
             return

@@ -12,7 +12,7 @@
 ///////////////////////////////////////////////////////
 env.WORKSPACE           = JENKINS_HOME + "/workspace/" + JOB_NAME
 env.WS                  = WORKSPACE
-env.FIRST_IMPRESSION    = pwd()
+env.FIRST_DIR           = pwd()
 env.PROJECT_NAME        = JOB_BASE_NAME.split('_')[0].toLowerCase()
 env.APP_NAME            = JOB_BASE_NAME.split('_')[1].toLowerCase()
 
@@ -37,6 +37,7 @@ env.STAGE_BUILD         = "master"
 env.STAGE_DOCKER        = "master"
 env.STAGE_TEST          = "master"
 env.STAGE_K8S           = "master"
+env.STAGE_SONAR         = "master"
 
 // TRIGGERS
 env.SKIP_BUILD          = false
