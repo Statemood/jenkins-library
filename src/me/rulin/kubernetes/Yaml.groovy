@@ -19,7 +19,7 @@ def generate(String yaml_file="k8s.yaml"){
         yml.apiVersion                  = "apps/v1"
         yml.kind                        = "Deployment"
         yml.metadata.name               = APP_NAME
-        s.replicas                      = int(K8S_REPLICAS)
+        s.replicas                      = K8S_REPLICAS
         s.selector.matchLabels.app      = APP_NAME
         s.template.metadata.labels.app  = APP_NAME
         
