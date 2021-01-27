@@ -42,7 +42,7 @@ def call(Map args = [:]) {
 
     stagePreProcess()
     stageGitClone()
-    stageCompile()
+    stageBuild()
     stageTest()
     stageDocker()
     stageKubernetes()
@@ -108,12 +108,14 @@ def stageSonar() {
     }
 }
 
-def stageCompile() {
+def stageBuild() {
     stage("Build Code") {
-        node(STAGE_BUILD) {
+        lang = Config.data['language'].toLowerCase()
+
+        node(lang) {
             dir(FIRST_DIR) {
                 def language = new Language()
-                language.seletor(Config.data['language'])
+                language.seletor(lang)
             }
         }
     }
