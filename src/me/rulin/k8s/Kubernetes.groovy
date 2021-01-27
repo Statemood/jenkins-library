@@ -14,7 +14,7 @@ package me.rulin.k8s
 
 def generateYaml(String yaml_file="k8s.yaml"){
     try {
-        def private yml = yaml_file //readYaml file: yaml_file
+        def private yml = readYaml file: yaml_file
         def private   s = yml.spec
         def private   c = s.template.spec.containers[0]
         def private res = c.resources
