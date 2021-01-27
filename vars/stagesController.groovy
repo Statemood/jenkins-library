@@ -13,6 +13,41 @@ import me.rulin.ci.SonarQube
 import me.rulin.docker.Docker
 import me.rulin.k8s.Kubernetes
 
+def call(Map args = [:]) {
+    /*
+    Order:
+        1. Local Settings
+        2. .jenkins.yaml
+        3. Config
+    */
+
+    loadSettings()
+
+    if(!ACTION) { ACTION = "deploy" }
+
+    Config.data['repo']             = args.containsKey('repo')              ?: null
+    Config.data['revision']         = args.containsKey('revision')          ?: GIT_REVISION
+    Config.data['language']         = args.containsKey('language')          ?: "java"
+    Config.data['action']           = ACTION
+    Config.data['build.user']       = BUILD_USER
+    Config.data['env']              = ENVIRONMENT
+    Config.data['credentials.id']   = args.containsKey('credentials.id')    ?: "DefaultGitSCMCredentialsID"
+
+    Config.data += args 
+
+    println Config.data 
+    println args 
+
+    dir(FIRST_IMPRESSION){
+        tagePreProcess()
+        stageGitClone()
+        stageCompile()
+        stageTest()
+        stageDocker()
+        stageKubernetes()
+    }
+}
+
 // Set build info
 def stageCurrentBuildInfo(){
     def private name = BUILD_NUMBER + "-" + Config.data['env']
@@ -27,7 +62,7 @@ def stagePreProcess() {
         // Set default info
         // Set build info
         // Check parameters
-
+        stageCurrentBuildInfo()
         log.i "Stage Pre-Process OK"
     }
 }
