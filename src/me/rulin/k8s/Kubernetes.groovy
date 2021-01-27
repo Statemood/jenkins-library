@@ -15,17 +15,6 @@ package me.rulin.k8s
 def generateYaml(String yaml_file="k8s.yaml"){
     try {
         def private yml = yaml_file //readYaml file: yaml_file
-
-        def dat = [
-            "apiVersion": "apps/v1",
-            "kind": "Deployment",
-            "metadata.name": APP_NAME,
-            "spec.replicas": K8S_REPLICAS,
-            "spec.selector.matchLabels.app": APP_NAME,
-            "spec.template.matedata.labels.app": APP_NAME
-        ]
-
-        /*
         def private   s = yml.spec
         def private   c = s.template.spec.containers[0]
         def private res = c.resources
@@ -48,10 +37,9 @@ def generateYaml(String yaml_file="k8s.yaml"){
         res.limits.cpu          = K8S_LIMITS_CPU
         res.limits.memory       = K8S_LIMITS_MEMORY
 
-        */
-        println dat
+        println yml
 
-        writeYaml file: yaml_file, data: dat, overwrite: true
+        writeYaml file: yaml_file, data: yml, overwrite: true
     }
     catch (e) {
         throw e
