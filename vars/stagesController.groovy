@@ -136,7 +136,7 @@ def stageTest() {
 
 def stageDocker(){
     // if (DEPLOY_MODE == "Container") {}
-    stage("Build Image")
+    stage("Build Image") {
         node(STAGE_DOCKER) {
             dir(FIRST_DIR) {
                 def private  docker = new Docker()
