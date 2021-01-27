@@ -2,6 +2,9 @@
 
 def repo = 'https://github.com/Statemood/simple-java-maven-app.git'
 
+entry(["repo": repo])
+
+/*
 pipeline {
     agent any
 
@@ -49,8 +52,8 @@ pipeline {
                     
                     fc.getConfig()
                     */
-
-                    set(["repo": repo,                       
+                    /*
+                    stagesController(["repo": repo,                       
                          "lang": "java",
                          "build.command": "mvn",
                          "build.options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
@@ -58,6 +61,7 @@ pipeline {
             }
         }
     }
+    /*
 
     post {
         aborted {
@@ -100,3 +104,4 @@ pipeline {
         }  
     }
 }
+*/

@@ -12,7 +12,7 @@
 
 package me.rulin.k8s
 
-def updateYaml(String yaml_file="k8s.yaml"){
+def generateYaml(String yaml_file="k8s.yaml"){
     try {
         def private yaml_data = readYaml file: yaml_file
         def c   = yaml_data.spec.template.spec.containers[0]
