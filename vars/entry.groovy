@@ -33,10 +33,7 @@ def call(Map args = [:]) {
     println args 
 
     stagesController.stageCurrentBuildInfo()
-    pipeline.standard()
-}
 
-def gate(){
     dir(FIRST_IMPRESSION){
         stagesController.stagePreProcess()
         stagesController.stageGitClone()

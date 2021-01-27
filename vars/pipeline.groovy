@@ -1,4 +1,4 @@
-def standard(){
+def standard(Map config=[:]){
     pipeline {
         agent any
 
