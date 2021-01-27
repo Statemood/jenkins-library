@@ -11,42 +11,8 @@ import me.rulin.ci.Git
 import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
 import me.rulin.docker.Docker
-import me.rulin.k8s.Kubernetes
-
-def call(Map args = [:]) {
-    /*
-    Order:
-        1. Local Settings
-        2. .jenkins.yaml
-        3. Config
-    */
-
-    loadSettings()
-
-    if(!ACTION) { ACTION = "deploy" }
-
-    Config.data['repo']             = args.containsKey('repo')              ?: null
-    Config.data['revision']         = args.containsKey('revision')          ?: GIT_REVISION
-    Config.data['language']         = args.containsKey('language')          ?: "java"
-    Config.data['action']           = ACTION
-    Config.data['build.user']       = BUILD_USER
-    Config.data['env']              = ENVIRONMENT
-    Config.data['credentials.id']   = args.containsKey('credentials.id')    ?: "DefaultGitSCMCredentialsID"
-
-    Config.data += args 
-
-    println Config.data 
-    println args 
-
-    log.i "Using workspace: " + FIRST_DIR
-
-    stagePreProcess()
-    stageGitClone()
-    stageBuild()
-    stageTest()
-    stageDocker()
-    stageKubernetes()
-}
+import me.rulin.kubernetes.Yaml
+import me.rulin.kubernetes.Command
 
 // Set build info
 def stageCurrentBuildInfo(){
@@ -159,9 +125,9 @@ def stageKubernetes(){
     stage("Kubernetes") {
         node(STAGE_K8S) {
             dir(FIRST_DIR) {
-                def k8s = new Kubernetes()
+                def private yaml = new Yaml()
 
-                k8s.generateYaml()
+                yaml.generate()
             }
         }
     }

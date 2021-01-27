@@ -1,4 +1,4 @@
-/* Kubernetes.groovy
+/* Yaml.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -7,24 +7,19 @@
    ##################################################
 */
 
-// Usage: 
-//      k8s.command("create", "deployment")
+package me.rulin.kubernetes
 
-package me.rulin.k8s
-
-def generateYaml(String yaml_file="k8s.yaml"){
+def generate(String yaml_file="k8s.yaml"){
     try {
         def private yml = readYaml file: yaml_file
         def private   s = yml.spec
         def private   c = s.template.spec.containers[0]
         def private res = c.resources
 
-        println yml
-        
         yml.apiVersion                  = "apps/v1"
         yml.kind                        = "Deployment"
         yml.metadata.name               = APP_NAME
-        s.replicas                      = K8S_REPLICAS
+        s.replicas                      = int(K8S_REPLICAS)
         s.selector.matchLabels.app      = APP_NAME
         s.template.metadata.labels.app  = APP_NAME
         
@@ -36,8 +31,6 @@ def generateYaml(String yaml_file="k8s.yaml"){
         res.requests.memory     = K8S_REQUESTS_MEMORY
         res.limits.cpu          = K8S_LIMITS_CPU
         res.limits.memory       = K8S_LIMITS_MEMORY
-
-        println yml
 
         writeYaml file: yaml_file, data: yml, overwrite: true
     }

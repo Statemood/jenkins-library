@@ -2,4 +2,4 @@
 
 def repo = 'https://github.com/Statemood/simple-java-maven-app.git'
 
-entry(["repo": repo])
+jenkinsfile(["repo": repo])
