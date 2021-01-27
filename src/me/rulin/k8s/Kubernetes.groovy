@@ -18,8 +18,7 @@ def updateYaml(String yaml_file="k8s.yaml"){
         def c   = data.spec.template.spec.containers[0]
         def res = c.resources
         println data
-
-        
+                
         data.metadata.name  = APP_NAME
         c.image             = DOCKER_IMAGE
         c.imagePullPolicy   = "Always"

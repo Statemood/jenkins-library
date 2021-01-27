@@ -87,7 +87,7 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
                 )
             ]){
                 // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#string-interpolation
-                cmd('login -u $registry_username -p $registry_password $reg')
+                sh('sodu docker login -u $registry_username -p $registry_password $reg')
             }
         }
     }
