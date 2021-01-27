@@ -161,7 +161,7 @@ def stageKubernetes(){
             dir(FIRST_DIR) {
                 def k8s = new Kubernetes()
 
-                k8s.updateYaml()
+                k8s.generateYaml()
             }
         }
     }
