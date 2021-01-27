@@ -16,36 +16,36 @@ def seletor(String tl){
 
     switch(tl.toLowerCase()){
         case "php":
-            b.build(tl,'composer.json')
+            b.build('composer.json')
             return
             
         case "java":
             switch(Config.data['build.command']) {
                 case "ant":
-                    b.build(tl)
+                    b.build()
                     return
 
                 case "gradle":
-                    b.build(tl,'build.gradle')
+                    b.build('build.gradle')
                     return
 
                 case "mvn":
-                    b.build(tl,'pom.xml')
+                    b.build('pom.xml')
                     return
 
                 break
             }
         
         case "python":
-            b.build(tl)
+            b.build()
             return
 
         case "golang":
-            b.build(tl)
+            b.build()
             return
 
         case "nodejs":
-            b.build(tl,'package.json')
+            b.build('package.json')
             return
         break
     }
