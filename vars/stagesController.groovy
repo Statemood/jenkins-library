@@ -39,7 +39,7 @@ def call(Map args = [:]) {
     println args 
 
     dir(FIRST_IMPRESSION){
-        tagePreProcess()
+        stagePreProcess()
         stageGitClone()
         stageCompile()
         stageTest()
