@@ -36,6 +36,7 @@ def deployment(String f){
         def private   s = yml[lt].spec
         def private  md = yml[lt].metadata
 
+        println yml[lt].kind
         println lt
         println s 
         println md 
