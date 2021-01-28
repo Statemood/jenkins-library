@@ -62,12 +62,16 @@ def deployment(String f){
         }
 
         if (e) {
-            for (i=e.size(); i++) {
-                log.i "now i is $i"
-                if (i == 10 ) {
-                    break
-                }
+            int ec = e.size(), i = 1
+            while (true) {
+                if (i > ec ) { break } else { i++ }
             }
+
+            // add env
+
+            e[i].name           = "ENVIRONMENT"
+            e[i].value          = ENVIRONMENT 
+
         }
 
         res.requests.cpu        = K8S_REQUESTS_CPU
