@@ -33,6 +33,9 @@ def deployment(String f){
     try {
         def private yml = readYaml file: f
         def private  lt = locationKind("Deployment", f)
+
+        log.i "LT=$lt"
+        /*
         def private   s = yml[lt].spec
         def private  md = yml[lt].metadata
         def private   c = s.template.spec.containers[0]
@@ -66,6 +69,7 @@ def deployment(String f){
         res.limits.memory       = K8S_LIMITS_MEMORY
 
         writeYaml file: yaml_file, data: yml, overwrite: true
+        */
     }
     catch (e) {
         throw e
