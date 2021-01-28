@@ -35,15 +35,7 @@ def deployment(String f){
         def private  lt = locationKind("Deployment", f)
         def private   s = yml[lt].spec
         def private  md = yml[lt].metadata
-
-        println yml[lt].kind
-        println lt
-        println s 
-        println md 
         def private   c = s.template.spec.containers[0]
-
-        println c
-        println c.resources 
         def private res = c.resources
         def private ssr = s.strategy.rollingUpdate
         def private ips = c.imagePullSecret
@@ -73,7 +65,7 @@ def deployment(String f){
         res.limits.cpu          = K8S_LIMITS_CPU
         res.limits.memory       = K8S_LIMITS_MEMORY
 
-        writeYaml file: yaml_file, data: yml, overwrite: true
+        writeYaml file: f, data: yml, overwrite: true
     }
     catch (e) {
         throw e
@@ -94,7 +86,7 @@ def service(String f){
         s.ports[0].name      = "http"
         s.ports[0].port      = APP_PORT
 
-        writeYaml file: yaml_file, data: yml, overwrite: true
+        writeYaml file: f, data: yml, overwrite: true
     }
     catch (e) {
         log.e "Oops! An error occurred during update serivce, file: " + f
