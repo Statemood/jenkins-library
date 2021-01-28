@@ -126,8 +126,9 @@ def stageKubernetes(){
         node(STAGE_K8S) {
             dir(FIRST_DIR) {
                 def private yaml = new Yaml()
-
-                yaml.generate()
+                def private    f = "k8s.yaml"
+                yaml.deployment(f)
+                yaml.service(f)
             }
         }
     }

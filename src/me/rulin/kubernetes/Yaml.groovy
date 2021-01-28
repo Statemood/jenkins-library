@@ -9,18 +9,37 @@
 
 package me.rulin.kubernetes
 
-def generate(String yaml_file="k8s.yaml"){
+def locationKind(String kd, String f) {
     try {
-        def private yml = readYaml file: yaml_file
-        def private   s = yml.spec
-        def private  md = yml.metadata
+        def private    yml = readYaml file: f
+
+        if (yml.size() > 0 && yml[0] != null) {
+            for (int i=0; i<yml.size(); i++) {
+                if (yml[i].kind == kd) {
+                    return "[$i]"
+                }
+            }
+        }
+        else {
+            return 
+        }
+    } 
+    catch (e) {
+        throw e
+    }
+}
+
+def deployment(String f){
+    try {
+        def private yml = readYaml file: f
+        def private  lt = locationKind("Deployment", f)
+        def private   s = yml[lt].spec
+        def private  md = yml[lt].metadata
         def private   c = s.template.spec.containers[0]
         def private res = c.resources
         def private ssr = s.strategy.rollingUpdate
         def private ips = c.imagePullSecret
 
-        yml.apiVersion                  = "apps/v1"
-        yml.kind                        = "Deployment"
         md.name                         = APP_NAME
         md.namespace                    = K8S_NAMESPACE
 
@@ -37,10 +56,6 @@ def generate(String yaml_file="k8s.yaml"){
         c.image                         = DOCKER_IMAGE
         c.imagePullPolicy               = "Always"
 
-        c.env                           = ""
-        c.env[0].name                   = "ENVIRONMENT"
-        c.env[0].value                  = ENVIRONMENT
-
         if (ips) {
             ips[0].name                 = "image-pull-secret-" + PROJECT_NAME
         }
@@ -53,6 +68,28 @@ def generate(String yaml_file="k8s.yaml"){
         writeYaml file: yaml_file, data: yml, overwrite: true
     }
     catch (e) {
+        throw e
+    }
+}
+
+def service(String f){
+    try {
+        def private      yml = readYaml file: f
+        def private location = locationKind("Service", f)
+        def private      svc = yml[location]
+        def private       md = svc.metadata
+        def private        s = svc.spec
+
+        md.name              = APP_NAME
+        md.namespace         = K8S_NAMESPACE
+        s.selector.app       = APP_NAME
+        s.ports[0].name      = "http"
+        s.ports[0].port      = APP_PORT
+
+        writeYaml file: yaml_file, data: yml, overwrite: true
+    }
+    catch (e) {
+        log.e "Oops! An error occurred during update serivce, file: " + yf
         throw e
     }
 }

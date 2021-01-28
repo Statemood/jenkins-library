@@ -15,6 +15,7 @@ env.WS                  = WORKSPACE
 env.FIRST_DIR           = pwd()
 env.PROJECT_NAME        = JOB_BASE_NAME.split('_')[0].toLowerCase()
 env.APP_NAME            = JOB_BASE_NAME.split('_')[1].toLowerCase()
+env.APP_PORT            = 8080
 
 try {
     // Get User info
@@ -103,7 +104,7 @@ env.K8S_REQUESTS_CPU    = "500m"
 env.K8S_REQUESTS_MEMORY = "512Mi"
 
 env.K8S_RUN_USER_ID                 = 
-env.K8S_NAMESPACE                   = 
+env.K8S_NAMESPACE                   = PROJECT_NAME
 env.K8S_REPLICAS                    = 1
 
 env.K8S_AFFINITY_PROVIDER           = 
