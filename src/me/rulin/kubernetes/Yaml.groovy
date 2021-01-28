@@ -61,19 +61,6 @@ def deployment(String f){
             ips[0].name                 = "image-pull-secret-" + PROJECT_NAME
         }
 
-        if (e) {
-            int ec = e.size(), i = 1
-            while (true) {
-                if (i > ec ) { break } else { i++ }
-            }
-
-            // add env
-
-            e[i].name           = "ENVIRONMENT"
-            e[i].value          = ENVIRONMENT 
-
-        }
-
         res.requests.cpu        = K8S_REQUESTS_CPU
         res.requests.memory     = K8S_REQUESTS_MEMORY
         res.limits.cpu          = K8S_LIMITS_CPU
