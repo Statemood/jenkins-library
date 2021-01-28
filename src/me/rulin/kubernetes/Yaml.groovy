@@ -35,9 +35,8 @@ def generate(String yaml_file="k8s.yaml"){
         c.name                          = APP_NAME
         c.image                         = DOCKER_IMAGE
         c.imagePullPolicy               = "Always"
-        try {
-            c.imagePullSecret[0].name   = "image-pull-secret-" + PROJECT_NAME
-        }
+        c.imagePullSecret[0].name       = "image-pull-secret-" + PROJECT_NAME
+        
 
         res.requests.cpu        = K8S_REQUESTS_CPU
         res.requests.memory     = K8S_REQUESTS_MEMORY
