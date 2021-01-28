@@ -33,12 +33,16 @@ def deployment(String f){
     try {
         def private yml = readYaml file: f
         def private  lt = locationKind("Deployment", f)
-
-        log.i "LT=$lt"
-        /*
         def private   s = yml[lt].spec
         def private  md = yml[lt].metadata
+
+        println lt
+        println s 
+        println md 
         def private   c = s.template.spec.containers[0]
+
+        println c
+        println c.resources 
         def private res = c.resources
         def private ssr = s.strategy.rollingUpdate
         def private ips = c.imagePullSecret
@@ -69,7 +73,6 @@ def deployment(String f){
         res.limits.memory       = K8S_LIMITS_MEMORY
 
         writeYaml file: yaml_file, data: yml, overwrite: true
-        */
     }
     catch (e) {
         throw e
@@ -93,7 +96,7 @@ def service(String f){
         writeYaml file: yaml_file, data: yml, overwrite: true
     }
     catch (e) {
-        log.e "Oops! An error occurred during update serivce, file: " + yf
+        log.e "Oops! An error occurred during update serivce, file: " + f
         throw e
     }
 }
