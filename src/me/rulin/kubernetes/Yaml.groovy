@@ -32,10 +32,12 @@ def generate(String yaml_file="k8s.yaml"){
         ssr.maxSurge                    = K8S_STRATEGY_MAX_SURGE
         ssr.maxUnavailable              = K8S_STRATEGY_MAX_UNAVAILABLE
 
-        c.name                  = APP_NAME
-        c.image                 = DOCKER_IMAGE
-        c.imagePullPolicy       = "Always"
-        c.imagePullSecret       = "image-pull-secret-" + PROJECT_NAME
+        c.name                          = APP_NAME
+        c.image                         = DOCKER_IMAGE
+        c.imagePullPolicy               = "Always"
+        try {
+            c.imagePullSecret[0].name   = "image-pull-secret-" + PROJECT_NAME
+        }
 
         res.requests.cpu        = K8S_REQUESTS_CPU
         res.requests.memory     = K8S_REQUESTS_MEMORY
