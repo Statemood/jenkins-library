@@ -37,6 +37,10 @@ def generate(String yaml_file="k8s.yaml"){
         c.image                         = DOCKER_IMAGE
         c.imagePullPolicy               = "Always"
 
+        c.env                           = ""
+        c.env[0].name                   = "ENVIRONMENT"
+        c.env[0].value                  = ENVIRONMENT
+
         if (ips) {
             ips[0].name                 = "image-pull-secret-" + PROJECT_NAME
         }

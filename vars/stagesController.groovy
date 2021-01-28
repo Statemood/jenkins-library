@@ -17,7 +17,7 @@ import me.rulin.kubernetes.Command
 // Set build info
 def stageCurrentBuildInfo(){
     def private name = BUILD_NUMBER + "-" + Config.data['env']
-    def private desc = Config.data['action'] + " by " + Config.data['build.user'] + ", version " + Config.data['revision'] 
+    def private desc = Config.data['build.user'] + " " + Config.data['action'] + " " + Config.data['revision'] 
 
     currentBuild.displayName = name 
     currentBuild.description = desc 
