@@ -24,7 +24,8 @@ def call(){
         }
     }
     catch (e) {
-        log.e "Oops! An error occurred while try to load 'SETTINGS'"
+        throw e
+        log.err "Oops! An error occurred while try to load 'SETTINGS'"
     }
 
     log.i "Load defaults"
