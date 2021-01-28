@@ -37,8 +37,6 @@ def generate(String yaml_file="k8s.yaml"){
         c.imagePullPolicy       = "Always"
         c.imagePullSecret       = "image-pull-secret-" + PROJECT_NAME
 
-        
-
         res.requests.cpu        = K8S_REQUESTS_CPU
         res.requests.memory     = K8S_REQUESTS_MEMORY
         res.limits.cpu          = K8S_LIMITS_CPU

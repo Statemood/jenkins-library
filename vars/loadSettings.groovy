@@ -24,7 +24,7 @@ def call(){
         }
     }
     catch (e) {
-        log.w "Undefined 'SETTINGS'"
+        log.e "Oops! An error occurred while try to load 'SETTINGS'"
     }
 
     log.i "Load defaults"
