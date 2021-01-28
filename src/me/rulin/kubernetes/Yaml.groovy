@@ -39,6 +39,7 @@ def deployment(String f){
         def private res = c.resources
         def private ssr = s.strategy.rollingUpdate
         def private ips = c.imagePullSecret
+        def private   e = c.env
 
         md.name                         = APP_NAME
         md.namespace                    = K8S_NAMESPACE
@@ -58,6 +59,15 @@ def deployment(String f){
 
         if (ips) {
             ips[0].name                 = "image-pull-secret-" + PROJECT_NAME
+        }
+
+        if (e) {
+            for (i=e.size(); i++) {
+                log.i "now i is $i"
+                if (i == 10 ) {
+                    break
+                }
+            }
         }
 
         res.requests.cpu        = K8S_REQUESTS_CPU
@@ -84,7 +94,7 @@ def service(String f){
         md.namespace         = K8S_NAMESPACE
         s.selector.app       = APP_NAME
         s.ports[0].name      = "http"
-        s.ports[0].port      = APP_PORT
+        s.ports[0].port      = APP_PORT.toInteger()
 
         writeYaml file: f, data: yml, overwrite: true
     }
