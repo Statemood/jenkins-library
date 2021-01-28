@@ -17,6 +17,7 @@ def generate(String yaml_file="k8s.yaml"){
         def private   c = s.template.spec.containers[0]
         def private res = c.resources
         def private ssr = s.strategy.rollingUpdate
+        def private ips = c.imagePullSecret
 
         yml.apiVersion                  = "apps/v1"
         yml.kind                        = "Deployment"
@@ -35,8 +36,10 @@ def generate(String yaml_file="k8s.yaml"){
         c.name                          = APP_NAME
         c.image                         = DOCKER_IMAGE
         c.imagePullPolicy               = "Always"
-        c.imagePullSecret[0].name       = "image-pull-secret-" + PROJECT_NAME
-        
+
+        if (ips) {
+            ips[0].name                 = "image-pull-secret-" + PROJECT_NAME
+        }
 
         res.requests.cpu        = K8S_REQUESTS_CPU
         res.requests.memory     = K8S_REQUESTS_MEMORY
