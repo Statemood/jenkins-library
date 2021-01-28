@@ -116,5 +116,6 @@ env.K8S_STRATEGY_MAX_SURGE          = "10%"
 env.K8S_STRATEGY_MAX_UNAVAILABLE    = "10%"
 env.K8S_GRACE_PERIOD_SECONDS        = 60  // Sec
 env.K8S_MIN_READY_SECONDS           = 5   // Sec
+env.K8S_PROGRESS_DEADLINE_SECONDS   = 300
 
 env.K8S_ALLOWED_COMMADS             = ["apply", "create", "delete", "get", "autoscale"]
