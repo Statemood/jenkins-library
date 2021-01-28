@@ -16,7 +16,7 @@ def locationKind(String kd, String f) {
         if (yml.size() > 0 && yml[0] != null) {
             for (int i=0; i<yml.size(); i++) {
                 if (yml[i].kind == kd) {
-                    return "[$i]"
+                    return i
                 }
             }
         }
