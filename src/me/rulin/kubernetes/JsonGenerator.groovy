@@ -18,7 +18,7 @@ def deployment(String f){
         def private        d = j[location.kind("Deployment", "json", f)]
 
         // Container + loop, support more containers
-        deploy = [
+        def private deploy = [
             "metadata": [
                 "labels": [
                     "app": APP_NAME,
@@ -101,9 +101,9 @@ def deployment(String f){
             ]
         ]
 
-        def dj = deploy
+        def private dj = deploy
 
-        writeJSON file: f, data: dj, pretty: 4
+        writeJSON file: f, json: dj, pretty: 4
     }
     catch (e) {
         throw e
