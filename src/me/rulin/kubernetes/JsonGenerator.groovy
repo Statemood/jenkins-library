@@ -104,7 +104,7 @@ def deployment(String f){
 
         deploy["spec.template.spec.containers"] = [
             "env": [
-                "name": "ENVIRONMENT"
+                "name": "ENVIRONMENT",
                 "value": ENVIRONMENT
             ]
         ]
