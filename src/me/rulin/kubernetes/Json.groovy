@@ -94,18 +94,13 @@ def deployment(String f){
                             ],
                             "restartPolicy": "Always",
                             "terminationGracePeriodSeconds": K8S_GRACE_PERIOD_SECONDS
-                        ]
+                        ]]
                     ]
                 ]
             ]
         ]
 
-        dj = deploy
-
-        res.requests.cpu        = K8S_REQUESTS_CPU
-        res.requests.memory     = K8S_REQUESTS_MEMORY
-        res.limits.cpu          = K8S_LIMITS_CPU
-        res.limits.memory       = K8S_LIMITS_MEMORY
+        def dj = deploy
 
         writeJSON file: f, data: dj, overwrite: true
     }
