@@ -19,12 +19,14 @@ def deployment(String f){
 
         // Container + loop, support more containers
         def private deploy = [
+            "apiVersion": "v1",
+            "kind": "Deployment",
             "metadata": [
                 "labels": [
                     "app": APP_NAME,
                     "app": APP_NAME,
                     "deploy": JOB_URL,
-                    "version": GIT_REVISION + Config.data['commit.id']
+                    "version": GIT_REVISION + "-" + Config.data['commit.id']
                 ],
                 "name": APP_NAME,
                 "namespace": K8S_NAMESPACE
