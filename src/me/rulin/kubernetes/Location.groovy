@@ -5,8 +5,8 @@ package me.rulin.kubernetes
 */
 def kind(String kd, String t, String f) {
     try {
-        def private r = 
-        
+        def private r = null
+
         if (t == "json") { def private r = readJSON file: f }
         if (t == "yaml") { def private r = readYaml file: f }
 
