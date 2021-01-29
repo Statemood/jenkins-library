@@ -24,8 +24,7 @@ def deployment(String f){
             "metadata": [
                 "labels": [
                     "app": APP_NAME,
-                    "app": APP_NAME,
-                    "deploy": JOB_URL,
+                    "build-by": JOB_NAME,
                     "version": GIT_REVISION + "-" + Config.data['commit.id']
                 ],
                 "name": APP_NAME,
@@ -97,9 +96,16 @@ def deployment(String f){
                             ]
                         ]],
                         "restartPolicy": "Always",
-                        "terminationGracePeriodSeconds": K8S_GRACE_PERIOD_SECONDS
+                        "terminationGracePeriodSeconds": K8S_GRACE_PERIOD_SECONDS.toInteger()
                     ]
                 ]
+            ]
+        ]
+
+        deploy["spec.template.spec.containers"] = [
+            "env": [
+                "name": "ENVIRONMENT"
+                "value": ENVIRONMENT
             ]
         ]
 
