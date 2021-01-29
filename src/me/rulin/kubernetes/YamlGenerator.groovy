@@ -8,15 +8,12 @@
 */
 
 package me.rulin.kubernetes
-import  me.rulin.kubernetes.Location
 
-def deployment(String f){
+def deployment(String f="k8s/yaml/deployment.yaml"){
     try {
-        def private location = new Location()
         def private      yml = readYaml file: f
-        def private       lt = location.kind("Deployment", "yaml", f)
-        def private        s = yml[lt].spec
-        def private       md = yml[lt].metadata
+        def private        s = yml.spec
+        def private       md = yml.metadata
         def private        c = s.template.spec.containers[0]
         def private      res = c.resources
         def private      ssr = s.strategy.rollingUpdate

@@ -11,14 +11,10 @@ package me.rulin.kubernetes
 
 import  me.rulin.kubernetes.Location
 
-def deployment(String f){
+def deployment(String f="k8s/deployment.json"){
     try {
-        def private location = new Location()
-        def private        j = readJSON file: f
-        def private        d = j[location.kind("Deployment", "json", f)]
-
         // Container + loop, support more containers
-        def private deploy = [
+        def private data = [
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": [
@@ -55,10 +51,11 @@ def deployment(String f){
                             "name": APP_NAME,
                             "image": DOCKER_IMAGE,
                             "imagePullPolicy": K8S_IMAGE_PULL_POLICY,
-                            "env": [
+                            // "imagePullSecret": PROJECT_NAME + '-pull-secert',
+                            "env": [[
                                 "name": "ENVIRONMENT",
                                 "value": ENVIRONMENT
-                            ],
+                            ]],
                             "livenessProbe": [
                                 "httpGet": [
                                     "path": "/",
@@ -81,13 +78,11 @@ def deployment(String f){
                                 "successThreshold": 1,
                                 "timeoutSeconds": 30
                             ],
-                            "ports": [
-                                [
-                                    "name": "http",
-                                    "protocol": "TCP",
-                                    "containerPort": APP_PORT.toInteger()
-                                ]
-                            ],
+                            "ports": [[
+                                "name": "http",
+                                "protocol": "TCP",
+                                "containerPort": APP_PORT.toInteger()
+                            ]],
                             "resources": [
                                 "limits": [
                                     "cpu": K8S_LIMITS_CPU,
@@ -105,9 +100,8 @@ def deployment(String f){
                 ]
             ]
         ]
-        def private dj = deploy
-
-        writeJSON file: f, json: dj, pretty: 4
+        
+        writeJSON file: f, json: data , pretty: 4
     }
     catch (e) {
         throw e
@@ -116,11 +110,10 @@ def deployment(String f){
 
 def service(String f){
     try {
-        def private      yml = readYaml file: f
-        def private location = locationKind("Service", f)
-        def private      svc = yml[location]
-        def private       md = svc.metadata
-        def private        s = svc.spec
+        def private location = new Location()
+        def private        j = readJSON file: f
+        def private        d = j[location.kind("Deployment", "json", f)]
+
 
         md.name              = APP_NAME
         md.namespace         = K8S_NAMESPACE
