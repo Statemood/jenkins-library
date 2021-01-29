@@ -1,3 +1,5 @@
+package me.rulin.kubernetes
+
 /* 
     Location kind of 'kd', from file 'f', with 'readJSON' or 'readYaml'
 */
