@@ -8,38 +8,20 @@
 */
 
 package me.rulin.kubernetes
-
-def locationKind(String kd, String f) {
-    try {
-        def private    yml = readYaml file: f
-
-        if (yml.size() > 0 && yml[0] != null) {
-            for (int i=0; i<yml.size(); i++) {
-                if (yml[i].kind == kd) {
-                    return i
-                }
-            }
-        }
-        else {
-            return 
-        }
-    } 
-    catch (e) {
-        throw e
-    }
-}
+import  me.rulin.kubernetes.Location
 
 def deployment(String f){
     try {
-        def private yml = readYaml file: f
-        def private  lt = locationKind("Deployment", f)
-        def private   s = yml[lt].spec
-        def private  md = yml[lt].metadata
-        def private   c = s.template.spec.containers[0]
-        def private res = c.resources
-        def private ssr = s.strategy.rollingUpdate
-        def private ips = c.imagePullSecret
-        def private   e = c.env
+        def private location = new Location()
+        def private      yml = readYaml file: f
+        def private       lt = location.kind("Deployment", "yaml", f)
+        def private        s = yml[lt].spec
+        def private       md = yml[lt].metadata
+        def private        c = s.template.spec.containers[0]
+        def private      res = c.resources
+        def private      ssr = s.strategy.rollingUpdate
+        def private      ips = c.imagePullSecret
+        def private        e = c.env
 
         md.name                         = APP_NAME
         md.namespace                    = K8S_NAMESPACE

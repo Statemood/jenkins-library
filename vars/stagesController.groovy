@@ -11,7 +11,7 @@ import me.rulin.ci.Git
 import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
 import me.rulin.docker.Docker
-import me.rulin.kubernetes.Yaml
+import me.rulin.kubernetes.Json
 import me.rulin.kubernetes.Command
 
 // Set build info
@@ -125,10 +125,9 @@ def stageKubernetes(){
     stage("Kubernetes") {
         node(STAGE_K8S) {
             dir(FIRST_DIR) {
-                def private yaml = new Yaml()
-                def private    f = "k8s.yaml"
-                yaml.deployment(f)
-                yaml.service(f)
+                def private json = new Json()
+                def private    f = "k8s.json"
+                json.deployment(f)
             }
         }
     }
