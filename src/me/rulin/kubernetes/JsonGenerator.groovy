@@ -102,11 +102,18 @@ def deployment(String f){
             ]
         ]
 
-        deploy["spec.template.spec.containers"] = [
-            "env": [
-                "name": "ENVIRONMENT",
-                "value": ENVIRONMENT
-            ]
+        deploy += [ 
+            "spec": [
+                "template": [ 
+                    "spec": [
+                        "containers":
+                            "env": [
+                                "name": "ENVIRONMENT",
+                                "value": ENVIRONMENT
+                            ]
+                        ]
+                    ]
+                ]
         ]
 
         def private dj = deploy
