@@ -126,6 +126,7 @@ def stageKubernetes(){
             dir(FIRST_DIR) {
                 def private   gen = new YamlGenerator()
                 def private tmp_d = libraryResource 'me/rulin/templates/k8s/yaml/deployment.yaml'
+                check.file(tmp_d)
                 log.i "into gen deploy"
                 gen.deployment(tmp_d)
             }
