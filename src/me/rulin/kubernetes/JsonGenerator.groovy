@@ -8,6 +8,7 @@
 */
 
 package me.rulin.kubernetes
+
 import  me.rulin.kubernetes.Location
 
 def deployment(String f){

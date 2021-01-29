@@ -11,8 +11,8 @@ import me.rulin.ci.Git
 import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
 import me.rulin.docker.Docker
-import me.rulin.kubernetes.Json
 import me.rulin.kubernetes.Command
+import me.rulin.kubernetes.JsonGenerator
 
 // Set build info
 def stageCurrentBuildInfo(){
@@ -108,7 +108,6 @@ def stageDocker(){
         node(STAGE_DOCKER) {
             dir(FIRST_DIR) {
                 def private  docker = new Docker()
-                
                 def private  tag = GIT_REVISION    + '-' + Config.data['commit.id'][0..8]
                 env.DOCKER_IMAGE = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
 
@@ -125,9 +124,9 @@ def stageKubernetes(){
     stage("Kubernetes") {
         node(STAGE_K8S) {
             dir(FIRST_DIR) {
-                def private json = new Json()
+                def private json_gen = new JsonGenerator()
                 def private    f = "k8s.json"
-                json.deployment(f)
+                json_gen.deployment(f)
             }
         }
     }
