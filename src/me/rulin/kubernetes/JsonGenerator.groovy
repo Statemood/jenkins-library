@@ -102,7 +102,7 @@ def deployment(String f){
             ]
         ]
 
-        deploy += [ 
+        def private e = [ 
             "spec": [
                 "template": [ 
                     "spec": [
@@ -116,7 +116,8 @@ def deployment(String f){
                 ]
             ]
         ]
-
+        deploy.putAll(e)
+        
         def private dj = deploy
 
         writeJSON file: f, json: dj, pretty: 4
