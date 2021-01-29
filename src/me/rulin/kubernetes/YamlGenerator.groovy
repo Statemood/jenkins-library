@@ -18,7 +18,7 @@ def deployment(String f="k8s.yaml"){
     catch (e) {
         log.err "No files found: " + f
     }
-
+    log.i "21"
     try {
         def private      yml = readYaml file: f
         def private        s = yml.spec
