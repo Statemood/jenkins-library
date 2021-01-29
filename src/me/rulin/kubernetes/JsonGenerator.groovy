@@ -55,6 +55,10 @@ def deployment(String f){
                             "name": APP_NAME,
                             "image": DOCKER_IMAGE,
                             "imagePullPolicy": K8S_IMAGE_PULL_POLICY,
+                            "env": [
+                                "name": "ENVIRONMENT",
+                                "value": ENVIRONMENT
+                            ],
                             "livenessProbe": [
                                 "httpGet": [
                                     "path": "/",
@@ -101,23 +105,6 @@ def deployment(String f){
                 ]
             ]
         ]
-
-        def private e = [ 
-            "spec": [
-                "template": [ 
-                    "spec": [
-                        "containers": [
-                            "env": [
-                                "name": "ENVIRONMENT",
-                                "value": ENVIRONMENT
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ]
-        deploy.putAll(e)
-        
         def private dj = deploy
 
         writeJSON file: f, json: dj, pretty: 4
