@@ -55,7 +55,7 @@ def deployment(String f){
                             "imagePullPolicy": K8S_IMAGE_PULL_POLICY,
                             "livenessProbe": [
                                 "httpGet": [
-                                    "path": "/"
+                                    "path": "/",
                                     "port": APP_PORT.toInteger()
                                 ],
                                 "failureThreshold": 3,
@@ -66,7 +66,7 @@ def deployment(String f){
                             ],
                             "readinessProbe": [
                                 "httpGet": [
-                                    "path": "/"
+                                    "path": "/",
                                     "port": APP_PORT.toInteger()
                                 ],
                                 "failureThreshold": 3,
