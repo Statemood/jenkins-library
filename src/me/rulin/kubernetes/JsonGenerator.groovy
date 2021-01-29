@@ -22,9 +22,9 @@ def deployment(String f){
             "metadata": [
                 "labels": [
                     "app": APP_NAME,
-                    "k8s.fsc.ai/app": APP_NAME,
-                    "k8s.fsc.ai/deploy": JOB_URL,
-                    "k8s.fsc.ai/version": GIT_REVISION + Config.data['commit.id']
+                    "app": APP_NAME,
+                    "deploy": JOB_URL,
+                    "version": GIT_REVISION + Config.data['commit.id']
                 ],
                 "name": APP_NAME,
                 "namespace": K8S_NAMESPACE
