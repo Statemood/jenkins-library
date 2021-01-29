@@ -7,8 +7,8 @@ def kind(String kd, String t, String f) {
     try {
         def private r = null
 
-        if (t == "json") { def private r = readJSON file: f }
-        if (t == "yaml") { def private r = readYaml file: f }
+        if (t == "json") { r = readJSON file: f }
+        if (t == "yaml") { r = readYaml file: f }
 
         if (r.size() > 0 && r[0] != null) {
             for (int i=0; i<r.size(); i++) {
