@@ -19,7 +19,7 @@ def deployment(String f){
 
         // Container + loop, support more containers
         def private deploy = [
-            "apiVersion": "v1",
+            "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": [
                 "labels": [
@@ -94,10 +94,10 @@ def deployment(String f){
                                     "cpu": K8S_REQUESTS_CPU,
                                     "memory": K8S_REQUESTS_MEMORY
                                 ]
-                            ],
-                            "restartPolicy": "Always",
-                            "terminationGracePeriodSeconds": K8S_GRACE_PERIOD_SECONDS
-                        ]]
+                            ]
+                        ]],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": K8S_GRACE_PERIOD_SECONDS
                     ]
                 ]
             ]
