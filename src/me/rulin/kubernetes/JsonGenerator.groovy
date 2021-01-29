@@ -103,7 +103,7 @@ def deployment(String f){
 
         def dj = deploy
 
-        writeJSON file: f, data: dj, overwrite: true
+        writeJSON file: f, data: dj, pretty: 4
     }
     catch (e) {
         throw e
