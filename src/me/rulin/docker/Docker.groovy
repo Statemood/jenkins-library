@@ -33,8 +33,7 @@ def private genDockerfile(String f='Dockerfile', String t='.', String d='/data/a
     def private dfc = []
     def private cid = Config.data['commit.id']
 
-    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user=$BUILD_USER build.number=$BUILD_NUMBER")
-    dfc.add("LABEL commit.id=$cid")
+    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user=$BUILD_USER LABEL commit.id=$cid")
     dfc.add("RUN mkdir -p $d")
     dfc.add("COPY $t $d")
 

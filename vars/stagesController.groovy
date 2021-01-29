@@ -12,7 +12,7 @@ import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
 import me.rulin.docker.Docker
 import me.rulin.kubernetes.Command
-import me.rulin.kubernetes.JsonGenerator
+import me.rulin.kubernetes.YamlGenerator
 
 // Set build info
 def stageCurrentBuildInfo(){
@@ -124,9 +124,10 @@ def stageKubernetes(){
     stage("Kubernetes") {
         node(STAGE_K8S) {
             dir(FIRST_DIR) {
-                def private json_gen = new JsonGenerator()
-                def private    f = "k8s.json"
-                json_gen.deployment(f)
+                def private   gen = new YamlGenerator()
+                def private tmp_d = libraryResource 'me/rulin/templates/k8s/yaml/deployment.yaml'
+                log.i "into gen deploy"
+                gen.deployment(tmp_d)
             }
         }
     }
