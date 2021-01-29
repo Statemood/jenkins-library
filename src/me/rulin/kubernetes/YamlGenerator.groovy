@@ -12,8 +12,8 @@ package me.rulin.kubernetes
 def deployment(String f="k8s.yaml"){
     try {
         check.file(f)
-
-        sh("mkdir -p k8s; cp $f k8s/")
+        log.i "Create dir k8s, copy $f"
+        sh("mkdir -pv k8s; cp $f k8s/")
     } 
     catch (e) {
         log.err "No files found: " + f
