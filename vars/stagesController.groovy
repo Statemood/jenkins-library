@@ -126,6 +126,7 @@ def stageKubernetes(){
             dir(FIRST_DIR) {
                 def private   gen = new YamlGenerator()
                 
+                log.i "test 129"
                 gen.deployment()
             }
         }

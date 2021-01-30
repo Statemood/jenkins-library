@@ -10,6 +10,7 @@
 package me.rulin.kubernetes
 
 def deployment(String f){
+    log.i "test 13"
     try {
         if (f) {
             def private yml = readYaml file: f
@@ -17,6 +18,8 @@ def deployment(String f){
         else {
             def private yml = readYaml text: libraryResource('me/rulin/templates/k8s/yaml/deployment.yaml')
         }
+
+        log.i "test 22"
     
         def private        s = yml.spec
         def private       md = yml.metadata
