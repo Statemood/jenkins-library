@@ -9,18 +9,15 @@
 
 package me.rulin.kubernetes
 
-def deployment(String f="k8s.yaml"){
+def deployment(String f){
     try {
-        check.file(f)
-        log.i "Create dir k8s, copy $f"
-        sh("mkdir -pv k8s; cp $f k8s/")
-    } 
-    catch (e) {
-        log.err "No files found: " + f
-    }
-    log.i "21"
-    try {
-        def private      yml = readYaml file: f
+        if (f) {
+            def private yml = readYaml file: f
+        }
+        else {
+            def private yml = readYaml text: libraryResource('me/rulin/templates/k8s/yaml/deployment.yaml')
+        }
+    
         def private        s = yml.spec
         def private       md = yml.metadata
         def private        c = s.template.spec.containers[0]
@@ -54,6 +51,7 @@ def deployment(String f="k8s.yaml"){
         res.limits.cpu          = K8S_LIMITS_CPU
         res.limits.memory       = K8S_LIMITS_MEMORY
 
+        sh("mkdir -pv k8s")
         writeYaml file: "k8s/deployment.yaml", data: yml, overwrite: true
     }
     catch (e) {
