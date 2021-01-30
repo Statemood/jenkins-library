@@ -11,6 +11,9 @@ package me.rulin.kubernetes
 
 def yamlReader(String t, String f=null) {
     try {
+        if (t == null) {
+            log.err "Missing arguments. yamlReader require at lease on argument."
+        }
         if (f) {
             check.file(f)
 
@@ -20,7 +23,7 @@ def yamlReader(String t, String f=null) {
             return y
         }
         else {
-            log.i "Read yaml from template file: " + t 
+            log.i "By default, read yaml from template file: " + t 
 
             String txt = libraryResource(t)
             def    y = readYaml text: txt
@@ -86,13 +89,11 @@ def deployment(String f=null){
     }
 }
 
-def service(String f){
+def service(String f=null){
     try {
-        def private      yml = readYaml file: f
-        def private location = locationKind("Service", f)
-        def private      svc = yml[location]
-        def private       md = svc.metadata
-        def private        s = svc.spec
+        def private      yml = yamlReader(f)
+        def private       md = yml.metadata
+        def private        s = yml.spec
 
         md.name              = APP_NAME
         md.namespace         = K8S_NAMESPACE
@@ -100,7 +101,7 @@ def service(String f){
         s.ports[0].name      = "http"
         s.ports[0].port      = APP_PORT.toInteger()
 
-        writeYaml file: f, data: yml, overwrite: true
+        writeYaml file: f, data: 'k8s/service.yaml', overwrite: true
     }
     catch (e) {
         log.e "Oops! An error occurred during update serivce, file: " + f

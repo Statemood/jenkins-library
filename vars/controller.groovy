@@ -163,7 +163,7 @@ def doKubernetes(){
                 def gen = new Yaml()
                 def pth = 'me/rulin/templates/kubernetes/yaml/standard'
                 gen.deployment(pth + '/deployment.yaml')
-
+                gen.service(pth + '/service.yaml')
             }
         }
     }
