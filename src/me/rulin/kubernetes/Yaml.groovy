@@ -14,13 +14,13 @@ def deployment(String f=null){
         if (f) {
             log.i "Read yaml from file: " + f
 
-            def yml = readYaml file: f
+            def public yml = readYaml file: f
         }
         else {
             log.i "Read yaml from template file." 
 
             String txt = libraryResource('me/rulin/templates/kubernetes/yaml/standard/deployment.yaml')
-            def    yml = readYaml text: txt
+            def public yml = readYaml text: txt
 
             println yml
             log.i "test 26"
