@@ -23,7 +23,10 @@ def deployment(String f=null){
             def    yml = readYaml text: txt
 
             println yml
+            log.i "test 26"
         }
+
+        println yml
 
         def private        s = yml.spec
         def private       md = yml.metadata
