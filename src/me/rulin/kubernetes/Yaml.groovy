@@ -9,25 +9,31 @@
 
 package me.rulin.kubernetes
 
-def deployment(String f=null){
+
+def getYamlData(String f=null) {
     try {
         if (f) {
             log.i "Read yaml from file: " + f
 
-            def yml = readYaml file: f
+            def    y = readYaml file: f
+            return y
         }
         else {
             log.i "Read yaml from template file." 
 
             String txt = libraryResource('me/rulin/templates/kubernetes/yaml/standard/deployment.yaml')
-            def d = readYaml text: txt
+            def    y = readYaml text: txt
 
-            println d
-            log.i "test 26"
+            return y
         }
+    }
+    catch (e) {
+        throw e
+    }
+}
 
-        println d
-        def private      yml = d
+def deployment(){
+        def private      yml = getYamlData()
         def private        s = yml.spec
         def private       md = yml.metadata
         def private        c = s.template.spec.containers[0]
