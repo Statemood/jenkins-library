@@ -126,10 +126,7 @@ def stageKubernetes(){
         node(STAGE_K8S) {
             dir(FIRST_DIR) {
                 def gen = new Yaml()
-                def jsn = new Json()
 
-                log.i "test 129"
-                jsn.deployment()
                 gen.deployment()
             }
         }
