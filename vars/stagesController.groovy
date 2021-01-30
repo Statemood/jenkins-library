@@ -43,12 +43,12 @@ def stageEntryPoint(Map args = [:]) {
 
     log.i "Using workspace: " + FIRST_DIR
 
-    stagesController.stagePreProcess()
-    stagesController.stageGitClone()
-    stagesController.stageBuild()
-    stagesController.stageTest()
-    stagesController.stageDocker()
-    stagesController.stageKubernetes()
+    stagePreProcess()
+    stageGitClone()
+    stageBuild()
+    stageTest()
+    stageDocker()
+    stageKubernetes()
 }
 
 // Set build info
