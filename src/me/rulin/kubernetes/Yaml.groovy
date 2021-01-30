@@ -45,6 +45,7 @@ def deployment(){
 
         md.name                         = APP_NAME
         md.namespace                    = K8S_NAMESPACE
+        md.labels.name.app              = APP_NAME
 
         s.replicas                      = K8S_REPLICAS.toInteger()
         s.selector.matchLabels.app      = APP_NAME
@@ -61,6 +62,12 @@ def deployment(){
 
         if (ips) {
             ips[0].name                 = "image-pull-secret-" + PROJECT_NAME
+        }
+
+        if (e) {
+            println e.size()
+            e[0].name                   = "ENVIRONMENT"
+            e[0].value                  = ENVIRONMENT
         }
 
         res.requests.cpu        = K8S_REQUESTS_CPU
