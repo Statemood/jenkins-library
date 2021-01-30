@@ -12,12 +12,14 @@ package me.rulin.kubernetes
 def deployment(String f=null){
     try {
         if (f) {
-            def private yml = readYaml file: f
-            log.i "read from file: " + f
+            log.i "Read yaml from file: " + f
+
+            def yml = readYaml file: f
         }
         else {
-            def private yml = readYaml text: libraryResource('me/rulin/templates/k8s/yaml/deployment.yaml')
-            log.i "read from text"
+            log.i "Read yaml from template file: " + 
+
+            def yml = readYaml text: libraryResource('me/rulin/templates/kubernetes/yaml/standard/deployment.yaml')
         }
 
         def private        s = yml.spec

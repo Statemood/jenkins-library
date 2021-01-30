@@ -26,10 +26,9 @@ def call(Map args = [:]) {
     log.i "Using workspace: " + FIRST_DIR
 
     stagesController.stagePreProcess()
-    stagesController.stageKubernetes()
     stagesController.stageGitClone()
     stagesController.stageBuild()
     stagesController.stageTest()
     stagesController.stageDocker()
-    
+    stagesController.stageKubernetes()
 }
