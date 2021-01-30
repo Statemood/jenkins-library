@@ -23,7 +23,7 @@ def yamlReader(String t, String f=null) {
             return y
         }
         else {
-            log.i "By default, read yaml from template file: " + t 
+            log.i "Read yaml from template file: " + t 
 
             String txt = libraryResource(t)
             def    y = readYaml text: txt
@@ -101,7 +101,7 @@ def service(String f=null){
         s.ports[0].name      = "http"
         s.ports[0].port      = APP_PORT.toInteger()
 
-        writeYaml file: f, data: 'k8s/service.yaml', overwrite: true
+        writeYaml file: 'k8s/service.yaml', data: yml, overwrite: true
     }
     catch (e) {
         log.e "Oops! An error occurred during update serivce, file: " + f
