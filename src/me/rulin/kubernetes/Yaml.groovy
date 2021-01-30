@@ -19,7 +19,7 @@ def deployment(String f=null){
         else {
             log.i "Read yaml from template file: " + 
 
-            def txt = libraryResource('me/rulin/templates/kubernetes/yaml/standard/deployment.yaml')
+            String txt = libraryResource('me/rulin/templates/kubernetes/yaml/standard/deployment.yaml')
             def yml = readYaml text: txt
         }
 
