@@ -45,7 +45,7 @@ def deployment(){
 
         md.name                         = APP_NAME
         md.namespace                    = K8S_NAMESPACE
-        md.labels.name.app              = APP_NAME
+        md.labels.app                   = APP_NAME
 
         s.replicas                      = K8S_REPLICAS.toInteger()
         s.selector.matchLabels.app      = APP_NAME
