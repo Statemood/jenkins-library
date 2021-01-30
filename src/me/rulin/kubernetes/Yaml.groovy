@@ -65,9 +65,11 @@ def deployment(){
         }
 
         if (e) {
-            println e.size()
-            e[0].name                   = "ENVIRONMENT"
-            e[0].value                  = ENVIRONMENT
+            if(e.size() > 0){
+                int en = 0
+                e[en].name              = "ENVIRONMENT"
+                e[en].value             = ENVIRONMENT
+            }
         }
 
         res.requests.cpu        = K8S_REQUESTS_CPU

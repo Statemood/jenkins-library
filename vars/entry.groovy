@@ -46,10 +46,7 @@ def call(Map config=[:]){
                         
                         fc.getConfig()
                         */
-                        run(["repo": config.repo,                       
-                            "lang": "java",
-                            "build.command": "mvn",
-                            "build.options": "-U clean -Dmaven.test.skip=true package dependency:tree"])
+                        run()
                     }
                 }
             }

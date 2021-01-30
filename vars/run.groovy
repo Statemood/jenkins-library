@@ -17,7 +17,7 @@ def call(Map args = [:]) {
     Config.data['build.user']       = BUILD_USER
     Config.data['env']              = ENVIRONMENT
     Config.data['credentials.id']   = args.containsKey('credentials.id')    ?: "DefaultGitSCMCredentialsID"
-
+    
     Config.data += args 
 
     println Config.data 
