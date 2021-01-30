@@ -17,10 +17,10 @@ def deployment(String f=null){
             def yml = readYaml file: f
         }
         else {
-            log.i "Read yaml from template file: " + 
+            log.i "Read yaml from template file." 
 
             String txt = libraryResource('me/rulin/templates/kubernetes/yaml/standard/deployment.yaml')
-            def yml = readYaml text: txt
+            def    yml = readYaml text: txt
         }
 
         def private        s = yml.spec
