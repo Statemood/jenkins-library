@@ -33,6 +33,7 @@ def getYamlData(String f=null) {
 }
 
 def deployment(){
+    try {
         def private      yml = getYamlData()
         def private        s = yml.spec
         def private       md = yml.metadata
