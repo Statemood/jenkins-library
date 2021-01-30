@@ -12,7 +12,7 @@ import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
 import me.rulin.docker.Docker
 import me.rulin.kubernetes.Command
-import me.rulin.kubernetes.YamlGenerator
+import me.rulin.kubernetes.Yaml
 
 // Set build info
 def stageCurrentBuildInfo(){
@@ -124,7 +124,7 @@ def stageKubernetes(){
     stage("Kubernetes") {
         node(STAGE_K8S) {
             dir(FIRST_DIR) {
-                def gen = new YamlGenerator()
+                def gen = new Yaml()
                 
                 log.i "test 129"
                 gen.deploy()
