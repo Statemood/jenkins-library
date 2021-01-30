@@ -9,7 +9,7 @@
 
 package me.rulin.kubernetes
 
-def deployment (String f){
+def deploy (String f){
     log.i "test 13"
     try {
         if (f) {

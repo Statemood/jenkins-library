@@ -124,10 +124,10 @@ def stageKubernetes(){
     stage("Kubernetes") {
         node(STAGE_K8S) {
             dir(FIRST_DIR) {
-                def yaml_gen = new YamlGenerator()
+                def gen = new YamlGenerator()
                 
                 log.i "test 129"
-                yaml_gen.deployment()
+                gen.deploy()
             }
         }
     }
