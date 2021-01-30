@@ -13,6 +13,9 @@ import  me.rulin.kubernetes.Location
 
 def deployment(String f="k8s/deployment.json"){
     try {
+
+        log.i "test 17"
+        return
         // Container + loop, support more containers
         def private data = [
             "apiVersion": "apps/v1",
