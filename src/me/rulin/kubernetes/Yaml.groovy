@@ -21,6 +21,8 @@ def deployment(String f=null){
 
             String txt = libraryResource('me/rulin/templates/kubernetes/yaml/standard/deployment.yaml')
             def    yml = readYaml text: txt
+
+            println yml
         }
 
         def private        s = yml.spec
