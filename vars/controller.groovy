@@ -15,8 +15,7 @@ import me.rulin.kubernetes.Command
 import me.rulin.kubernetes.Json
 import me.rulin.kubernetes.Yaml
 
-
-def stageEntryPoint(Map args = [:]) {
+def entry(Map args = [:]) {
     /*
     Order:
         1. Local Settings
@@ -43,16 +42,16 @@ def stageEntryPoint(Map args = [:]) {
 
     log.i "Using workspace: " + FIRST_DIR
 
-    stagePreProcess()
-    stageGitClone()
-    stageBuild()
-    stageTest()
-    stageDocker()
-    stageKubernetes()
+    preProcess()
+    codeClone()
+    codeBuild()
+    codeTest()
+    doDocker()
+    doKubernetes()
 }
 
 // Set build info
-def stageCurrentBuildInfo(){
+def currentBuildInfo(){
     def private name = BUILD_NUMBER + "-" + Config.data['env']
     def private desc = Config.data['build.user'] + " " + Config.data['action'] + " " + Config.data['revision'] 
 
@@ -60,21 +59,21 @@ def stageCurrentBuildInfo(){
     currentBuild.description = desc 
 }
 
-def stagePreProcess() {
+def preProcess() {
     stage("Pre-Process") {
         node(STAGE_PRE_PROCESS) {
             dir(FIRST_DIR) {
                 // Set default info
                 // Set build info
                 // Check parameters
-                stageCurrentBuildInfo()
+                currentBuildInfo()
                 log.i "Stage Pre-Process OK"
             }
         }
     }
 }
 
-def stageGitClone() {
+def codeClone() {
     stage("Git Clone") {
         node(STAGE_GIT) {
             dir(FIRST_DIR) {
@@ -100,7 +99,7 @@ def stageGitClone() {
     }
 }
 
-def stageSonar() {
+def sonarScan() {
     stage("SonarQube Scanner") {
         node(STAGE_SONAR) {
             dir(FIRST_DIR) {
@@ -111,7 +110,7 @@ def stageSonar() {
     }
 }
 
-def stageBuild() {
+def codeBuild() {
     stage("Build Code") {
         lang = Config.data['language'].toLowerCase()
 
@@ -124,7 +123,7 @@ def stageBuild() {
     }
 }
 
-def stageTest() {
+def codeTest() {
     def private utc = Config.data['build.command.unit.test']
     if (utc) {
         stage("Unit Test") {
@@ -139,7 +138,7 @@ def stageTest() {
     }
 }
 
-def stageDocker(){
+def doDocker(){
     // if (DEPLOY_MODE == "Container") {}
     stage("Build Image") {
         node(STAGE_DOCKER) {
@@ -157,13 +156,14 @@ def stageDocker(){
     }
 }
 
-def stageKubernetes(){
+def doKubernetes(){
     stage("Kubernetes") {
         node(STAGE_K8S) {
             dir(FIRST_DIR) {
                 def gen = new Yaml()
+                def pth = 'me/rulin/templates/kubernetes/yaml/standard'
+                gen.deployment(pth + '/deployment.yaml')
 
-                gen.deployment()
             }
         }
     }

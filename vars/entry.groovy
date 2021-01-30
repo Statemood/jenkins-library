@@ -46,7 +46,7 @@ def call(Map config=[:]){
                         
                         fc.getConfig()
                         */
-                        stagesController.stageEntryPoint(config)
+                        controller.entry(config)
                     }
                 }
             }

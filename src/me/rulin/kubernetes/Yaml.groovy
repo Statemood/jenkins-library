@@ -9,21 +9,21 @@
 
 package me.rulin.kubernetes
 
-
-def getYamlData(String f=null) {
+def yamlReader(String t, String f=null) {
     try {
         if (f) {
+            check.file(f)
+
             log.i "Read yaml from file: " + f
 
             def    y = readYaml file: f
             return y
         }
         else {
-            log.i "Read yaml from template file." 
+            log.i "Read yaml from template file: " + t 
 
-            String txt = libraryResource('me/rulin/templates/kubernetes/yaml/standard/deployment.yaml')
+            String txt = libraryResource(t)
             def    y = readYaml text: txt
-
             return y
         }
     }
@@ -32,9 +32,9 @@ def getYamlData(String f=null) {
     }
 }
 
-def deployment(){
+def deployment(String f=null){
     try {
-        def private      yml = getYamlData()
+        def private      yml = yamlReader(f)
         def private        s = yml.spec
         def private       md = yml.metadata
         def private        c = s.template.spec.containers[0]
@@ -58,7 +58,7 @@ def deployment(){
 
         c.name                          = APP_NAME
         c.image                         = DOCKER_IMAGE
-        c.imagePullPolicy               = "Always"
+        c.imagePullPolicy               = K8S_IMAGE_PULL_POLICY
 
         if (ips) {
             ips[0].name                 = "image-pull-secret-" + PROJECT_NAME
@@ -69,6 +69,7 @@ def deployment(){
                 int en = 0
                 e[en].name              = "ENVIRONMENT"
                 e[en].value             = ENVIRONMENT
+                //do for
             }
         }
 
