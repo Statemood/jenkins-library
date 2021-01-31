@@ -1,4 +1,4 @@
-/* stagesController.groovy
+/* controller.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -164,6 +164,8 @@ def doKubernetes(){
                 def pth = 'me/rulin/templates/kubernetes/yaml/standard'
                 gen.deployment(pth + '/deployment.yaml')
                 gen.service(pth + '/service.yaml')
+
+                log.a "Ready to deploy!"
             }
         }
     }

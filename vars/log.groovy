@@ -7,20 +7,22 @@
    ##################################################
 */
 
-def       i(String msg) { info(msg)             }
+def       a(String msg) { echo "ATTENTION: $msg"   }
 
-def       n(String msg) { notice(msg)           } 
+def       i(String msg) { info(msg)                }
 
-def       w(String msg) { warning(msg)          }
+def       n(String msg) { notice(msg)              } 
 
-def       e(String msg) { echo "$msg"           }
+def       w(String msg) { warning(msg)             }
 
-def    info(String msg) { echo "INFO: $msg"     }
+def       e(String msg) { echo "$msg"              }
 
-def  notice(String msg) { echo "NOTICE: $msg"   }
+def    info(String msg) { echo "INFO: $msg"        }
 
-def warning(String msg) { echo "WARNING: $msg"  }
+def  notice(String msg) { echo "NOTICE: $msg"      }
 
-def     err(String msg) { error " $msg"         }
+def warning(String msg) { echo "WARNING: $msg"     }
+
+def     err(String msg) { error " $msg"            }
 
 return this

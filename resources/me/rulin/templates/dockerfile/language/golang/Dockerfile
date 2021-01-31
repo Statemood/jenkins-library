@@ -6,7 +6,7 @@
 #    https://github.com/Statemood/dockerfiles
 # --------------------------------------------
 
-FROM statemood/alpine:3.8
+FROM alpine:3.13
 
 RUN apk update		&& \
     apk upgrade		
