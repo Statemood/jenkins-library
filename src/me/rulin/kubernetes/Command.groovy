@@ -1,4 +1,4 @@
-/* kubernetes.groovy
+/* Command.groovy
    ##################################################
    # Created by Lin Ru at 2018.10.01 22:00          #
    #                                                #
@@ -11,7 +11,7 @@
 //      k8s.command("create", "deployment")
 //                             k8s.yaml
 
-package me.rulin.k8s
+package me.rulin.kubernetes
 
 def command(String cmd, String target=null){
     if (!cmd in K8S_ALLOWED_COMMANDS) {
@@ -22,7 +22,7 @@ def command(String cmd, String target=null){
         check.file(target)
     }
 
-    log.info cmd.toUpperCase() + target
+    log.i cmd.toUpperCase() + target
 
     try {
         sh(script: "kubectl $cmd -f ${target}", label: "Call kubectl for $cmd $target")

@@ -10,16 +10,17 @@
 package me.rulin.ci
 
 def build(String b_file=null){
-    log.i "Preparing to build " + Config.data['language'].toUpperCase() + " project"
 
-    private  bc = Config.data['build_command']
-    private  bo = Config.data['build_options']
+    log.i "Preparing to build " + Config.data['language'].toUpperCase() + " project."
+
+    private  bc = Config.data['build.command']
+    private  bo = Config.data['build.options']
     private cmd = bc + " " + bo
 
     try {
         if (b_file){
             check.file(b_file)
-
+                    
             log.i "Build with command: " + bc + ", options: " + bo
             sh(cmd)
         }

@@ -24,7 +24,8 @@ def call(){
         }
     }
     catch (e) {
-        log.w "Undefined 'SETTINGS'"
+        throw e
+        log.err "Oops! An error occurred while try to load 'SETTINGS'"
     }
 
     log.i "Load defaults"
@@ -36,7 +37,7 @@ def call(){
             try {
                 log.i "Read config from " + sf
                 def yaml_data = readYaml file: sf
-
+                
                 Config.data += yaml_data
 
                 c = Config.data + yaml_data

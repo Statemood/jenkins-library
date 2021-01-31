@@ -14,13 +14,13 @@ def seletor(String tl){
     // tl, target language
     private b = new Build()
 
-    switch(tl){
+    switch(tl.toLowerCase()){
         case "php":
             b.build('composer.json')
             return
             
         case "java":
-            switch(Config.data['build_command']) {
+            switch(Config.data['build.command']) {
                 case "ant":
                     b.build()
                     return
@@ -47,7 +47,6 @@ def seletor(String tl){
         case "nodejs":
             b.build('package.json')
             return
-            
         break
     }
 }

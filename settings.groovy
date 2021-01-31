@@ -10,11 +10,12 @@
 ///////////////////////////////////////////////////////
 // Common                                            //
 ///////////////////////////////////////////////////////
-env.WORKSPACE = JENKINS_HOME + "/workspace/" + JOB_NAME
-env.WS        = WORKSPACE
-
-env.PROJECT_NAME = JOB_BASE_NAME.split('_')[0].toLowerCase()
-env.APP_NAME     = JOB_BASE_NAME.split('_')[1].toLowerCase()
+env.WORKSPACE           = JENKINS_HOME + "/workspace/" + JOB_NAME
+env.WS                  = WORKSPACE
+env.FIRST_DIR           = pwd()
+env.PROJECT_NAME        = JOB_BASE_NAME.split('_')[0].toLowerCase()
+env.APP_NAME            = JOB_BASE_NAME.split('_')[1].toLowerCase()
+env.APP_PORT            = 8080
 
 try {
     // Get User info
@@ -37,6 +38,7 @@ env.STAGE_BUILD         = "master"
 env.STAGE_DOCKER        = "master"
 env.STAGE_TEST          = "master"
 env.STAGE_K8S           = "master"
+env.STAGE_SONAR         = "master"
 
 // TRIGGERS
 env.SKIP_BUILD          = false
@@ -80,9 +82,7 @@ env.NPM_I               =  NPM_INSTALL
 ///////////////////////////////////////////////////////
 // Docker                                            //
 ///////////////////////////////////////////////////////
-env.DOCKER_REGISTRY                 = ""
-// Saved in the Jenkins credentials with name 'Docker-Registry'
-env.DOCKER_REGISTRY_ACCOUNT         = credentials('Docker-Registry')
+env.DOCKER_REGISTRY_ACCOUNT         = "Docker-Registry"
 env.DOCKER_IMAGE_NAME               = ""
 env.DOCKER_IMAGE_TAG                = ""
 env.DOCKER_IMAGE_BUILD_TIMEOUT      = 1800
@@ -104,7 +104,7 @@ env.K8S_REQUESTS_CPU    = "500m"
 env.K8S_REQUESTS_MEMORY = "512Mi"
 
 env.K8S_RUN_USER_ID                 = 
-env.K8S_NAMESPACE                   = 
+env.K8S_NAMESPACE                   = PROJECT_NAME
 env.K8S_REPLICAS                    = 1
 
 env.K8S_AFFINITY_PROVIDER           = 
@@ -117,5 +117,6 @@ env.K8S_STRATEGY_MAX_SURGE          = "10%"
 env.K8S_STRATEGY_MAX_UNAVAILABLE    = "10%"
 env.K8S_GRACE_PERIOD_SECONDS        = 60  // Sec
 env.K8S_MIN_READY_SECONDS           = 5   // Sec
+env.K8S_PROGRESS_DEADLINE_SECONDS   = 300
 
 env.K8S_ALLOWED_COMMADS             = ["apply", "create", "delete", "get", "autoscale"]
