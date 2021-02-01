@@ -7,19 +7,20 @@
    ##################################################
 */
 
-def merge(Map args=[:]){
+def merge(Map arguments=[:]){
     /*
     Order:
         1. Local Settings
+        2. Default Settings (@ settings.config)
         2. .jenkins.yaml
-        3. Config
+        3. User Config
     */
     localSettingsFile()
-
-    Config.data = defaultSettings() + args
+    config()
+    Config.data = Config.settings + arguments
 }
 
-def defaultSettings(){
+def config(){
     // 设置初始化配置
     try {
         def first_dir  = pwd()

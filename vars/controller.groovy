@@ -22,8 +22,7 @@ def entry(Map args = [:]) {
         3. Config
     */
 
-    loadSettings()
-    settings.defaultSettings()
+    settings.merge(args)
 
     println Config.settings
     println '-----' 
