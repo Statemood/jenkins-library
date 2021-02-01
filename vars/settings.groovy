@@ -89,20 +89,20 @@ def config(){
     return Config.settings
 }
 
-def localSettingsFile(String ds=""){
+def localSettingsFile(){
     try {
-        if (ds) {
-            if (fileExists(ds)) {
+        if (SETTINGS) {
+            if (fileExists(SETTINGS)) {
                 log.i "Loading local settings"
 
-                load(ds)
+                load(SETTINGS)
             }
             else {
-                log.w "File not found: " + ds
+                log.w "File not found: " + SETTINGS
             }
         }
         else {
-             log.w "Undefined 'ds'"
+             log.w "Undefined 'SETTINGS'"
         }
     }
     catch (e) {
