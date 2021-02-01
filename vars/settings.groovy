@@ -18,9 +18,12 @@ def merge(Map arguments=[:]){
     localSettingsFile()
     config()
 
+    println "*********** Config.settings ***********"
+    println Config.settings
+
     Config.data = Config.settings.putAll(arguments)
 
-    println "*********** Config.settings ***********"
+    println "*********** Config.settings after add ***********"
     println Config.settings
 
     println "*********** config.data ***********"
