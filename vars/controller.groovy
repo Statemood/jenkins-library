@@ -46,8 +46,8 @@ def entry(Map args = [:]) {
 
 // Set build info
 def currentBuildInfo(){
-    def private name = BUILD_NUMBER + "-" + Config.data['env']
-    def private desc = Config.data['build.user'] + " " + Config.data['action'] + " " + Config.data['revision'] 
+    def private name = BUILD_NUMBER + "-" + Config.data['base']['env']
+    def private desc = Config.data['build']['user'] + " " + Config.data['base']['action'] + " " + Config.data['git']['revision'] 
 
     currentBuild.displayName = name 
     currentBuild.description = desc 

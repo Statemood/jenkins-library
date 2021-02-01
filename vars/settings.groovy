@@ -22,7 +22,7 @@ def merge(Map arguments=[:]){
 
     println '*********** Config.settings ***********'
     println Config.settings
-    
+
     println '*********** config.data ***********'
     println Config.data
 
@@ -54,6 +54,7 @@ def config(){
             'action'                : ACTION,
             'command'               : "mvn",
             'dir'                   : ".",
+            'language'              : "java",
             'legacy'                : false,
             'options'               : "-ff -ntp -U clean -Dmaven.test.skip=true package dependency:tree",
             'skip'                  : false,

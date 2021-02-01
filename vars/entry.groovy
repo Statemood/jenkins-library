@@ -1,4 +1,7 @@
 def call(Map config=[:]){
+    // Fetch config from remote
+    // Set default
+
     pipeline {
         agent any
 
