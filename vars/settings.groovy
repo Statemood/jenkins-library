@@ -22,12 +22,14 @@ def merge(Map arguments=[:]){
     println Config.settings
 
 
-    println '-------------------'
+    println "*********** arguments ***********"
+    println arguments
+
     for(key in arguments.keySet()){
         println key + ' = ' + arguments.key
     }
-    println '-------------------'
-
+    println "*********** arguments ***********"
+    
     Config.settings + arguments
 
     println "*********** Config.settings after add ***********"
@@ -36,8 +38,7 @@ def merge(Map arguments=[:]){
     println "*********** config.data ***********"
     println Config.data
 
-    println "*********** arguments ***********"
-    println arguments
+
 }
 
 def config(){
