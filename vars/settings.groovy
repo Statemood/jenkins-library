@@ -27,6 +27,9 @@ def merge(Map arguments=[:]){
 
     for(key in arguments.keySet()){
         println key + ' = ' + arguments[key]
+        for (k in arguments[key]) {
+            println k + ' = ' + arguments[key][k]
+        }
     }
     println "*********** arguments ***********"
 
