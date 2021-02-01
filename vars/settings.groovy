@@ -21,12 +21,7 @@ def merge(Map arguments=[:]){
     println "*********** Config.settings ***********"
     println Config.settings
 
-    def temp_config = new LinkedHashMap(Config.settings)
-
-
-    temp_config = Config.settings.putAll(arguments)
-
-    Config.data = temp_config
+    Config.settings << arguments
 
     println "*********** Config.settings after add ***********"
     println Config.settings
