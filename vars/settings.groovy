@@ -26,16 +26,6 @@ def config(){
         if(!ACTION)         { ACTION        = "deploy"  }
         if(!ENVIRONMENT)    { ENVIRONMENT   = "dev"     }
         if(!GIT_REVISION)   { GIT_REVISION  = null      }
-
-        /* Get User info
-           Requeire 'build user vars' plugin
-           See https://plugins.jenkins.io/build-user-vars-plugin for more information
-        */
-        wrap([$class: 'BuildUser']) { build_user    = BUILD_USER    }
-        wrap([$class: 'BuildUser']) { build_user_id = BUILD_USER_ID }
-
-        def project_name        = JOB_BASE_NAME.split('_')[0].toLowerCase()
-        def     app_name        = JOB_BASE_NAME.split('_')[1].toLowerCase()
     }
     catch (e) {
         log.err "在初始化环境变量时遇到问题."
@@ -44,8 +34,8 @@ def config(){
 
     Config.settings = [
         'base'                      : [
-            'dir'                   : base.firstDirectory(),
-            'name'                  : app_name,
+            'dir'                   : metis.getFirstDirectory(),
+            'name'                  : metis.getApplicationName(),
             'port'                  : 8080,
             'workspace'             : JENKINS_HOME + "/workspace/" + JOB_NAME
         ],
@@ -58,8 +48,8 @@ def config(){
             'options'               : "-ff -ntp -U clean -Dmaven.test.skip=true package dependency:tree",
             'skip'                  : false,
             'stage'                 : "master",
-            'user'                  : BUILD_USER,
-            'userid'                : BUILD_USER_ID
+            'user'                  : metis.getBuildUserName,
+            'userid'                : metis.getBuildUserNameID
         ],
         'docker'                    : [
             'account'               : "Docker-Registry",
@@ -81,7 +71,7 @@ def config(){
             'stage'                 : "master"
         ],
         'k8s'                       : [
-            'namespace'             : project_name,
+            'namespace'             : metis.getFrojectName,
             'resources'             : [
                 'limits_cpu'        : "300m",
                 'limits_memory'     : "512Mi",
