@@ -43,7 +43,7 @@ def defaultSettings(){
         throw e
     }
 
-    Config.settings[
+    Config.settings = [
         'base'                      : [
             'dir'                   : first_dir,
             'name'                  : app_name,
