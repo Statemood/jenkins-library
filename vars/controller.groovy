@@ -23,6 +23,7 @@ def entry(Map args = [:]) {
     */
 
     loadSettings()
+    settings.defaultSettings()
 
     println Config.settings
     println '-----' 
