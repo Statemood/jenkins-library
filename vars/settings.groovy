@@ -21,7 +21,7 @@ def merge(Map arguments=[:]){
     println "*********** Config.settings ***********"
     println Config.settings
 
-    Config.settings << arguments
+    Config.settings += arguments
 
     println "*********** Config.settings after add ***********"
     println Config.settings
