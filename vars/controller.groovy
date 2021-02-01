@@ -25,7 +25,7 @@ def entry(Map args = [:]) {
 
     loadSettings()
 
-    if(!ACTION) { ACTION = "deploy" }
+    if(!ACTION) { ACTION = "deploy" }   
 
     Config.data['repo']             = args.containsKey('repo')              ?: null
     Config.data['revision']         = args.containsKey('revision')          ?: GIT_REVISION
