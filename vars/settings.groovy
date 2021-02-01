@@ -26,10 +26,10 @@ def merge(Map arguments=[:]){
     println arguments
 
     for(key in arguments.keySet()){
-        println key + ' = ' + arguments.key
+        println key + ' = ' + arguments[key]
     }
     println "*********** arguments ***********"
-    
+
     Config.settings + arguments
 
     println "*********** Config.settings after add ***********"
