@@ -12,7 +12,6 @@ import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
 import me.rulin.docker.Docker
 import me.rulin.kubernetes.Command
-import me.rulin.kubernetes.Json
 import me.rulin.kubernetes.Yaml
 
 def entry(Map args = [:]) {
@@ -24,6 +23,10 @@ def entry(Map args = [:]) {
     */
 
     loadSettings()
+
+    println Config.settings
+    println '-----' 
+    println Config.settings['base']
 
     if(!ACTION) { ACTION = "deploy" }
 
