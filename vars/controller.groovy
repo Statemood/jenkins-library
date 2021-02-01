@@ -28,17 +28,6 @@ def entry(Map args = [:]) {
     println '-----' 
     println Config.settings['base']
 
-    if(!ACTION) { ACTION = "deploy" }
-
-    Config.data['repo']             = args.containsKey('repo')              ?: null
-    Config.data['revision']         = args.containsKey('revision')          ?: GIT_REVISION
-    Config.data['language']         = args.containsKey('language')          ?: "java"
-    Config.data['action']           = ACTION
-    Config.data['env']              = ENVIRONMENT
-    Config.data['credentials.id']   = args.containsKey('credentials.id')    ?: "DefaultGitSCMCredentialsID"
-    
-    Config.data += args 
-
     println Config.data 
     println args 
 
@@ -83,7 +72,7 @@ def codeClone() {
                     def private revision = Config.data['revision']
                     def private     repo = Config.data['repo']
 
-                    log.i "Git clone " + revision + " " + repo
+                    log.i "Git clone " + revision + " from " + repo
 
                     git credentialsId: Config.data['credentials.id'],
                         branch: revision,

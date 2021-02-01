@@ -35,6 +35,7 @@ def config(){
     Config.settings = [
         'base'                      : [
             'dir'                   : metis.getFirstDirectory(),
+            'env'                   : ENVIRONMENT,
             'name'                  : metis.getApplicationName(),
             'port'                  : 8080,
             'workspace'             : JENKINS_HOME + "/workspace/" + JOB_NAME
@@ -43,7 +44,6 @@ def config(){
             'action'                : ACTION,
             'command'               : "mvn",
             'dir'                   : ".",
-            'env'                   : ENVIRONMENT,
             'legacy'                : false,
             'options'               : "-ff -ntp -U clean -Dmaven.test.skip=true package dependency:tree",
             'skip'                  : false,
