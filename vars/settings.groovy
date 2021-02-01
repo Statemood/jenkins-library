@@ -17,7 +17,17 @@ def merge(Map arguments=[:]){
     */
     localSettingsFile()
     config()
+
     Config.data = Config.settings + arguments
+
+    println '*********** Config.settings ***********'
+    println Config.settings
+    
+    println '*********** config.data ***********'
+    println Config.data
+
+    println '*********** arguments ***********'
+    println arguments
 }
 
 def config(){

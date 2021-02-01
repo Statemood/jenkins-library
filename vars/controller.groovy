@@ -28,7 +28,10 @@ def entry(Map args = [:]) {
     println '-----' 
     println Config.settings['base']
 
+
+    println '----- config.data -----'
     println Config.data 
+    println '----- config.data -----'
     println args 
 
     log.i "Using workspace: " + Config.data['base']['dir']
