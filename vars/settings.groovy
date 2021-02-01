@@ -23,8 +23,6 @@ def merge(Map arguments=[:]){
 def config(){
     // 设置初始化配置
     try {
-        def first_dir  = pwd()
-
         if(!ACTION)         { ACTION        = "deploy"  }
         if(!ENVIRONMENT)    { ENVIRONMENT   = "dev"     }
         if(!GIT_REVISION)   { GIT_REVISION  = null      }
@@ -46,7 +44,7 @@ def config(){
 
     Config.settings = [
         'base'                      : [
-            'dir'                   : first_dir,
+            'dir'                   : base.firstDirectory(),
             'name'                  : app_name,
             'port'                  : 8080,
             'workspace'             : JENKINS_HOME + "/workspace/" + JOB_NAME
