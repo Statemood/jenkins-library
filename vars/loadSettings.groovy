@@ -55,5 +55,6 @@ def call(){
 }
 
 def defaults(){
-    Config.data['build.command']     = "mvn build"
+    Config.data['build.command']            = "mvn build"
+    Config.data['build.command.unit.test']  = "mvn test"
 }
