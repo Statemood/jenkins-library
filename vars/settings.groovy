@@ -101,25 +101,25 @@ def config(){
     return Config.settings
 }
 
-def localSettingsFile(){
+def localSettingsFile(String ds=""){
     try {
-        if (DEFAULT_SETTINGS) {
-            if (fileExists(DEFAULT_SETTINGS)) {
+        if (ds) {
+            if (fileExists(ds)) {
                 log.i "Loading local settings"
 
-                load(DEFAULT_SETTINGS)
+                load(ds)
             }
             else {
-                log.w "File not found: " + DEFAULT_SETTINGS
+                log.w "File not found: " + ds
             }
         }
         else {
-             log.w "Undefined 'DEFAULT_SETTINGS'"
+             log.w "Undefined 'ds'"
         }
     }
     catch (e) {
         throw e
-        log.err "Oops! An error occurred while try to load 'DEFAULT_SETTINGS'"
+        log.err "Oops! An error occurred while try to load default settings."
     }
 
     log.i "Load defaults "
