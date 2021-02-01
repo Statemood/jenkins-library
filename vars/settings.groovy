@@ -18,15 +18,15 @@ def merge(Map arguments=[:]){
     localSettingsFile()
     config()
 
-    Config.data = Config.settings.pubAll(arguments)
+    Config.data = Config.settings.putAll(arguments)
 
-    println '*********** Config.settings ***********'
+    println "*********** Config.settings ***********"
     println Config.settings
 
-    println '*********** config.data ***********'
+    println "*********** config.data ***********"
     println Config.data
 
-    println '*********** arguments ***********'
+    println "*********** arguments ***********"
     println arguments
 }
 
@@ -43,56 +43,56 @@ def config(){
     }
 
     Config.settings = [
-        'base'                      : [
-            'dir'                   : metis.getFirstDirectory(),
-            'env'                   : ENVIRONMENT,
-            'name'                  : metis.getApplicationName(),
-            'port'                  : 8080,
-            'workspace'             : JENKINS_HOME + "/workspace/" + JOB_NAME
+        base                      : [
+            dir                   : metis.getFirstDirectory(),
+            env                   : ENVIRONMENT,
+            name                  : metis.getApplicationName(),
+            port                  : 8080,
+            workspace             : JENKINS_HOME + "/workspace/" + JOB_NAME
         ],
-        'build'                     : [
-            'action'                : ACTION,
-            'command'               : "mvn",
-            'dir'                   : ".",
-            'language'              : "java",
-            'legacy'                : false,
-            'options'               : "-ff -ntp -U clean -Dmaven.test.skip=true package dependency:tree",
-            'skip'                  : false,
-            'stage'                 : "master",
-            'user'                  : metis.getBuildUserName(),
-            'userid'                : metis.getBuildUserNameID()
+        build                     : [
+            action                : ACTION,
+            command               : "mvn",
+            dir                   : ".",
+            language              : "java",
+            legacy                : false,
+            options               : "-ff -ntp -U clean -Dmaven.test.skip=true package dependency:tree",
+            skip                  : false,
+            stage                 : "master",
+            user                  : metis.getBuildUserName(),
+            userid                : metis.getBuildUserNameID()
         ],
-        'docker'                    : [
-            'account'               : "Docker-Registry",
-            'image'                 : [
-                'name'              : "",
-                'tag'               : "",
-                'build_timeout'     : 1800,
-                'build_options'     : "",
-                'push_timeout'      : 600
+        docker                    : [
+            account               : "Docker-Registry",
+            image                 : [
+                name              : "",
+                tag               : "",
+                build_timeout     : 1800,
+                build_options     : "",
+                push_timeout      : 600
             ],
-            'ignore_file'           : ".dockerignore"
+            ignore_file           : ".dockerignore"
         ],
-        'git'                       : [
-            'commit_length'         : 8,
-            'credentials'           : "DefaultGitSCMCredentialsID",
-            'repo'                  : null,
-            'revision'              : GIT_REVISION,
-            'skip'                  : false,
-            'stage'                 : "master"
+        git                       : [
+            commit_length         : 8,
+            credentials           : "DefaultGitSCMCredentialsID",
+            repo                  : null,
+            revision              : GIT_REVISION,
+            skip                  : false,
+            stage                 : "master"
         ],
-        'k8s'                       : [
-            'namespace'             : metis.getFrojectName(),
-            'resources'             : [
-                'limits_cpu'        : "300m",
-                'limits_memory'     : "512Mi",
-                'requests_cpu'      : "300m",
-                'requests_memory'   : "512Mi"
+        k8s                       : [
+            namespace             : metis.getFrojectName(),
+            resources             : [
+                limits_cpu        : "300m",
+                limits_memory     : "512Mi",
+                requests_cpu      : "300m",
+                requests_memory   : "512Mi"
             ],
-            'run'                   : [
-                'args'              : null,
-                'command'           : null,
-                'user'              : null
+            run                   : [
+                args              : null,
+                command           : null,
+                user              : null
             ]
         ]
     ]
@@ -113,7 +113,7 @@ def localSettingsFile(){
             }
         }
         else {
-             log.w "Undefined 'SETTINGS'"
+             log.w "Undefined SETTINGS"
         }
     }
     catch (e) {
@@ -123,7 +123,7 @@ def localSettingsFile(){
 
     log.i "Load defaults "
 
-    sf_lists = ['settings.yaml', 'jenkins.yaml']
+    sf_lists = ["settings.yaml", "jenkins.yaml"]
     for (sf in sf_lists) {
         if (fileExists(sf)) {
             try {
