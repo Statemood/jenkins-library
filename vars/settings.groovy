@@ -48,8 +48,8 @@ def config(){
             'options'               : "-ff -ntp -U clean -Dmaven.test.skip=true package dependency:tree",
             'skip'                  : false,
             'stage'                 : "master",
-            'user'                  : metis.getBuildUserName,
-            'userid'                : metis.getBuildUserNameID
+            'user'                  : metis.getBuildUserName(),
+            'userid'                : metis.getBuildUserNameID()
         ],
         'docker'                    : [
             'account'               : "Docker-Registry",
@@ -71,7 +71,7 @@ def config(){
             'stage'                 : "master"
         ],
         'k8s'                       : [
-            'namespace'             : metis.getFrojectName,
+            'namespace'             : metis.getFrojectName(),
             'resources'             : [
                 'limits_cpu'        : "300m",
                 'limits_memory'     : "512Mi",
