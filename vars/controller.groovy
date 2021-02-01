@@ -69,8 +69,8 @@ def codeClone() {
         node(STAGE_GIT) {
             dir(Config.data['base']['dir']) {
                 try {
-                    def private revision = Config.data['revision']
-                    def private     repo = Config.data['repo']
+                    def private revision = Config.data['git']['revision']
+                    def private     repo = Config.data['git']['repo']
 
                     log.i "Git clone " + revision + " from " + repo
 
@@ -78,7 +78,7 @@ def codeClone() {
                         branch: revision,
                         url: repo
 
-                    Config.data['commit.id'] = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+                    Config.data['git']['commit_id'] = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
 
                     return
                 } catch (e) {
