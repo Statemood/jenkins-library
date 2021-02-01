@@ -34,7 +34,6 @@ def entry(Map args = [:]) {
     Config.data['revision']         = args.containsKey('revision')          ?: GIT_REVISION
     Config.data['language']         = args.containsKey('language')          ?: "java"
     Config.data['action']           = ACTION
-    Config.data['build.user']       = BUILD_USER
     Config.data['env']              = ENVIRONMENT
     Config.data['credentials.id']   = args.containsKey('credentials.id')    ?: "DefaultGitSCMCredentialsID"
     
@@ -43,7 +42,7 @@ def entry(Map args = [:]) {
     println Config.data 
     println args 
 
-    log.i "Using workspace: " + FIRST_DIR
+    log.i "Using workspace: " + Config.data['base']['dir']
 
     preProcess()
     codeClone()
@@ -65,7 +64,7 @@ def currentBuildInfo(){
 def preProcess() {
     stage("Pre-Process") {
         node(STAGE_PRE_PROCESS) {
-            dir(FIRST_DIR) {
+            dir(Config.data['base']['dir']) {
                 // Set default info
                 // Set build info
                 // Check parameters
@@ -79,7 +78,7 @@ def preProcess() {
 def codeClone() {
     stage("Git Clone") {
         node(STAGE_GIT) {
-            dir(FIRST_DIR) {
+            dir(Config.data['base']['dir']) {
                 try {
                     def private revision = Config.data['revision']
                     def private     repo = Config.data['repo']
@@ -105,7 +104,7 @@ def codeClone() {
 def sonarScan() {
     stage("SonarQube Scanner") {
         node(STAGE_SONAR) {
-            dir(FIRST_DIR) {
+            dir(Config.data['base']['dir']) {
                 def sonar = new SonarQube()
                 sonar.scanner()
             }
@@ -118,7 +117,7 @@ def codeBuild() {
         lang = Config.data['language'].toLowerCase()
 
         node(lang) {
-            dir(FIRST_DIR) {
+            dir(Config.data['base']['dir']) {
                 def language = new Language()
                 language.seletor(lang)
             }
@@ -131,7 +130,7 @@ def codeTest() {
     if (utc) {
         stage("Unit Test") {
             node(STAGE_TEST) {
-                dir(FIRST_DIR) {
+                dir(Config.data['base']['dir']) {
                     log.i "Test by command: " + utc
 
                     sh(utc)
@@ -145,7 +144,7 @@ def doDocker(){
     // if (DEPLOY_MODE == "Container") {}
     stage("Build Image") {
         node(STAGE_DOCKER) {
-            dir(FIRST_DIR) {
+            dir(Config.data['base']['dir']) {
                 def private  docker = new Docker()
                 def private  tag = GIT_REVISION    + '-' + Config.data['commit.id'][0..8]
                 env.DOCKER_IMAGE = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
@@ -162,7 +161,7 @@ def doDocker(){
 def doKubernetes(){
     stage("Kubernetes") {
         node(STAGE_K8S) {
-            dir(FIRST_DIR) {
+            dir(Config.data['base']['dir']) {
                 def gen = new Yaml()
                 def pth = 'me/rulin/templates/kubernetes/yaml/standard'
                 gen.deployment(pth + '/deployment.yaml')
