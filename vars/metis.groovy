@@ -20,7 +20,8 @@ def getBuildUserNameID(){
 }
 
 def getFirstDirectory(){
-    return pwd()
+    first_dir = pwd()
+    return first_dir
 }
 
 def getFrojectName(){
