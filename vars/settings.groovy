@@ -58,7 +58,7 @@ def config(){
         build_skip                      : false,
         build_stage                     : 'master',
         build_user                      : metis.getBuildUserName(),
-        build_userid                    : metis.getBuildUserNameID()
+        build_userid                    : metis.getBuildUserNameID(),
         docker_account                  : 'Docker-Registry',
         docker_img_name                 : '',
         docker_img_tag                  : '',
