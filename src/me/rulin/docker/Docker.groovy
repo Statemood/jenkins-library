@@ -19,7 +19,7 @@ def String cmd(String c){
 }
 
 def private genDockerfile(String f='Dockerfile', String t='.', String d=Config.data.base_web_root, String c=null){
-    if (fileExists(Config.data.docker_ignore_file) {
+    if (fileExists(Config.data.docker_ignore_file)) {
         log.i "Copy dockerignore file"
 
         sh('cp -rf' + Config.data.docker_ignore_file + ' .')
