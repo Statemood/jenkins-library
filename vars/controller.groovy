@@ -24,6 +24,11 @@ def entry(Map args = [:]) {
 
     settings.merge(args)
 
+    println Config.data
+
+    println '-------------------'
+    println Config.data.base_dir
+
     preProcess()
     codeClone()
     codeBuild()
