@@ -81,7 +81,7 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
         timeout(time: Config.data.docker_login_timeout, unit: 'SECONDS') {
             withCredentials([
                 usernamePassword(
-                    credentialsId: ,
+                    credentialsId: Config.data.docker_account,
                     passwordVariable: 'registry_password',
                     usernameVariable: 'registry_username'
                 )
