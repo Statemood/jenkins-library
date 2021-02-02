@@ -18,33 +18,26 @@ Shared Library for Jenkins Pipeline
 创建项目
 
 #### 2. 配置使用 Jenkinsfile
-在项目配置界面，**流水线** 处:
-  - 定义
-    - Pipeline script from SCM
-      - SCM
-        - Git
+在项目配置界面，**流水线** 处，选择 `Pipeline script from SCM`
+  - SCM
+    - Git
       - Repository URL
-        - https://github.com/Statemood/jenkins-library
+      - https://github.com/Statemood/jenkins-library
       - Branch Specifier (blank for 'any')
-        - origin/master
+      - origin/master
     - 脚本路径
       - Jenkinsfile
 
+或选择 `Pipeline script`, 然后输入如下配置
+
+```groovy
+@Library('github.com/Statemood/jenkins-library@dev') _
+
+entry([git_repo: 'https://github.com/Statemood/simple-java-maven-app.git'])
+```
+
 保存即可开始使用。
 
-### Scripted Pipeline
-#### 1. 保存 `settings.groovy` 到Jenkins本地
-   - 如 `/data/jenkins/config/settings.groovy`
-   - 确保 Jenkins 运行用户有读取此文件的权限
-
-#### 2. 在 Jenkins 中配置全局变量 `SETTINGS`, 步骤如下：
-  - -> Manage Jenkins
-    - -> Configure System
-      - -> Global properties
-      - Create new one
-        - Name:  `SETTINGS`
-        - Value: `/data/jenkins/config/settings.groovy`
-  - 具体 `settings.groovy` 路径请以本地环境配置为准
 
 #### 3. 配置 Global Pipeline Libraries
 - 配置方式参考 https://jenkins.io/doc/book/pipeline/shared-libraries/#global-shared-libraries

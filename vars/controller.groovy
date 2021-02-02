@@ -24,27 +24,6 @@ def entry(Map args = [:]) {
 
     settings.merge(args)
 
-<<<<<<< HEAD
-    log.i 'Using workspace: ' + Config.data.base_dir
-=======
-    if(!ACTION) { ACTION = "deploy" }   
-
-    Config.data['repo']             = args.containsKey('repo')              ?: null
-    Config.data['revision']         = args.containsKey('revision')          ?: GIT_REVISION
-    Config.data['language']         = args.containsKey('language')          ?: "java"
-    Config.data['action']           = ACTION
-    Config.data['build.user']       = BUILD_USER
-    Config.data['env']              = ENVIRONMENT
-    Config.data['credentials.id']   = args.containsKey('credentials.id')    ?: "DefaultGitSCMCredentialsID"
-    
-    Config.data += args 
-
-    println Config.data 
-    println args 
-
-    log.i "Using workspace: " + FIRST_DIR
->>>>>>> master
-
     preProcess()
     codeClone()
     codeBuild()
@@ -125,7 +104,7 @@ def codeBuild() {
 }
 
 def codeTest() {
-    def private utc = Config.data['build.command.unit.test']
+    def private utc = Config.data.test_command + ' ' + Config.data.test_options
     if (utc) {
         stage('Unit Test') {
             node(STAGE_TEST) {
@@ -145,13 +124,14 @@ def doDocker(){
         node(STAGE_DOCKER) {
             dir(Config.data.base_dir) {
                 def private  docker = new Docker()
-                def private  tag = Config.data.git_revision + '-' + Config.data.git_commit_id[0..8]
-                env.DOCKER_IMAGE = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
-
+                def private     cfg = Config.data
+                Config.data.docker_img_tag  = cfg.git_revision + '-' + cfg.git_commit_id[0..8]
+                Config.data.docker_img_name = DOCKER_REGISTRY  + '/' + cfg.base_project + '/' + cfg.base_name
+                Config.data.docker_img      = cfg.docker_img_name + ':' + cfg.docker_img_tag
                 docker.genDockerfile()
-                docker.build(DOCKER_IMAGE)
+                docker.build(cfg.docker_img)
                 docker.login()
-                docker.push(DOCKER_IMAGE)
+                docker.push(cfg.docker_img)
             }
         }
     }
@@ -162,7 +142,7 @@ def doKubernetes(){
         node(STAGE_K8S) {
             dir(Config.data.base_dir) {
                 def gen = new Yaml()
-                def pth = 'me/rulin/templates/kubernetes/yaml/standard'
+                def pth = Config.data.k8s_standard_templates_dir
                 gen.deployment(pth + '/deployment.yaml')
                 gen.service(pth + '/service.yaml')
 

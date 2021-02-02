@@ -50,8 +50,10 @@ def private build(String image_name) {
     try {
         log.info "Build image: " + image_name
 
-        timeout(time: DOCKER_IMAGE_BUILD_TIMEOUT, unit: 'SECONDS') {
-            cmd("build $DOCKER_IMAGE_BUILD_OPTIONS -t $image_name .")
+        def private dibo = Config.data.docker_img_build_options
+
+        timeout(time: Config.data.docker_img_build_timeout, unit: 'SECONDS') {
+            cmd("build $dibo -t $image_name .")
         }
     }
     catch (e) {

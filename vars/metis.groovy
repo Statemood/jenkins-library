@@ -20,9 +20,21 @@ def getBuildUserNameID(){
 }
 
 def getFirstDirectory(){
-    return pwd()
+    first_dir = pwd()
+    return first_dir
 }
 
 def getFrojectName(){
     return JOB_BASE_NAME.split('_')[0].toLowerCase()
+}
+
+def getReplicasNumber(){
+    def repn = 2
+
+    dq = ['dev', 'test', 'qa']
+    if (ENVIRONMENT in dq) {
+        repn =  1
+    }
+
+    return repn
 }
