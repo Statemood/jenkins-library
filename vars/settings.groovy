@@ -59,7 +59,7 @@ def config(){
         build_stage                     : 'master',
         build_user                      : metis.getBuildUserName(),
         build_userid                    : metis.getBuildUserNameID(),
-        docker_account                  : 'Docker-Registry',
+        docker_account                  : 'Registry-Jenkins',
         docker_img_name                 : '',
         docker_img_tag                  : '',
         docker_img_build_timeout        : 1800,

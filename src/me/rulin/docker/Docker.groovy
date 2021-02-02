@@ -30,10 +30,11 @@ def private genDockerfile(String f='Dockerfile', String t='.', String d=Config.d
     
     // Test Dockerfile exist
     check.file(f)
-    def private dfc = []
-    def private cid = Config.data.git_commit_id
+    def private dfc  = []
+    def private cid  = Config.data.git_commit_id
+    def private user = Config.data.build_userid
 
-    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user=$BUILD_USER commit.id=$cid")
+    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$user commit.id=$cid")
     dfc.add("RUN mkdir -p $d")
     dfc.add("COPY $t $d")
 
@@ -80,7 +81,7 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
         timeout(time: Config.data.docker_login_timeout, unit: 'SECONDS') {
             withCredentials([
                 usernamePassword(
-                    credentialsId: Config.data.docker_account,
+                    credentialsId: ,
                     passwordVariable: 'registry_password',
                     usernameVariable: 'registry_username'
                 )
@@ -90,7 +91,7 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
         }
     }
     catch (e) {
-        println "Error occurred during push image"
+        println "Error occurred during login to registry"
         throw e
     }
 }
