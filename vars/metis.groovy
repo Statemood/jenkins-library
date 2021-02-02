@@ -32,7 +32,7 @@ def getReplicasNumber(){
 
     dq = ['dev', 'test', 'qa']
     if (ENVIRONMENT in dq) {
-        def repn =  1
+        repn =  1
     }
 
     return repn
