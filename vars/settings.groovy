@@ -17,6 +17,8 @@ def merge(Map arguments=[:]){
     */
     localSettingsFile()
     config()
+
+    Config.data = Config.settings + arguments
 }
 
 def config(){
