@@ -82,6 +82,7 @@ def config(){
         k8s_strategy_max_surge          : '25%',
         k8s_strategy_max_unavailable    : '25%',
         k8s_termination_GPS             : 60,
+        notice_timeout                  : 15,
         run_args                        : null,
         run_command                     : null,
         run_user                        : null,

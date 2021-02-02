@@ -1,1 +1,1 @@
-package me.rulin.webhook
+package me.rulin.notifications

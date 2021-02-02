@@ -33,7 +33,7 @@ def entry(Map args = [:]) {
         'Sonar Scan': { sonarScan() },
         'Docker'    : { doDocker()  }
     )
-    
+
     doKubernetes()
 }
 
@@ -91,6 +91,12 @@ def sonarScan() {
                 def sonar = new SonarQube()
                 sonar.scanner()
             }
+        }
+    }
+
+    stage("Quality Gate") {
+        timeout(time: 30, unit: 'MINTUNES') {
+            waitForQualityGate abortPipeline: true
         }
     }
 }
