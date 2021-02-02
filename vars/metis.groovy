@@ -28,13 +28,11 @@ def getFrojectName(){
 }
 
 def getReplicasNumber(){
-    try {
-        def repn = 2
+    def repn = 2
 
-        dq = ['dev', 'test', 'qa']
-        if (ENVIRONMENT in dq) {
-            def repn =  1
-        }
+    dq = ['dev', 'test', 'qa']
+    if (ENVIRONMENT in dq) {
+        def repn =  1
     }
 
     return repn
