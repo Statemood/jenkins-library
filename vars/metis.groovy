@@ -26,3 +26,16 @@ def getFirstDirectory(){
 def getFrojectName(){
     return JOB_BASE_NAME.split('_')[0].toLowerCase()
 }
+
+def getReplicasNumber(){
+    try {
+        def repn = 2
+
+        dq = ['dev', 'test', 'qa']
+        if (ENVIRONMENT in dq) {
+            def repn =  1
+        }
+    }
+
+    return repn
+}

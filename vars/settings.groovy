@@ -17,17 +17,6 @@ def merge(Map arguments=[:]){
     */
     localSettingsFile()
     config()
-
-    Config.data = Config.settings + arguments
-    println "*********** arguments ***********"
-    println arguments
-
-    println "*********** Config.settings ***********"
-    println Config.settings
-
-    println "*********** config.data ***********"
-    println Config.data
-
 }
 
 def config(){
@@ -48,6 +37,7 @@ def config(){
         base_env                        : ENVIRONMENT,
         base_name                       : metis.getApplicationName(),
         base_port                       : 8080,
+        base_project                    : metis.getFrojectName(),
         base_web_root                   : '/data/app',
         base_workspace                  : JENKINS_HOME + '/workspace/' + JOB_NAME,
         build_command                   : 'mvn',
@@ -74,11 +64,22 @@ def config(){
         git_revision                    : GIT_REVISION,
         git_skip                        : false,
         git_stage                       : 'master',
+        k8s_allowed_commands            : ['apply', 'create', 'delete', 'get', 'autoscale'],
+        k8s_img_pull_policy             : 'Always',
+        k8s_img_pull_secret             : metis.getFrojectName() + '-image-pull-secret',
+        k8s_min_ready_seconds           : 60,
         k8s_namespace                   : metis.getFrojectName(),
-        k8s_limits_cpu                  : '300m',
-        k8s_limits_memory               : '512Mi',
-        k8s_requests_cpu                : '300m',
-        k8s_requests_memory             : '512Mi',
+        k8s_progress_deadline_sec       : 300,
+        k8s_replicas                    : metis.getReplicasNumber(),
+        k8s_res_limits_cpu              : '300m',
+        k8s_res_limits_memory           : '512Mi',
+        k8s_res_requests_cpu            : '300m',
+        k8s_res_requests_memory         : '512Mi',
+        k8s_rev_history_limit           : 5,
+        k8s_standard_templates_dir      : 'me/rulin/templates/kubernetes/yaml/standard',
+        k8s_strategy_max_surge          : '25%',
+        k8s_strategy_max_unavailable    : '25%',
+        k8s_termination_GPS             : 60,
         run_args                        : null,
         run_command                     : null,
         run_user                        : null
