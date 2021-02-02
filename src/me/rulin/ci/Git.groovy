@@ -10,7 +10,7 @@
 package me.rulin.ci
 
 def commitID(int len=41){
-    sh(script: "git rev-parse HEAD", returnStdout: true).trim()[0..len]
+    return sh(script: 'git rev-parse HEAD', returnStdout: true).trim()[0..len]
 }
 
 def commitMessage(){

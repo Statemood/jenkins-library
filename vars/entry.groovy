@@ -24,7 +24,7 @@ def call(Map config=[:]){
                 tagFilter: '*', 
                 type: 'PT_BRANCH_TAG', 
                 description: 'Please select a branch or tag to build',
-                useRepository: config.repo)
+                useRepository: config.git_repo)
 
             choice(
                 name: 'ENVIRONMENT',

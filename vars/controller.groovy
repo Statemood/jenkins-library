@@ -24,17 +24,7 @@ def entry(Map args = [:]) {
 
     settings.merge(args)
 
-    println Config.settings
-    println '-----' 
-    println Config.settings['base']
-
-
-    println '----- config.data -----'
-    println Config.data 
-    println '----- config.data -----'
-    println args 
-
-    log.i "Using workspace: " + Config.data['base']['dir']
+    log.i 'Using workspace: ' + Config.data.base_dir
 
     preProcess()
     codeClone()
@@ -46,46 +36,44 @@ def entry(Map args = [:]) {
 
 // Set build info
 def currentBuildInfo(){
-    def private name = BUILD_NUMBER + "-" + Config.data['base']['env']
-    def private desc = Config.data['build']['user'] + " " + Config.data['base']['action'] + " " + Config.data['git']['revision'] 
+    def private name = BUILD_NUMBER + '-' + Config.data.base_env
+    def private desc = Config.data.build_user + ' ' + Config.data.base_action + ' ' + Config.data.git_revision
 
     currentBuild.displayName = name 
     currentBuild.description = desc 
 }
 
 def preProcess() {
-    stage("Pre-Process") {
+    stage('Pre-Process') {
         node(STAGE_PRE_PROCESS) {
-            dir(Config.data['base']['dir']) {
+            dir(Config.data.base_dir) {
                 // Set default info
                 // Set build info
                 // Check parameters
                 currentBuildInfo()
-                log.i "Stage Pre-Process OK"
+                log.i 'Stage Pre-Process OK'
             }
         }
     }
 }
 
 def codeClone() {
-    stage("Git Clone") {
+    stage('Git Clone') {
         node(STAGE_GIT) {
-            dir(Config.data['base']['dir']) {
+            dir(Config.data.base_dir) {
                 try {
-                    def private revision = Config.data['git']['revision']
-                    def private     repo = Config.data['git']['repo']
+                    def private revision = Config.data.git_revision
+                    def private     repo = Config.data.git_repo
 
-                    log.i "Git clone " + revision + " from " + repo
+                    log.i 'Git clone ' + revision + ' from ' + repo
 
-                    git credentialsId: Config.data['credentials.id'],
+                    git credentialsId: Config.data.git_credentials,
                         branch: revision,
                         url: repo
 
-                    Config.data['git']['commit_id'] = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-
-                    return
+                    Config.data.git_commit_id = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
                 } catch (e) {
-                    log.e "Ops! Error occurred during git checkout"
+                    log.e 'Ops! Error occurred during git checkout'
                     throw e
                 }
             }
@@ -94,9 +82,9 @@ def codeClone() {
 }
 
 def sonarScan() {
-    stage("SonarQube Scanner") {
+    stage('SonarQube Scanner') {
         node(STAGE_SONAR) {
-            dir(Config.data['base']['dir']) {
+            dir(Config.data.base_dir) {
                 def sonar = new SonarQube()
                 sonar.scanner()
             }
@@ -105,11 +93,11 @@ def sonarScan() {
 }
 
 def codeBuild() {
-    stage("Build Code") {
-        lang = Config.data['language'].toLowerCase()
+    stage('Build Code') {
+        lang = Config.data.build_language.toLowerCase()
 
         node(lang) {
-            dir(Config.data['base']['dir']) {
+            dir(Config.data.base_dir) {
                 def language = new Language()
                 language.seletor(lang)
             }
@@ -120,10 +108,10 @@ def codeBuild() {
 def codeTest() {
     def private utc = Config.data['build.command.unit.test']
     if (utc) {
-        stage("Unit Test") {
+        stage('Unit Test') {
             node(STAGE_TEST) {
-                dir(Config.data['base']['dir']) {
-                    log.i "Test by command: " + utc
+                dir(Config.data.base_dir) {
+                    log.i 'Test by command: ' + utc
 
                     sh(utc)
                 }
@@ -133,12 +121,12 @@ def codeTest() {
 }
 
 def doDocker(){
-    // if (DEPLOY_MODE == "Container") {}
-    stage("Build Image") {
+    // if (DEPLOY_MODE == 'Container') {}
+    stage('Docker') {
         node(STAGE_DOCKER) {
-            dir(Config.data['base']['dir']) {
+            dir(Config.data.base_dir) {
                 def private  docker = new Docker()
-                def private  tag = GIT_REVISION    + '-' + Config.data['commit.id'][0..8]
+                def private  tag = Config.data.git_revision + '-' + Config.data.git_commit_id[0..8]
                 env.DOCKER_IMAGE = DOCKER_REGISTRY + '/' + PROJECT_NAME + '/' + APP_NAME + ':' + tag 
 
                 docker.genDockerfile()
@@ -151,15 +139,15 @@ def doDocker(){
 }
 
 def doKubernetes(){
-    stage("Kubernetes") {
+    stage('Kubernetes') {
         node(STAGE_K8S) {
-            dir(Config.data['base']['dir']) {
+            dir(Config.data.base_dir) {
                 def gen = new Yaml()
                 def pth = 'me/rulin/templates/kubernetes/yaml/standard'
                 gen.deployment(pth + '/deployment.yaml')
                 gen.service(pth + '/service.yaml')
 
-                log.a "Ready to deploy!"
+                log.a 'Ready to deploy!'
             }
         }
     }
