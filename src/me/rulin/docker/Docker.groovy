@@ -18,22 +18,23 @@ def String cmd(String c){
     }
 }
 
-def private genDockerfile(String f='Dockerfile', String t='.', String d='/data/app', String c=null){
-    if (fileExists(DOCKERIGNORE_FILE)) {
+def private genDockerfile(String f='Dockerfile', String t='.', String d=Config.data.base_web_root, String c=null){
+    if (fileExists(Config.data.docker_ignore_file)) {
         log.i "Copy dockerignore file"
 
-        sh("cp -rf $DOCKERIGNORE_FILE .")
+        sh('cp -rf' + Config.data.docker_ignore_file + ' .')
     }
     else {
-        log.w "File not found: $DOCKERIGNORE_FILE, ignored"
+        log.w 'File not found: ' + Config.data.docker_ignore_file
     }
     
     // Test Dockerfile exist
     check.file(f)
-    def private dfc = []
-    def private cid = Config.data['commit.id']
+    def private dfc  = []
+    def private cid  = Config.data.git_commit_id
+    def private user = Config.data.build_userid
 
-    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user=$BUILD_USER commit.id=$cid")
+    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$user commit.id=$cid")
     dfc.add("RUN mkdir -p $d")
     dfc.add("COPY $t $d")
 
@@ -63,7 +64,7 @@ def private push(String image_name){
     try {
         log.info "Push image " + image_name
 
-        timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
+        timeout(time: Config.data.docker_img_push_timeout, unit: 'SECONDS') {
             cmd("push $image_name")
         }
     }
@@ -77,10 +78,10 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
     try {
         log.i "Login to Docker Registry " + reg
 
-        timeout(time: DOCKER_IMAGE_PUSH_TIMEOUT, unit: 'SECONDS') {
+        timeout(time: Config.data.docker_login_timeout, unit: 'SECONDS') {
             withCredentials([
                 usernamePassword(
-                    credentialsId: DOCKER_REGISTRY_ACCOUNT,
+                    credentialsId: Config.data.docker_account,
                     passwordVariable: 'registry_password',
                     usernameVariable: 'registry_username'
                 )
@@ -90,7 +91,7 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
         }
     }
     catch (e) {
-        println "Error occurred during push image"
+        println "Error occurred during login to registry"
         throw e
     }
 }

@@ -23,9 +23,9 @@ def scanner(String o="") {
             private ssc_p = "-Dsonar.password="         + sonar_p
             private ssc_k = "-Dsonar.projectKey="       + APP_NAME
             private ssc_n = "-Dsonar.projectName="      + APP_NAME
-            private ssc_v = "-Dsonar.projectVersion="   + Config.data['revision']
+            private ssc_v = "-Dsonar.projectVersion="   + Config.data.git_revision
             private ssc_d = "-Dsonar.projectBaseDir=."
-            private ssc_l = "-Dsonar.language="         + Config.data['lang']
+            private ssc_l = "-Dsonar.language="         + Config.data.build_language
             private ssc_s = "-Dsonar.sources=."
             private ssc_b = "-Dsonar.java.binaries=."
         }
