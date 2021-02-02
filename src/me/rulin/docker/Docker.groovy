@@ -88,7 +88,7 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
                     usernameVariable: 'registry_username'
                 )
             ]){
-                def login_args = 'login -u ' + registry_username + '-p ' + registry_password + ' ' + reg
+                def login_args = 'login -u ' + registry_username + ' -p ' + registry_password + ' ' + reg
                 cmd(login_args)
             }
         }
