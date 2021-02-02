@@ -84,7 +84,10 @@ def config(){
         k8s_termination_GPS             : 60,
         run_args                        : null,
         run_command                     : null,
-        run_user                        : null
+        run_user                        : null,
+        test_command                    : 'mvn',
+        test_options                    : 'test',
+        test_type                       : 'unit'
     ]
 
     return Config.settings

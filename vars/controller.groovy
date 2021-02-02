@@ -24,11 +24,6 @@ def entry(Map args = [:]) {
 
     settings.merge(args)
 
-    println Config.data
-
-    println '-------------------'
-    println Config.data.base_dir
-
     preProcess()
     codeClone()
     codeBuild()
@@ -109,7 +104,7 @@ def codeBuild() {
 }
 
 def codeTest() {
-    def private utc = Config.data.
+    def private utc = Config.data.test_command + ' ' + Config.data.test_options
     if (utc) {
         stage('Unit Test') {
             node(STAGE_TEST) {
