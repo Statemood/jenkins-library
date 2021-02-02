@@ -28,12 +28,12 @@ def scanner(String o="") {
             private ssc_l = "-Dsonar.language="         + Config.data.build_language
             private ssc_s = "-Dsonar.sources=."
             private ssc_b = "-Dsonar.java.binaries=."
-        }
             
-        sonar_opts  = ssc_u + ssc_p + ssc_k + ssc_n + ssc_v + ssc_d + ssc_l + ssc_s + ssc_b
-        sonar_opts += o
+            sonar_opts  = ssc_u + ssc_p + ssc_k + ssc_n + ssc_v + ssc_d + ssc_l + ssc_s + ssc_b
+            sonar_opts += o
 
-        sh("sonar-scanner $sonar_opts")
+            sh("sonar-scanner $sonar_opts")
+        }
     }
     catch (e) {
         log.e "Failed with Sonar Scanner"
