@@ -126,7 +126,7 @@ def doDocker(){
                 def private  docker = new Docker()
                 def private     cfg = Config.data
                 Config.data.docker_img_tag  = cfg.git_revision + '-' + cfg.git_commit_id[0..8]
-                Config.data.docker_img_name = DOCKER_REGISTRY  + '/' + cfg.base_project + '/' + cfg.base_name + ':' + cfg.docker_img_tag 
+                Config.data.docker_img_name = DOCKER_REGISTRY  + '/' + cfg.base_project + '/' + cfg.base_name
                 Config.data.docker_img      = cfg.docker_img_name + ':' + cfg.docker_img_tag
                 docker.genDockerfile()
                 docker.build(cfg.docker_img)
