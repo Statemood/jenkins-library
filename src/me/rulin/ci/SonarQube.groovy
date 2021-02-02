@@ -32,6 +32,7 @@ def scanner(String o="") {
             sonar_opts  = ssc_u + ssc_p + ssc_k + ssc_n + ssc_v + ssc_d + ssc_l + ssc_s + ssc_b
             sonar_opts += o
 
+            log.i sonar_opts
             sh("sonar-scanner $sonar_opts")
         }
     }
