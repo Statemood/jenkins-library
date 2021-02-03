@@ -20,7 +20,7 @@ def String cmd(String c){
 
 def private genDockerfile(String f='Dockerfile', String t='.', String d=Config.data.base_web_root, String c=null){
     if (fileExists(Config.data.docker_ignore_file)) {
-        log.i "Copy dockerignore file"
+        log.i 'Copy dockerignore file'
 
         sh('cp -rf' + Config.data.docker_ignore_file + ' .')
     }
@@ -48,7 +48,7 @@ def private genDockerfile(String f='Dockerfile', String t='.', String d=Config.d
 def private build(String image_name) {
     check.file('Dockerfile')
     try {
-        log.info "Build image: " + image_name
+        log.info 'Build image: ' + image_name
 
         def private dibo = Config.data.docker_img_build_options
 
@@ -57,28 +57,28 @@ def private build(String image_name) {
         }
     }
     catch (e) {
-        println "Error occurred during build image"
+        println 'Error occurred during build image'
         throw e
     }
 }
 
 def private push(String image_name){
     try {
-        log.info "Push image " + image_name
+        log.info 'Push image ' + image_name
 
         timeout(time: Config.data.docker_img_push_timeout, unit: 'SECONDS') {
             cmd("push $image_name")
         }
     }
     catch (e) {
-        println "Error occurred during push image"
+        println 'Error occurred during push image'
         throw e
     }
 }
 
 def login(String reg=DOCKER_REGISTRY, String opt=null){
     try {
-        log.i "Login to Docker Registry " + reg
+        log.i 'Login to Docker Registry ' + reg
 
         timeout(time: Config.data.docker_login_timeout, unit: 'SECONDS') {
             withCredentials([
@@ -88,16 +88,17 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
                     usernameVariable: 'registry_username'
                 )
             ]){
-                cmd("login -u $registry_username -p $registry_password $reg")
+                def login_args = 'login -u ' + registry_username + ' -p ' + registry_password + ' ' + reg
+                cmd(login_args)
             }
         }
     }
     catch (e) {
-        println "Error occurred during login to registry"
+        println 'Error occurred during login to registry'
         throw e
     }
 }
 
 def logout(){
-    cmd("logout")
+    cmd('logout')
 }

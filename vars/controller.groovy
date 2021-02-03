@@ -27,8 +27,13 @@ def entry(Map args = [:]) {
     preProcess()
     codeClone()
     codeBuild()
-    codeTest()
-    doDocker()
+
+    parallel (
+        'Test'      : { codeTest()  },
+        'Sonar Scan': { sonarScan() },
+        'Docker'    : { doDocker()  }
+    )
+
     doKubernetes()
 }
 
@@ -88,6 +93,12 @@ def sonarScan() {
             }
         }
     }
+
+    stage("Quality Gate") {
+        timeout(time: 30, unit: 'MINTUNES') {
+            waitForQualityGate abortPipeline: true
+        }
+    }
 }
 
 def codeBuild() {
@@ -106,7 +117,7 @@ def codeBuild() {
 def codeTest() {
     def private utc = Config.data.test_command + ' ' + Config.data.test_options
     if (utc) {
-        stage('Unit Test') {
+        stage('Test') {
             node(STAGE_TEST) {
                 dir(Config.data.base_dir) {
                     log.i 'Test by command: ' + utc
@@ -143,9 +154,10 @@ def doKubernetes(){
             dir(Config.data.base_dir) {
                 def gen = new Yaml()
                 def pth = Config.data.k8s_standard_templates_dir
-                gen.deployment(pth + '/deployment.yaml')
-                gen.service(pth + '/service.yaml')
-
+                parallel (
+                    'Process Deployment': { gen.deployment(pth + '/deployment.yaml') },
+                    'Process Service'   : { gen.service(pth + '/service.yaml') }
+                )
                 log.a 'Ready to deploy!'
             }
         }
