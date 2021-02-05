@@ -26,12 +26,26 @@ def entry(Map args = [:]) {
 
     preProcess()
     codeClone()
-    codeBuild()
+
+    def private scan_after_build = ['java']
+
+    if(Config.data.build_language in scan_after_build) {
+        codeBuild()
+    
+        parallel (
+            'Test'          : { codeTest()  },
+            'Sonar Scan'    : { sonarScan() }
+        )
+    }
+    else {
+        sonarScan()
+        codeBuild()
+        codeTest() 
+    }
 
     parallel (
-        'Test'      : { codeTest()  },
-        'Sonar Scan': { sonarScan() },
-        'Docker'    : { doDocker()  }
+        'Quality Gate'  : { qualityGate() },
+        'Docker'        : { doDocker()    }
     )
 
     doKubernetes()
@@ -93,10 +107,16 @@ def sonarScan() {
             }
         }
     }
+}
 
+def qualityGate(){
     stage("Quality Gate") {
-        timeout(time: 30, unit: 'MINUTES') {
-            waitForQualityGate abortPipeline: true
+        node(STAGE_SONAR) {
+            timeout(time: 30, unit: 'MINUTES') {
+                dir(Config.data.base_dir) {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
         }
     }
 }
