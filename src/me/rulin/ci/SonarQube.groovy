@@ -34,7 +34,9 @@ def scanner(String o='') {
             sonar_exec  = 'sonar-scanner ' + sonar_opts  
 
             // TODO: try another way
-            sh(sonar_exec)
+            withSonarQubeEnv('SonarQube Scanner'){
+                sh(sonar_exec)
+            }
         }
     }
     catch (e) {
