@@ -37,10 +37,11 @@ def scanner(String o='') {
 def qualityGateStatus(){
     try {
         timeout(time: 10, unit: 'MINUTES') { 
-        def qg_stats = waitForQualityGate()
+            def qg_stats = waitForQualityGate()
 
-        if (qg_stats.status != 'SUCCESS') {
-            log.err 'Pipeline aborted due to quality gate failure: ' + qg.stats
+            if (qg_stats.status != 'SUCCESS') {
+                log.err 'Pipeline aborted due to quality gate failure: ' + qg.stats
+            }
         }
     }
     catch (e) {
