@@ -156,7 +156,7 @@ def doKubernetes(){
     stage('Kubernetes') {
         node(STAGE_K8S) {
             dir(Config.data.base_dir) {
-                def cmd = new Comamnd()
+                def cmd = new Command()
                 def gen = new Yaml()
                 def pth = Config.data.k8s_standard_templates_dir
 
