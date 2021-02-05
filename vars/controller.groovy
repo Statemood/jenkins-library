@@ -95,7 +95,7 @@ def sonarScan() {
     }
 
     stage("Quality Gate") {
-        timeout(time: 30, unit: 'MINTUNES') {
+        timeout(time: 30, unit: 'MINUTES') {
             waitForQualityGate abortPipeline: true
         }
     }
