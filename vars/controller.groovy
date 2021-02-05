@@ -136,12 +136,16 @@ def doDocker(){
             dir(Config.data.base_dir) {
                 def private  docker = new Docker()
                 def private     cfg = Config.data
-                Config.data.docker_img_tag  = cfg.git_revision + '-' + cfg.git_commit_id[0..8]
-                Config.data.docker_img_name = DOCKER_REGISTRY  + '/' + cfg.base_project + '/' + cfg.base_name
+                Config.data.docker_img_tag  = cfg.git_revision    + '-' + cfg.git_commit_id[0..8]
+                Config.data.docker_img_name = DOCKER_REGISTRY     + '/' + cfg.base_project + '/' + cfg.base_name
                 Config.data.docker_img      = cfg.docker_img_name + ':' + cfg.docker_img_tag
-                docker.genDockerfile()
+
+                parallel (
+                    'Generate Dockerfile': { docker.genDockerfile() },
+                    'Login to Registry'  : { docker.login() }
+                )
+                
                 docker.build(cfg.docker_img)
-                docker.login()
                 docker.push(cfg.docker_img)
             }
         }
@@ -152,13 +156,23 @@ def doKubernetes(){
     stage('Kubernetes') {
         node(STAGE_K8S) {
             dir(Config.data.base_dir) {
+                def cmd = new Comamnd()
                 def gen = new Yaml()
                 def pth = Config.data.k8s_standard_templates_dir
+
+                def deploy  = pth + '/deployment.yaml'
+                def service = pth + '/service.yaml'
+
                 parallel (
-                    'Process Deployment': { gen.deployment(pth + '/deployment.yaml') },
-                    'Process Service'   : { gen.service(pth + '/service.yaml') }
+                    'Generate Deployment'   : { gen.deployment(deploy) },
+                    'Generate Service'      : { gen.service(service) }
                 )
                 log.a 'Ready to deploy!'
+
+                parallel (
+                    'Deploy Deployment'     : { cmd.command('apply', deploy)  },
+                    'Deploy Service'        : { gen.service('apply', service) }
+                )
             }
         }
     }
