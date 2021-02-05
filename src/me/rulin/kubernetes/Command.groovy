@@ -26,8 +26,8 @@ def command(String cmd, String target=null){
 
     try {
         def private conf = '~/.kube/' + Config.data.base_env.toLowerCase() + '.config'
-        def private exec = 'kubectl --kubeconfig ' + conf + cmd ' -f ' + target
-        sh(script:  exec, label: 'Call kubectl for' + cmd target)
+        def private exec = 'kubectl --kubeconfig ' + conf + cmd + ' -f ' + target
+        sh(script:  exec, label: 'Call kubectl for' + cmd + ' ' + target)
     }
     catch (e) {
         log.e "Error occurred during exec 'kubectl' " + cmd + ' for target ' + target
