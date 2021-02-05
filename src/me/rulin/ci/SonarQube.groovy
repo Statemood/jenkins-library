@@ -34,12 +34,16 @@ def scanner(String o='') {
                 sonar_exec  = 'sonar-scanner ' + sonar_opts  
 
                 sh(sonar_exec)
+
+                log.i 'SonarQube done'
             }
         }
 
         timeout(time: 1, unit: 'MINUTES') { // Just in case something goes wrong, pipeline will be killed after a timeout
             def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-            if (qg.status != 'OK') {
+
+            println 'gq = ' + gq
+            if (qg.status != 'SUCCESS') {
                 error "Pipeline aborted due to quality gate failure: ${qg.status}"
             }
         }
