@@ -12,15 +12,17 @@ package me.rulin.ci
 def scanner(String o='') {
     try {
         log.i 'Preparing SonarQube Scanner'
-        withSonarQubeEnv(){
+        withSonarQubeEnv(credentialsId: 'Sonar-Jenkins-Token'){
+            /*
             withCredentials([
                 usernamePassword(
                     credentialsId: 'Sonar-Account',
                     passwordVariable: 'sonar_p',
                     usernameVariable: 'sonar_u')])
             {
-                private ssc_u = ' -Dsonar.login='            + sonar_u
-                private ssc_p = ' -Dsonar.password='         + sonar_p
+                */
+                //private ssc_u = ' -Dsonar.login='            + sonar_u
+                //private ssc_p = ' -Dsonar.password='         + sonar_p
                 private ssc_k = ' -Dsonar.projectKey='       + Config.data.base_name
                 private ssc_n = ' -Dsonar.projectName='      + Config.data.base_name
                 private ssc_v = ' -Dsonar.projectVersion='   + Config.data.git_revision
@@ -29,7 +31,7 @@ def scanner(String o='') {
                 private ssc_s = ' -Dsonar.sources=.'
                 private ssc_b = ' -Dsonar.java.binaries=.'
                 
-                sonar_opts  = ssc_u + ssc_p + ssc_k + ssc_n + ssc_v + ssc_d + ssc_l + ssc_s + ssc_b
+                sonar_opts  = ssc_k + ssc_n + ssc_v + ssc_d + ssc_l + ssc_s + ssc_b
                 sonar_opts += o
                 sonar_exec  = 'sonar-scanner ' + sonar_opts  
 
