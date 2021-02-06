@@ -45,6 +45,7 @@ def entry(Map args = [:]) {
             'Test'          : { codeTest()  },
             'Sonar Scan'    : { sonarScan() },
             'Docker'        : { doDocker()  }
+        )
     }
 
     doKubernetes()
