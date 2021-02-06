@@ -35,37 +35,46 @@ def yamlReader(String t, String f=null) {
     }
 }
 
-def deployment(String f=null){
+def deployment(
+        String source_file = 
+            Config.data.k8s_yml_default_templates_dir + 
+            Config.data.k8s_yml_default_dir + 
+            Config.data.k8s_yml_default_deploy, 
+        String dest_file =
+            Config.data.k8s_yml_default_dir + 
+            Config.data.k8s_yml_default_deploy
+    ){
     try {
         def private      cfg = Config.data
-        def private      yml = yamlReader(f)
+        def private      yml = yamlReader(source_file)
         def private        s = yml.spec
         def private       md = yml.metadata
-        def private        c = s.template.spec.containers[0]
+                          ts = s.template.spec
+        def private        c = ts.containers[0]
         def private      res = c.resources
         def private      ssr = s.strategy.rollingUpdate
         def private      ips = c.imagePullSecret
         def private        e = c.env
 
-        md.name                         = cfg.base_name
-        md.namespace                    = cfg.k8s_namespace
-        md.labels.app                   = cfg.base_name
+        md.name                             = cfg.base_name
+        md.namespace                        = cfg.k8s_namespace
+        md.labels.app                       = cfg.base_name
 
-        s.replicas                      = K8S_REPLICAS.toInteger()
-        s.selector.matchLabels.app      = cfg.base_name
-        s.template.metadata.labels.app  = cfg.base_name
-        s.terminationGracePeriodSeconds = cfg.k8s_termination_GPS.toInteger()
-        s.revisionHistoryLimit          = cfg.k8s_rev_history_limit.toInteger()
-        s.progressDeadlineSeconds       = cfg.k8s_progress_deadline_sec.toInteger()
-        ssr.maxSurge                    = cfg.k8s_strategy_max_surge
-        ssr.maxUnavailable              = cfg.k8s_strategy_max_unavailable
+        s.replicas                          = cfg.k8s_replicas
+        s.selector.matchLabels.app          = cfg.base_name
+        s.template.metadata.labels.app      = cfg.base_name
+        ts.terminationGracePeriodSeconds    = cfg.k8s_termination_GPS.toInteger()
+        s.revisionHistoryLimit              = cfg.k8s_rev_history_limit.toInteger()
+        s.progressDeadlineSeconds           = cfg.k8s_progress_deadline_sec.toInteger()
+        ssr.maxSurge                        = cfg.k8s_strategy_max_surge
+        ssr.maxUnavailable                  = cfg.k8s_strategy_max_unavailable
 
-        c.name                          = cfg.base_name
-        c.image                         = cfg.docker_img_name
-        c.imagePullPolicy               = cfg.k8s_img_pull_policy
+        c.name                              = cfg.base_name
+        c.image                             = cfg.docker_img_name
+        c.imagePullPolicy                   = cfg.k8s_img_pull_policy
 
         if (ips) {
-            ips[0].name                 = cfg.k8s_img_pull_secret
+            ips[0].name                     = cfg.k8s_img_pull_secret
         }
 
         if (e) {
@@ -77,35 +86,48 @@ def deployment(String f=null){
             }
         }
 
-        res.requests.cpu        = K8S_REQUESTS_CPU
-        res.requests.memory     = K8S_REQUESTS_MEMORY
-        res.limits.cpu          = K8S_LIMITS_CPU
-        res.limits.memory       = K8S_LIMITS_MEMORY
+        res.requests.cpu        = cfg.k8s_res_requests_cpu
+        res.requests.memory     = cfg.k8s_res_requests_memory
+        res.limits.cpu          = cfg.k8s_res_limits_cpu
+        res.limits.memory       = cfg.k8s_res_limits_memory
 
-        sh("mkdir -pv k8s")
-        writeYaml file: "k8s/deployment.yaml", data: yml, overwrite: true
+        def cmd_create_dir = 'mkdir -pv ' + cfg.k8s_yml_default_dir
+        sh(cmd_create_dir)
+        writeYaml file: dest_file, data: yml, overwrite: true
     }
     catch (e) {
         throw e
     }
 }
 
-def service(String f=null){
+def service(
+    String source_file = 
+        Config.data.k8s_yml_default_templates_dir + 
+        Config.data.k8s_yml_default_dir + 
+        Config.data.k8s_yml_default_svc, 
+    String dest_file =
+        Config.data.k8s_yml_default_dir + 
+        Config.data.k8s_yml_default_svc
+){
     try {
-        def private      yml = yamlReader(f)
+        def private      yml = yamlReader(source_file)
         def private       md = yml.metadata
         def private        s = yml.spec
+        def private      cfg = Config.data
 
-        md.name              = APP_NAME
-        md.namespace         = K8S_NAMESPACE
-        s.selector.app       = APP_NAME
+        md.name              = cfg.base_name
+        md.namespace         = cfg.k8s_namespace
+        s.selector.app       = cfg.base_name
         s.ports[0].name      = "http"
-        s.ports[0].port      = APP_PORT.toInteger()
+        s.ports[0].port      = cfg.base_port
 
-        writeYaml file: 'k8s/service.yaml', data: yml, overwrite: true
+        def cmd_create_dir = 'mkdir -pv ' + cfg.k8s_yml_default_dir
+        sh(cmd_create_dir)
+
+        writeYaml file: dest_file, data: yml, overwrite: true
     }
     catch (e) {
-        log.e "Oops! An error occurred during update serivce, file: " + f
+        log.e "Oops! An error occurred during update serivce, file: " + dest_file
         throw e
     }
 }

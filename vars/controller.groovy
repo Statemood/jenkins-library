@@ -14,6 +14,7 @@ import me.rulin.docker.Docker
 import me.rulin.kubernetes.Command
 import me.rulin.kubernetes.Yaml
 
+
 def entry(Map args = [:]) {
     /*
     Order:
@@ -26,13 +27,27 @@ def entry(Map args = [:]) {
 
     preProcess()
     codeClone()
-    codeBuild()
 
-    parallel (
-        'Test'      : { codeTest()  },
-        'Sonar Scan': { sonarScan() },
-        'Docker'    : { doDocker()  }
-    )
+    def private scan_after_build = ['java']
+
+    if(Config.data.build_language in scan_after_build) {
+        codeBuild()
+    
+        parallel (
+            'Test'          : { codeTest()  },
+            'Sonar Scan'    : { sonarScan() },
+            'Docker'        : { doDocker()  }
+        )
+    }
+    else {
+        sonarScan()
+        codeBuild()
+        parallel (
+            'Test'          : { codeTest()  },
+            'Sonar Scan'    : { sonarScan() },
+            'Docker'        : { doDocker()  }
+        )
+    }
 
     doKubernetes()
 }
@@ -93,10 +108,16 @@ def sonarScan() {
             }
         }
     }
+}
 
+def qualityGate(){
     stage("Quality Gate") {
-        timeout(time: 30, unit: 'MINTUNES') {
-            waitForQualityGate abortPipeline: true
+        node(STAGE_SONAR) {
+            timeout(time: 30, unit: 'MINUTES') {
+                dir(Config.data.base_dir) {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
         }
     }
 }
@@ -136,12 +157,16 @@ def doDocker(){
             dir(Config.data.base_dir) {
                 def private  docker = new Docker()
                 def private     cfg = Config.data
-                Config.data.docker_img_tag  = cfg.git_revision + '-' + cfg.git_commit_id[0..8]
-                Config.data.docker_img_name = DOCKER_REGISTRY  + '/' + cfg.base_project + '/' + cfg.base_name
+                Config.data.docker_img_tag  = cfg.git_revision    + '-' + cfg.git_commit_id[0..8]
+                Config.data.docker_img_name = DOCKER_REGISTRY     + '/' + cfg.base_project + '/' + cfg.base_name
                 Config.data.docker_img      = cfg.docker_img_name + ':' + cfg.docker_img_tag
-                docker.genDockerfile()
+
+                parallel (
+                    'Generate Dockerfile': { docker.genDockerfile() },
+                    'Login to Registry'  : { docker.login() }
+                )
+                
                 docker.build(cfg.docker_img)
-                docker.login()
                 docker.push(cfg.docker_img)
             }
         }
@@ -152,13 +177,22 @@ def doKubernetes(){
     stage('Kubernetes') {
         node(STAGE_K8S) {
             dir(Config.data.base_dir) {
-                def gen = new Yaml()
-                def pth = Config.data.k8s_standard_templates_dir
+                def cmd     = new Command()
+                def gen     = new Yaml()
+                def pth     = Config.data.k8s_yml_default_dir
+                def deploy  = Config.data.k8s_yml_default_deploy
+                def service = Config.data.k8s_yml_default_svc
+
                 parallel (
-                    'Process Deployment': { gen.deployment(pth + '/deployment.yaml') },
-                    'Process Service'   : { gen.service(pth + '/service.yaml') }
+                    'Generate Deployment'   : { gen.deployment() },
+                    'Generate Service'      : { gen.service()    }
                 )
                 log.a 'Ready to deploy!'
+
+                parallel (
+                    'Deploy Deployment'     : { cmd.command('apply', pth + deploy)  },
+                    'Deploy Service'        : { cmd.command('apply', pth + service) }
+                )
             }
         }
     }

@@ -20,7 +20,7 @@ def getBuildUserNameID(){
 }
 
 def getFirstDirectory(){
-    first_dir = pwd()
+    def first_dir = pwd()
     return first_dir
 }
 
@@ -29,9 +29,9 @@ def getFrojectName(){
 }
 
 def getReplicasNumber(){
-    def repn = 2
+    Integer repn = 2
 
-    dq = ['dev', 'test', 'qa']
+    def dq = ['dev', 'test', 'qa']
     if (ENVIRONMENT in dq) {
         repn =  1
     }

@@ -14,8 +14,8 @@
 package me.rulin.kubernetes
 
 def command(String cmd, String target=null){
-    if (!cmd in K8S_ALLOWED_COMMANDS) {
-        log.err "Command not allowed: " + cmd
+    if (!cmd in Config.data.k8s_allowed_commands) {
+        log.err 'Command not allowed: ' + cmd
     }
 
     if (target != null) {
@@ -25,7 +25,9 @@ def command(String cmd, String target=null){
     log.i cmd.toUpperCase() + target
 
     try {
-        sh(script: "kubectl $cmd -f ${target}", label: "Call kubectl for $cmd $target")
+        def private conf = '~/.kube/' + Config.data.base_env.toLowerCase() + '.config'
+        def private exec = 'kubectl --kubeconfig ' + conf + ' ' + cmd + ' -f ' + target
+        sh(script:  exec, label: 'Call kubectl for' + cmd + ' ' + target)
     }
     catch (e) {
         log.e "Error occurred during exec 'kubectl' " + cmd + ' for target ' + target
