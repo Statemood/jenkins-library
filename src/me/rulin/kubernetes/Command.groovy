@@ -14,7 +14,7 @@
 package me.rulin.kubernetes
 
 def command(String cmd, String target=null){
-    if (!cmd in K8S_ALLOWED_COMMANDS) {
+    if (!cmd in Config.data.k8s_allowed_commands) {
         log.err 'Command not allowed: ' + cmd
     }
 
