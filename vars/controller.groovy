@@ -180,8 +180,8 @@ def doKubernetes(){
                 def gen = new Yaml()
                 def pth = Config.data.k8s_standard_templates_dir
 
-                def deploy  = pth + '/deployment.yaml'
-                def service = pth + '/service.yaml'
+                def deploy  = 'k8s/deployment.yaml'
+                def service = 'k8s/service.yaml'
 
                 parallel (
                     'Generate Deployment'   : { gen.deployment(deploy) },
