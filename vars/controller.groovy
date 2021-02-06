@@ -34,19 +34,18 @@ def entry(Map args = [:]) {
     
         parallel (
             'Test'          : { codeTest()  },
-            'Sonar Scan'    : { sonarScan() }
+            'Sonar Scan'    : { sonarScan() },
+            'Docker'        : { doDocker()  }
         )
     }
     else {
         sonarScan()
         codeBuild()
-        codeTest() 
+        parallel (
+            'Test'          : { codeTest()  },
+            'Sonar Scan'    : { sonarScan() },
+            'Docker'        : { doDocker()  }
     }
-
-    parallel (
-        'Quality Gate'  : { qualityGate() },
-        'Docker'        : { doDocker()    }
-    )
 
     doKubernetes()
 }
