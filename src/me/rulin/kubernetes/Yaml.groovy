@@ -122,11 +122,11 @@ def service(
 
         def cmd_create_dir = 'mkdir -pv ' + cfg.k8s_default_dir
         sh(cmd_create_dir)
-        
-        writeYaml file: dest_file data: yml, overwrite: true
+
+        writeYaml file: dest_file, data: yml, overwrite: true
     }
     catch (e) {
-        log.e "Oops! An error occurred during update serivce, file: " + f
+        log.e "Oops! An error occurred during update serivce, file: " + dest_file
         throw e
     }
 }
