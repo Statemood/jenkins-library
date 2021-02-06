@@ -14,6 +14,7 @@ import me.rulin.docker.Docker
 import me.rulin.kubernetes.Command
 import me.rulin.kubernetes.Yaml
 
+
 def entry(Map args = [:]) {
     /*
     Order:
@@ -176,22 +177,21 @@ def doKubernetes(){
     stage('Kubernetes') {
         node(STAGE_K8S) {
             dir(Config.data.base_dir) {
-                def cmd = new Command()
-                def gen = new Yaml()
-                def pth = Config.data.k8s_standard_templates_dir
-
-                def deploy  = '/deployment.yaml'
-                def service = '/service.yaml'
+                def cmd     = new Command()
+                def gen     = new Yaml()
+                def pth     = Config.data.k8s_yml_default_dir
+                def deploy  = Config.data.k8s_yml_default_deploy
+                def service = Config.data.k8s_yml_default_svc
 
                 parallel (
-                    'Generate Deployment'   : { gen.deployment(pth + deploy) },
-                    'Generate Service'      : { gen.service(pth + service) }
+                    'Generate Deployment'   : { gen.deployment() },
+                    'Generate Service'      : { gen.service()    }
                 )
                 log.a 'Ready to deploy!'
 
                 parallel (
-                    'Deploy Deployment'     : { cmd.command('apply', 'k8s' + deploy)  },
-                    'Deploy Service'        : { cmd.command('apply', 'k8s' + service) }
+                    'Deploy Deployment'     : { cmd.command('apply', pth + deploy)  },
+                    'Deploy Service'        : { cmd.command('apply', pth + service) }
                 )
             }
         }
