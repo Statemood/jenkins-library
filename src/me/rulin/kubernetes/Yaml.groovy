@@ -49,31 +49,32 @@ def deployment(
         def private      yml = yamlReader(source_file)
         def private        s = yml.spec
         def private       md = yml.metadata
-        def private        c = s.template.spec.containers[0]
+                          ts = s.template.spec
+        def private        c = ts.containers[0]
         def private      res = c.resources
         def private      ssr = s.strategy.rollingUpdate
         def private      ips = c.imagePullSecret
         def private        e = c.env
 
-        md.name                              = cfg.base_name
-        md.namespace                         = cfg.k8s_namespace
-        md.labels.app                        = cfg.base_name
+        md.name                             = cfg.base_name
+        md.namespace                        = cfg.k8s_namespace
+        md.labels.app                       = cfg.base_name
 
-        s.replicas                           = cfg.k8s_replicas
-        s.selector.matchLabels.app           = cfg.base_name
-        s.template.metadata.labels.app       = cfg.base_name
-        s.spec.terminationGracePeriodSeconds = cfg.k8s_termination_GPS.toInteger()
-        s.revisionHistoryLimit               = cfg.k8s_rev_history_limit.toInteger()
-        s.progressDeadlineSeconds            = cfg.k8s_progress_deadline_sec.toInteger()
-        ssr.maxSurge                         = cfg.k8s_strategy_max_surge
-        ssr.maxUnavailable                   = cfg.k8s_strategy_max_unavailable
+        s.replicas                          = cfg.k8s_replicas
+        s.selector.matchLabels.app          = cfg.base_name
+        s.template.metadata.labels.app      = cfg.base_name
+        ts.terminationGracePeriodSeconds    = cfg.k8s_termination_GPS.toInteger()
+        s.revisionHistoryLimit              = cfg.k8s_rev_history_limit.toInteger()
+        s.progressDeadlineSeconds           = cfg.k8s_progress_deadline_sec.toInteger()
+        ssr.maxSurge                        = cfg.k8s_strategy_max_surge
+        ssr.maxUnavailable                  = cfg.k8s_strategy_max_unavailable
 
-        c.name                               = cfg.base_name
-        c.image                              = cfg.docker_img_name
-        c.imagePullPolicy                    = cfg.k8s_img_pull_policy
+        c.name                              = cfg.base_name
+        c.image                             = cfg.docker_img_name
+        c.imagePullPolicy                   = cfg.k8s_img_pull_policy
 
         if (ips) {
-            ips[0].name                      = cfg.k8s_img_pull_secret
+            ips[0].name                     = cfg.k8s_img_pull_secret
         }
 
         if (e) {
