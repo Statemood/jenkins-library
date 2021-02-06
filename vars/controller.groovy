@@ -191,7 +191,7 @@ def doKubernetes(){
 
                 parallel (
                     'Deploy Deployment'     : { cmd.command('apply', 'k8s' + deploy)  },
-                    'Deploy Service'        : { cmd.service('apply', 'k8s' + service) }
+                    'Deploy Service'        : { cmd.command('apply', 'k8s' + service) }
                 )
             }
         }
