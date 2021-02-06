@@ -81,7 +81,7 @@ def config(){
         k8s_strategy_max_surge          : '25%',
         k8s_strategy_max_unavailable    : '25%',
         k8s_termination_GPS             : 60,
-        k8s_yml_default_dir             : 'kubernetes/yaml/default/'
+        k8s_yml_default_dir             : 'kubernetes/yaml/default/',
         k8s_yml_default_deploy          : 'deployment.yaml',
         k8s_yml_default_svc             : 'service.yaml',
         k8s_yml_default_templates_dir   : 'me/rulin/templates/',
