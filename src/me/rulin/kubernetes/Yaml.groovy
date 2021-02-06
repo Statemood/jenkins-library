@@ -49,7 +49,7 @@ def deployment(
         def private      yml = yamlReader(source_file)
         def private        s = yml.spec
         def private       md = yml.metadata
-                          ts = s.template.spec
+        def private       ts = s.template.spec
         def private        c = ts.containers[0]
         def private      res = c.resources
         def private      ssr = s.strategy.rollingUpdate
