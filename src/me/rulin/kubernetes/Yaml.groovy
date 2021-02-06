@@ -37,12 +37,12 @@ def yamlReader(String t, String f=null) {
 
 def deployment(
         String source_file = 
-            Config.data.k8s_default_templates_dir + 
-            Config.data.k8s_default_dir + 
-            Config.data.k8s_default_deploy, 
+            Config.data.k8s_yml_default_templates_dir + 
+            Config.data.k8s_yml_default_dir + 
+            Config.data.k8s_yml_default_deploy, 
         String dest_file =
-            Config.data.k8s_default_dir + 
-            Config.data.k8s_default_deploy
+            Config.data.k8s_yml_default_dir + 
+            Config.data.k8s_yml_default_deploy
     ){
     try {
         def private      cfg = Config.data
@@ -90,7 +90,7 @@ def deployment(
         res.limits.cpu          = cfg.k8s_res_limits_cpu
         res.limits.memory       = cfg.k8s_res_limits_memory
 
-        def cmd_create_dir = 'mkdir -pv ' + cfg.k8s_default_dir
+        def cmd_create_dir = 'mkdir -pv ' + cfg.k8s_yml_default_dir
         sh(cmd_create_dir)
         writeYaml file: dest_file, data: yml, overwrite: true
     }
@@ -101,12 +101,12 @@ def deployment(
 
 def service(
     String source_file = 
-        Config.data.k8s_default_templates_dir + 
-        Config.data.k8s_default_dir + 
-        Config.data.k8s_default_svc, 
+        Config.data.k8s_yml_default_templates_dir + 
+        Config.data.k8s_yml_default_dir + 
+        Config.data.k8s_yml_default_svc, 
     String dest_file =
-        Config.data.k8s_default_dir + 
-        Config.data.k8s_default_svc
+        Config.data.k8s_yml_default_dir + 
+        Config.data.k8s_yml_default_svc
 ){
     try {
         def private      yml = yamlReader(source_file)
@@ -120,7 +120,7 @@ def service(
         s.ports[0].name      = "http"
         s.ports[0].port      = cfg.base_port
 
-        def cmd_create_dir = 'mkdir -pv ' + cfg.k8s_default_dir
+        def cmd_create_dir = 'mkdir -pv ' + cfg.k8s_yml_default_dir
         sh(cmd_create_dir)
 
         writeYaml file: dest_file, data: yml, overwrite: true
