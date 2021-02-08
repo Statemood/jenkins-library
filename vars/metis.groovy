@@ -38,3 +38,4 @@ def getReplicasNumber(){
 
     return repn
 }
+

@@ -20,7 +20,7 @@ def build(String b_file=null){
     try {
         if (b_file){
             check.file(b_file)
-                    
+
             log.i 'Build with command: ' + bc + ', options: ' + bo
             sh(cmd)
         }

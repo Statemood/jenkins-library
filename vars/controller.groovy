@@ -14,7 +14,6 @@ import me.rulin.docker.Docker
 import me.rulin.kubernetes.Command
 import me.rulin.kubernetes.Yaml
 
-
 def entry(Map args = [:]) {
     /*
     Order:
@@ -151,7 +150,7 @@ def codeTest() {
 }
 
 def doDocker(){
-    // if (DEPLOY_MODE == 'Container') {}
+    if(DEPLOYMENT_MODEL == 'Legacy') { return }
     stage('Docker') {
         node(STAGE_DOCKER) {
             dir(Config.data.base_dir) {
@@ -174,6 +173,7 @@ def doDocker(){
 }
 
 def doKubernetes(){
+    if(DEPLOYMENT_MODEL == 'Legacy') { return }
     stage('Kubernetes') {
         node(STAGE_K8S) {
             dir(Config.data.base_dir) {

@@ -24,9 +24,10 @@ def merge(Map arguments=[:]){
 def config(){
     // 设置初始化配置
     try {
-        if(!ACTION)         { ACTION        = "deploy"  }
-        if(!ENVIRONMENT)    { ENVIRONMENT   = "dev"     }
-        if(!GIT_REVISION)   { GIT_REVISION  = null      }
+        if(!ACTION)             { ACTION            = "deploy"  }
+        if(!ENVIRONMENT)        { ENVIRONMENT       = "dev"     }
+        if(!GIT_REVISION)       { GIT_REVISION      = null      }
+        if(!DEPLOYMENT_MODEL)   { DEPLOYMENT_MODEL  = null      }
     }
     catch (e) {
         log.err "在初始化环境变量时遇到问题."
