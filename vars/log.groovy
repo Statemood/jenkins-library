@@ -30,6 +30,10 @@ def output(String level, String alias, String extra=null) {
     def String file_text = libraryResource(t)
     def private msg_text = readJSON text: file_text
 
+    println msg_text
+
+    println msg_text.alias
+
     println level + ': ' + msg_text.alias.message + extra
 }
 
