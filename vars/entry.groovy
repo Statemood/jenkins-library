@@ -37,7 +37,7 @@ def call(Map config=[:]){
                 choices: 'deploy\nrollback')
 
             choice(
-                name: 'DEPLOYMENT_MODEL',
+                name: 'DEPLOYMENT_MODE',
                 description: 'Please select action',
                 choices: 'Container\nLegacy\nMixed')
         }

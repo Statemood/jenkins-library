@@ -57,7 +57,7 @@ def private build(String image_name) {
         }
     }
     catch (e) {
-        println 'Error occurred during build image'
+        log.output("e",error_docker_build_image)
         throw e
     }
 }

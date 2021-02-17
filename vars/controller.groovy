@@ -7,6 +7,7 @@
    ##################################################
 */
 
+import me.rulin.cd.Server
 import me.rulin.ci.Git
 import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
@@ -150,7 +151,7 @@ def codeTest() {
 }
 
 def doDocker(){
-    if(DEPLOYMENT_MODEL == 'Legacy') { return }
+    if(DEPLOYMENT_MODE == 'Legacy') { return }
     stage('Docker') {
         node(STAGE_DOCKER) {
             dir(Config.data.base_dir) {
@@ -173,7 +174,7 @@ def doDocker(){
 }
 
 def doKubernetes(){
-    if(DEPLOYMENT_MODEL == 'Legacy') { return }
+    if(DEPLOYMENT_MODE == 'Legacy') { return }
     stage('Kubernetes') {
         node(STAGE_K8S) {
             dir(Config.data.base_dir) {
@@ -195,6 +196,16 @@ def doKubernetes(){
                 )
             }
         }
+    }
+}
+
+def doServer(List th=[]){
+    if(DEPLOYMENT_MODE == 'Container') { return }
+
+    def server = new Server()
+
+    for(host in th){
+        server.upload()
     }
 }
 

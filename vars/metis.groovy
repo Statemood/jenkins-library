@@ -8,20 +8,19 @@ def getBuildUserName(){
        See https://plugins.jenkins.io/build-user-vars-plugin for more information
     */
 
-    wrap([$class: 'BuildUser']) { build_user = BUILD_USER }
-
-    return build_user
+    wrap([$class: 'BuildUser']) { 
+        return build_user = BUILD_USER 
+    }
 }
 
 def getBuildUserNameID(){
-    wrap([$class: 'BuildUser']) { build_user_id = BUILD_USER_ID }
-
-    return build_user_id
+    wrap([$class: 'BuildUser']) { 
+        return build_user_id = BUILD_USER_ID 
+    }
 }
 
 def getFirstDirectory(){
-    def first_dir = pwd()
-    return first_dir
+    return pwd()
 }
 
 def getFrojectName(){
@@ -38,4 +37,3 @@ def getReplicasNumber(){
 
     return repn
 }
-
