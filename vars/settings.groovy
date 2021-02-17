@@ -15,7 +15,6 @@ def merge(Map arguments=[:]){
         2. .jenkins.yaml
         3. User Config
     */
-    localeController()
     localSettingsFile()
     config()
 
@@ -102,13 +101,6 @@ def config(){
     ]
 
     return Config.settings
-}
-
-def localeController(String locale='en_US'){
-    def private        t = 'me/rulin/locale/' + locale + '/LC_MESSAGES.json'
-    def String file_text = libraryResource(t)
-
-    return msg = readJSON text: file_text
 }
 
 def localSettingsFile(){
