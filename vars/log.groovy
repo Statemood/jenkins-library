@@ -26,7 +26,13 @@ def warning(String msg) { echo "WARNING: $msg"     }
 def     err(String msg) { error " $msg"            }
 
 def output(String level, String alias, String extra=null) {
-    if(Config.settings.base_locale == null) { def locale = 'en_US' }
+   println Config.settings.base_locale
+    if(Config.settings.base_locale == null) { 
+        def locale = 'en_US' 
+    }
+    else {
+        def locale = 'en_US' 
+    }
 
     def private        t = 'me/rulin/locale/' + locale + '/LC_MESSAGES.json'
     def String file_text = libraryResource(t)
