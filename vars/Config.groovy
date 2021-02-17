@@ -9,7 +9,9 @@
 
 // CI Config
 class Config implements Serializable {
-    static Map data     = [:]
+    static Map data     = [
+        locale          = 'en_US'
+    ]
 
     static Map settings = [:]
 }

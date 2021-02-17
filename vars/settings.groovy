@@ -38,7 +38,6 @@ def config(){
         base_action                     : ACTION,
         base_dir                        : metis.getFirstDirectory(),
         base_env                        : ENVIRONMENT,
-        base_locale                     : 'en_US',
         base_name                       : metis.getApplicationName(),
         base_port                       : 8080,
         base_project                    : metis.getFrojectName(),
