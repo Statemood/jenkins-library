@@ -32,9 +32,9 @@ def output(String level, String msg, String extra=null) {
 
     println msg_text
 
-    println msg_text.msg
+    println msg_text[msg]
 
-    println level + ': ' + msg_text.msg.message + extra
+    println level + ': ' + msg_text[msg][message] + extra
 }
 
 
