@@ -124,7 +124,7 @@ def localSettingsFile(){
         log.err 'Oops! An error occurred while try to load default settings.'
     }
 
-    log.i 'Load defaults'
+    log.output('info', 'init_load_default_settings')
 }
 
 return this
