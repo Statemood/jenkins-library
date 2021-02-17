@@ -26,11 +26,8 @@ def warning(String msg) { echo "WARNING: $msg"     }
 def     err(String msg) { error " $msg"            }
 
 def output(String level, String alias, String extra=null) {
-    def private        t = 'me/rulin/locale/en_US/LC_MESSAGES.json'
-    def String file_text = libraryResource(t)
-    def private msg_text = readJSON text: file_text
 
-    println level + ': ' + msg_text[alias].message + extra
+    println level + ': ' + msg[alias].message + extra
 }
 
 
