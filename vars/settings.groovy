@@ -68,6 +68,7 @@ def config(){
         git_skip                        : false,
         git_stage                       : 'master',
         k8s_allowed_commands            : ['apply', 'create', 'delete', 'get', 'autoscale'],
+        k8s_config_dir                  : '/home/jenkins/.kube/',
         k8s_img_pull_policy             : 'Always',
         k8s_img_pull_secret             : metis.getFrojectName() + '-image-pull-secret',
         k8s_min_ready_seconds           : 60,

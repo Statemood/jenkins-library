@@ -25,7 +25,7 @@ def command(String cmd, String target=null){
     log.i cmd.toUpperCase() + ' ' + target
 
     try {
-        def private conf = '~/.kube/' + Config.data.base_env.toLowerCase() + '.config'
+        def private conf = Config.data.k8s_config_dir + Config.data.base_env.toLowerCase() + '.config'
         def private exec = 'kubectl --kubeconfig ' + conf + ' ' + cmd + ' -f ' + target
 
         check.file(conf)
