@@ -127,7 +127,7 @@ def service(
         writeYaml file: dest_file, data: yml, overwrite: true
     }
     catch (e) {
-        log.e "Oops! An error occurred during update serivce, file: " + dest_file
+        log.e 'Oops! An error occurred during update serivce, file: ' + dest_file
         throw e
     }
 }

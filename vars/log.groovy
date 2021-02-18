@@ -33,4 +33,11 @@ def output(String level, String alias, String extra='') {
     println level + ': ' + msg[alias].message + extra
 }
 
+def messages(){
+    Map dict = [
+        init_load_default_settings      : "Default settings loaded.",
+        init_load_settings_file         : "Load settings file."
+    ]
+}
+
 return this

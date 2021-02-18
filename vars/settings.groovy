@@ -106,7 +106,8 @@ def localSettingsFile(){
     try {
         if (SETTINGS) {
             if (fileExists(SETTINGS)) {
-                log.output('info', 'init_load_settings_file')
+                //log.output('info', 'init_load_settings_file')
+                log.i 'Load settings file.'
 
                 load(SETTINGS)
             }
@@ -122,8 +123,6 @@ def localSettingsFile(){
         throw e
         log.err 'Oops! An error occurred while try to load default settings.'
     }
-
-    log.output('info', 'init_load_default_settings')
 }
 
 return this
