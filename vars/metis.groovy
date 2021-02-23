@@ -9,13 +9,13 @@ def getBuildUserName(){
     */
 
     wrap([$class: 'BuildUser']) { 
-        return build_user = BUILD_USER 
+        return BUILD_USER 
     }
 }
 
 def getBuildUserNameID(){
     wrap([$class: 'BuildUser']) { 
-        return build_user_id = BUILD_USER_ID 
+        return BUILD_USER_ID 
     }
 }
 
@@ -25,6 +25,10 @@ def getFirstDirectory(){
 
 def getFrojectName(){
     return JOB_BASE_NAME.split('_')[0].toLowerCase()
+}
+
+def getGetCommitID(){
+    return Config.data.git_commit_id = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
 }
 
 def getReplicasNumber(){

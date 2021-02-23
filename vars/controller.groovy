@@ -89,7 +89,7 @@ def codeClone() {
                         branch: revision,
                         url: repo
 
-                    Config.data.git_commit_id = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
+                    metis.getGetCommitID()
                 } catch (e) {
                     log.e 'Ops! Error occurred during git checkout'
                     throw e
