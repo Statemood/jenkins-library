@@ -62,7 +62,7 @@ def config(){
         docker_login_timeout            : 15,
         git_commit_length               : 8,
         git_commit_id                   : '',
-        git_credentials                 : 'DefaultGitSCMCredentialsID',
+        git_credentials                 : 'GitLab-Jenkins-UP',
         git_repo                        : null,
         git_revision                    : GIT_REVISION,
         git_skip                        : false,
