@@ -37,7 +37,7 @@ def yamlReader(String t, String f=null) {
 
 def deployment(
         String source_file = 
-            Config.data.k8s_yml_default_templates_dir + 
+            Config.data.base_templates_dir  + 
             Config.data.k8s_yml_default_dir + 
             Config.data.k8s_yml_default_deploy, 
         String dest_file =
@@ -102,7 +102,7 @@ def deployment(
 
 def service(
     String source_file = 
-        Config.data.k8s_yml_default_templates_dir + 
+        Config.data.base_templates_dir  + 
         Config.data.k8s_yml_default_dir + 
         Config.data.k8s_yml_default_svc, 
     String dest_file =

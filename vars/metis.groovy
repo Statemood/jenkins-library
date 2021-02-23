@@ -41,3 +41,9 @@ def getReplicasNumber(){
 
     return repn
 }
+
+def getMavenPackageInfo(String item){
+    def pom = readMavenPom file: 'pom.xml'
+
+    return pom.item
+}

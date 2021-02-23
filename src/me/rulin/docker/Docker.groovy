@@ -29,6 +29,18 @@ def private genDockerfile(String f='Dockerfile', String t='.', String d=Config.d
     }
     
     // Test Dockerfile exist
+    if(!fileExists(f)){
+        log.i 'Using default Dockerfile for ' + Config.data.build_language
+        def private String txt = libraryResource(
+                                    Config.data.base_templates_dir + 
+                                    '/dockerfile/language/'        + 
+                                    Config.data.build_language     + 
+                                    '/Dockerfile')
+
+        log.i 'Copied ' + f                            
+        writeFile file: f, text: txt
+    }
+
     check.file(f)
     def private dfc  = []
     def private cid  = Config.data.git_commit_id
