@@ -18,38 +18,47 @@ def String cmd(String c){
     }
 }
 
-def private genDockerfile(String f='Dockerfile', String t='.', String d=Config.data.base_web_root, String c=null){
+def private genDockerfile(String f='Dockerfile', 
+                          String s=Config.data.artifact_src,
+                          String t=Config.data.artifact_dest,
+                          String d=Config.data.base_web_root, 
+                          String c=null){
     if (fileExists(Config.data.docker_ignore_file)) {
         log.i 'Copy dockerignore file'
 
         sh('cp -rf' + Config.data.docker_ignore_file + ' .')
     }
     else {
-        log.w 'File not found: ' + Config.data.docker_ignore_file
+        log.w 'File not found: ' + Config.data.docker_ignore_file + '. Skipped.'
     }
     
     // Test Dockerfile exist
     if(!fileExists(f)){
         log.i 'Using default Dockerfile for ' + Config.data.build_language
-        def private String txt = libraryResource(
-                                    Config.data.base_templates_dir + 
-                                    '/dockerfile/language/'        + 
-                                    Config.data.build_language     + 
-                                    '/Dockerfile')
+        def private        dtf = Config.data.base_templates_dir + '/dockerfile/language/' + 
+                                 Config.data.build_language     + '/Dockerfile'
+        def private String txt = libraryResource(dtf)
 
         log.i 'Copied ' + f                            
         writeFile file: f, text: txt
     }
 
     check.file(f)
-    def private dfc  = []
-    def private cid  = Config.data.git_commit_id
+    def private  dfc = []
+    def private  cid = Config.data.git_commit_id
     def private user = Config.data.build_userid
 
     dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$user commit.id=$cid")
     dfc.add("RUN mkdir -p $d")
-    dfc.add("COPY $t $d")
+    dfc.add("COPY $s $d/$t")
+    dfc.add("WORKDIR $d")
 
+    def cmd = Config.data.run_command
+    if(!cmd){
+        dfc.add("CMD $cmd")
+    }
+
+    // Keep this line.
     sh("echo >> $f")
 
     for(s in dfc) {
@@ -69,7 +78,8 @@ def private build(String image_name) {
         }
     }
     catch (e) {
-        log.output("e",error_docker_build_image)
+        //log.output("e",error_docker_build_image)
+        log.e 'Error occurred during build image'
         throw e
     }
 }
@@ -83,7 +93,7 @@ def private push(String image_name){
         }
     }
     catch (e) {
-        println 'Error occurred during push image'
+        log.e 'Error occurred during push image'
         throw e
     }
 }
@@ -106,7 +116,7 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
         }
     }
     catch (e) {
-        println 'Error occurred during login to registry'
+        log.e 'Error occurred during login to registry'
         throw e
     }
 }

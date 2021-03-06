@@ -35,6 +35,8 @@ def config(){
     }
 
     Config.settings = [
+        artifact_src                    : '.',
+        artifact_dest                   : '',
         base_action                     : ACTION,
         base_dir                        : metis.getFirstDirectory(),
         base_env                        : ENVIRONMENT,
@@ -88,8 +90,7 @@ def config(){
         k8s_yml_default_deploy          : 'deployment.yaml',
         k8s_yml_default_svc             : 'service.yaml',
         notice_timeout                  : 15,
-        run_args                        : null,
-        run_command                     : null,
+        run_command                     : '',
         run_user                        : null,
         ssh_host                        : null,
         ssh_speed_limit                 : 20480,
