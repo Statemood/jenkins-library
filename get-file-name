@@ -1,0 +1,8 @@
+#! /bin/bash
+
+# Put in /usr/local/bin, set permission to 0755.
+
+case $1 in
+    name)   echo "${2%.*}"  ;;
+    suffix) echo "${2##*.}" ;;
+esac
