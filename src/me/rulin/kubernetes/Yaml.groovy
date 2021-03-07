@@ -53,7 +53,7 @@ def deployment(
         def private        c = ts.containers[0]
         def private      res = c.resources
         def private      ssr = s.strategy.rollingUpdate
-        def private      ips = c.imagePullSecret
+        def private      ips = ts.imagePullSecrets
         def private        e = c.env
 
         md.name                             = cfg.base_name
@@ -70,12 +70,10 @@ def deployment(
         ssr.maxUnavailable                  = cfg.k8s_strategy_max_unavailable
 
         c.name                              = cfg.base_name
-        c.image                             = cfg.docker_img_name
+        c.image                             = cfg.docker_img_name + ':' + cfg.docker_img_tag
         c.imagePullPolicy                   = cfg.k8s_img_pull_policy
-
-        if (ips) {
-            ips[0].name                     = cfg.k8s_img_pull_secret
-        }
+        
+        ips[0].name                         = cfg.k8s_img_pull_secret
 
         if (e) {
             if(e.size() > 0){

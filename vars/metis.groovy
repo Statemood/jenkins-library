@@ -48,6 +48,6 @@ def getMavenPackageInfo(String item){
     return pom.item
 }
 
-def getFileSuffix(String f){
-    return sh(script: "echo ${f##*.}", returnStdout: true).trim().toLowerCase()
+def getFileNameInfo(String f, String t='suffix'){
+    return sh(script: "get-file-name $t $f", returnStdout: true).trim().toLowerCase()
 }

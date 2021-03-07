@@ -18,7 +18,7 @@ def String cmd(String c){
     }
 }
 
-def private genDockerfile(String f='Dockerfile', 
+def private genDockerfile(String f=Config.data.docker_file, 
                           String s=Config.data.artifact_src,
                           String t=Config.data.artifact_dest,
                           String d=Config.data.base_web_root, 
@@ -33,48 +33,59 @@ def private genDockerfile(String f='Dockerfile',
     }
     
     // Test Dockerfile exist
+    sh("rm -fv $f")
     if(!fileExists(f)){
         log.i 'Using default Dockerfile for ' + Config.data.build_language
         def private        dtf = Config.data.base_templates_dir + '/dockerfile/language/' + 
                                  Config.data.build_language     + '/Dockerfile'
         def private String txt = libraryResource(dtf)
 
-        log.i 'Copied ' + f                            
+        log.i 'Copied ' + f
+
         writeFile file: f, text: txt
     }
 
     check.file(f)
     def private  dfc = []
     def private  cid = Config.data.git_commit_id
-    def private user = Config.data.build_userid
+    def private buid = Config.data.build_userid
+    def private user = Config.data.run_user
+    def private  cmd = Config.data.run_command
+    def private dest = d + t
 
-    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$user commit.id=$cid")
-    dfc.add("RUN mkdir -p $d")
-    dfc.add("COPY $s $d/$t")
-    dfc.add("WORKDIR $d")
-
-    def cmd = Config.data.run_command
-    if(!cmd){
-        dfc.add("CMD $cmd")
+    if(Config.data.build_language == 'java'){
+        dest = d + Config.data.base_name + '.' + metis.getFileNameInfo(s)
     }
+
+    println '----------------'
+    println cmd
+    println '----------------'
+
+    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$buid commit.id=$cid")
+    dfc.add("RUN  mkdir -p $d")
+    dfc.add("COPY $s $dest")
+    dfc.add("USER    $user")
+    dfc.add("WORKDIR $d")
+    dfc.add("CMD     $cmd")
 
     // Keep this line.
     sh("echo >> $f")
 
-    for(s in dfc) {
-        sh("echo $s >> $f")
+    for(ic in dfc){
+        sh("echo $ic >> $f")
     }
 }
 
 def private build(String image_name) {
-    check.file('Dockerfile')
+    check.file(Config.data.docker_file)
     try {
         log.info 'Build image: ' + image_name
 
         def private dibo = Config.data.docker_img_build_options
+        def private   df = Config.data.docker_file
 
         timeout(time: Config.data.docker_img_build_timeout, unit: 'SECONDS') {
-            cmd("build $dibo -t $image_name .")
+            cmd("build $dibo -t $image_name -f $df .")
         }
     }
     catch (e) {

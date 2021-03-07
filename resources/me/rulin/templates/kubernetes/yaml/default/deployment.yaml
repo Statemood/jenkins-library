@@ -30,6 +30,8 @@ spec:
                 operator: In
                 values:
                 - amd64
+      imagePullSecrets:
+      - name: default-secret
       containers:
       - name: app-name
         image: image-name
