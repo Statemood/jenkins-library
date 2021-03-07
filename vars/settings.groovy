@@ -24,9 +24,10 @@ def merge(Map arguments=[:]){
 def config(){
     // 设置初始化配置
     try {
-        if(!ACTION)         { ACTION        = "deploy"  }
-        if(!ENVIRONMENT)    { ENVIRONMENT   = "dev"     }
-        if(!GIT_REVISION)   { GIT_REVISION  = null      }
+        if(!ACTION)             { ACTION            = "deploy"  }
+        if(!ENVIRONMENT)        { ENVIRONMENT       = "dev"     }
+        if(!GIT_REVISION)       { GIT_REVISION      = null      }
+        if(!DEPLOYMENT_MODE)    { DEPLOYMENT_MODE   = null      }
     }
     catch (e) {
         log.err "在初始化环境变量时遇到问题."
@@ -34,13 +35,16 @@ def config(){
     }
 
     Config.settings = [
+        artifact_src                    : '.',
+        artifact_dest                   : '.',
         base_action                     : ACTION,
         base_dir                        : metis.getFirstDirectory(),
         base_env                        : ENVIRONMENT,
         base_name                       : metis.getApplicationName(),
         base_port                       : 8080,
         base_project                    : metis.getFrojectName(),
-        base_web_root                   : '/data/app',
+        base_templates_dir              : 'me/rulin/templates/',
+        base_web_root                   : '/data/app/',
         base_workspace                  : JENKINS_HOME + '/workspace/' + JOB_NAME,
         build_command                   : 'mvn',
         build_dir                       : '.',
@@ -52,6 +56,7 @@ def config(){
         build_user                      : metis.getBuildUserName(),
         build_userid                    : metis.getBuildUserNameID(),
         docker_account                  : 'Registry-Jenkins',
+        docker_file                     : 'Dockerfile.jenkins',
         docker_img_name                 : '',
         docker_img_tag                  : '',
         docker_img_build_timeout        : 1800,
@@ -61,14 +66,15 @@ def config(){
         docker_login_timeout            : 15,
         git_commit_length               : 8,
         git_commit_id                   : '',
-        git_credentials                 : 'DefaultGitSCMCredentialsID',
+        git_credentials                 : 'GitLab-Jenkins-UP',
         git_repo                        : null,
         git_revision                    : GIT_REVISION,
         git_skip                        : false,
         git_stage                       : 'master',
         k8s_allowed_commands            : ['apply', 'create', 'delete', 'get', 'autoscale'],
-        k8s_img_pull_policy             : 'Always',
-        k8s_img_pull_secret             : metis.getFrojectName() + '-image-pull-secret',
+        k8s_config_dir                  : '/home/jenkins/.kube/',
+        k8s_img_pull_policy             : 'IfNotPresent',
+        k8s_img_pull_secret             : 'images-puller-' + metis.getFrojectName(),
         k8s_min_ready_seconds           : 60,
         k8s_namespace                   : metis.getFrojectName(),
         k8s_progress_deadline_sec       : 300,
@@ -84,11 +90,13 @@ def config(){
         k8s_yml_default_dir             : 'kubernetes/yaml/default/',
         k8s_yml_default_deploy          : 'deployment.yaml',
         k8s_yml_default_svc             : 'service.yaml',
-        k8s_yml_default_templates_dir   : 'me/rulin/templates/',
         notice_timeout                  : 15,
-        run_args                        : null,
-        run_command                     : null,
-        run_user                        : null,
+        run_command                     : '',
+        run_user                        : 1000,
+        ssh_host                        : null,
+        ssh_speed_limit                 : 20480,
+        ssh_user                        : 'www',
+        ssh_port                        : 22,
         test_command                    : 'mvn',
         test_options                    : 'test',
         test_type                       : 'unit'
@@ -101,7 +109,8 @@ def localSettingsFile(){
     try {
         if (SETTINGS) {
             if (fileExists(SETTINGS)) {
-                log.i 'Loading local settings'
+                //log.output('info', 'init_load_settings_file')
+                log.i 'Load settings file.'
 
                 load(SETTINGS)
             }
@@ -117,8 +126,6 @@ def localSettingsFile(){
         throw e
         log.err 'Oops! An error occurred while try to load default settings.'
     }
-
-    log.i 'Load defaults'
 }
 
 return this

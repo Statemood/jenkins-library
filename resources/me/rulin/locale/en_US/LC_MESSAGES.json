@@ -1,0 +1,14 @@
+{
+    "error_git_co": { 
+        "message": "Ops! Error occurred during git checkout." 
+    },
+    "error_docker_build_image": {
+        "message": "Ops! Error occurred during build docker image."
+    },
+    "init_load_settings_file": {
+        "message": "Load settings file."
+    },
+    "init_load_default_settings": {
+        "message": "Default settings loaded."
+    }
+}

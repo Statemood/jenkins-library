@@ -18,46 +18,76 @@ def String cmd(String c){
     }
 }
 
-def private genDockerfile(String f='Dockerfile', String t='.', String d=Config.data.base_web_root, String c=null){
+def private genDockerfile(String f=Config.data.docker_file, 
+                          String s=Config.data.artifact_src,
+                          String t=Config.data.artifact_dest,
+                          String d=Config.data.base_web_root, 
+                          String c=null){
     if (fileExists(Config.data.docker_ignore_file)) {
         log.i 'Copy dockerignore file'
 
         sh('cp -rf' + Config.data.docker_ignore_file + ' .')
     }
     else {
-        log.w 'File not found: ' + Config.data.docker_ignore_file
+        log.w 'File not found: ' + Config.data.docker_ignore_file + '. Skipped.'
     }
     
     // Test Dockerfile exist
+    sh("rm -fv $f")
+    if(!fileExists(f)){
+        log.i 'Using default Dockerfile for ' + Config.data.build_language
+        def private        dtf = Config.data.base_templates_dir + '/dockerfile/language/' + 
+                                 Config.data.build_language     + '/Dockerfile'
+        def private String txt = libraryResource(dtf)
+
+        log.i 'Copied ' + f
+
+        writeFile file: f, text: txt
+    }
+
     check.file(f)
-    def private dfc  = []
-    def private cid  = Config.data.git_commit_id
-    def private user = Config.data.build_userid
+    def private  dfc = []
+    def private  cid = Config.data.git_commit_id
+    def private buid = Config.data.build_userid
+    def private user = Config.data.run_user
+    def private  cmd = Config.data.run_command
+    def private  rev = Config.data.git_revision
+    def private dest = d + t
 
-    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$user commit.id=$cid")
-    dfc.add("RUN mkdir -p $d")
-    dfc.add("COPY $t $d")
+    if(Config.data.build_language == 'java'){
+        dest = d + Config.data.base_name + '.' + metis.getFileNameInfo(s)
+    }
 
+    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$buid git.revision=$rev git.commit.id=$cid")
+    dfc.add("RUN   mkdir -p $d")
+    dfc.add("COPY    $s $dest")
+    dfc.add("USER       $user")
+    dfc.add("WORKDIR    $d")
+    dfc.add("CMD        [$cmd]")
+
+    // Keep this line.
     sh("echo >> $f")
 
-    for(s in dfc) {
-        sh("echo $s >> $f")
+    for(ic in dfc){
+        sh("echo $ic >> $f")
     }
 }
 
 def private build(String image_name) {
-    check.file('Dockerfile')
+    check.file(Config.data.docker_file)
     try {
         log.info 'Build image: ' + image_name
 
         def private dibo = Config.data.docker_img_build_options
+        def private   df = Config.data.docker_file
 
         timeout(time: Config.data.docker_img_build_timeout, unit: 'SECONDS') {
-            cmd("build $dibo -t $image_name .")
+            cmd("build $dibo -t $image_name -f $df .")
         }
     }
     catch (e) {
-        println 'Error occurred during build image'
+        //log.output("e",error_docker_build_image)
+        log.e 'Error occurred during build image'
         throw e
     }
 }
@@ -71,7 +101,7 @@ def private push(String image_name){
         }
     }
     catch (e) {
-        println 'Error occurred during push image'
+        log.e 'Error occurred during push image'
         throw e
     }
 }
@@ -94,7 +124,7 @@ def login(String reg=DOCKER_REGISTRY, String opt=null){
         }
     }
     catch (e) {
-        println 'Error occurred during login to registry'
+        log.e 'Error occurred during login to registry'
         throw e
     }
 }

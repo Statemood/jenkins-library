@@ -35,20 +35,18 @@ def call(Map config=[:]){
                 name: 'ACTION',
                 description: 'Please select action',
                 choices: 'deploy\nrollback')
+
+            choice(
+                name: 'DEPLOYMENT_MODE',
+                description: 'Please select action',
+                choices: 'Container\nLegacy\nMixed')
         }
 
         stages {
-            stage ("Initial Stages") {
+            stage ('Initial Stages') {
                 steps {
                     script {
-                        log.i "Acquire config data"
-                        // Fecth data
-                        /*
-                        
-                        fc = new FetchConfig(auto)
-                        
-                        fc.getConfig()
-                        */
+                        log.i 'Call Pipeline'
                         controller.entry(config)
                     }
                 }
@@ -58,26 +56,26 @@ def call(Map config=[:]){
         post {
             aborted {
                 script {
-                    log.i "Post Action: aborted"
+                    log.i 'Post Action: aborted'
                 }
             }
 
             always {
                 script {
-                    log.i "Post Action: always"
+                    log.i 'Post Action: always'
                 }
             }
 
             changed {
                 script {
-                    log.i "Post Action: changed"
+                    log.i 'Post Action: changed'
                 }
             }
 
             failure {
                 script {
-                    currentBuild.result = "FAILURE"
-                    log.i "Post Action: failure"  
+                    currentBuild.result = 'FAILURE'
+                    log.i 'Post Action: failure'
 
                     // Send mail
                 }

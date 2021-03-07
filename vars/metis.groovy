@@ -8,24 +8,27 @@ def getBuildUserName(){
        See https://plugins.jenkins.io/build-user-vars-plugin for more information
     */
 
-    wrap([$class: 'BuildUser']) { build_user = BUILD_USER }
-
-    return build_user
+    wrap([$class: 'BuildUser']) { 
+        return BUILD_USER 
+    }
 }
 
 def getBuildUserNameID(){
-    wrap([$class: 'BuildUser']) { build_user_id = BUILD_USER_ID }
-
-    return build_user_id
+    wrap([$class: 'BuildUser']) { 
+        return BUILD_USER_ID 
+    }
 }
 
 def getFirstDirectory(){
-    def first_dir = pwd()
-    return first_dir
+    return pwd()
 }
 
 def getFrojectName(){
     return JOB_BASE_NAME.split('_')[0].toLowerCase()
+}
+
+def getGetCommitID(){
+    return Config.data.git_commit_id = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
 }
 
 def getReplicasNumber(){
@@ -37,4 +40,14 @@ def getReplicasNumber(){
     }
 
     return repn
+}
+
+def getMavenPackageInfo(String item){
+    def pom = readMavenPom file: 'pom.xml'
+
+    return pom.item
+}
+
+def getFileNameInfo(String f, String t='suffix'){
+    return sh(script: "get-file-name $t $f", returnStdout: true).trim().toLowerCase()
 }

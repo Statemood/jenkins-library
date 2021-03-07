@@ -26,10 +26,12 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: key
+              - key: kubernetes.io/arch
                 operator: In
                 values:
-                - value
+                - amd64
+      imagePullSecrets:
+      - name: default-secret
       containers:
       - name: app-name
         image: image-name

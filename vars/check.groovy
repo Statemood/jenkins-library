@@ -9,7 +9,7 @@
 
 def file(String f) {
     if (!fileExists(f)) {
-        log.err "$f does not exist"
+        log.err 'File ' + f + ' does not exist.'
 
     }
 }
@@ -17,19 +17,19 @@ def file(String f) {
 def isdir(String d) {
     def directory = new File(d)
     if (!directory.exists() || ! directory.isDirectory()) {
-        log.err "$directory does not exist or is not a directory"
+        log.err directory + ' does not exist or is not a directory.'
     }
 }
 
 def exist(String e) {
     if (!fileExists(e)) {
-        log.err "$e: No such file or directory" 
+        log.err 'No such file or directory: ' + e
     }
 }
 
 def var(v) {
     if (!v) {
-        log.err "Require " + v
+        log.err 'Require ' + v
     }
 }
 

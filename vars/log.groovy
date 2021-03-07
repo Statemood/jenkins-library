@@ -25,4 +25,19 @@ def warning(String msg) { echo "WARNING: $msg"     }
 
 def     err(String msg) { error " $msg"            }
 
+def output(String level, String alias, String extra='') {
+    def private        t = 'me/rulin/locale/' + Config.data.locale + '/LC_MESSAGES.json'
+    def String file_text = libraryResource(t)
+    def private      msg = readJSON text: file_text
+
+    println level + ': ' + msg[alias].message + extra
+}
+
+def messages(){
+    Map dict = [
+        init_load_default_settings      : "Default settings loaded.",
+        init_load_settings_file         : "Load settings file."
+    ]
+}
+
 return this

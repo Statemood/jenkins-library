@@ -7,13 +7,13 @@
    ##################################################
 */
 
+import me.rulin.cd.Server
 import me.rulin.ci.Git
 import me.rulin.ci.Language
 import me.rulin.ci.SonarQube
 import me.rulin.docker.Docker
 import me.rulin.kubernetes.Command
 import me.rulin.kubernetes.Yaml
-
 
 def entry(Map args = [:]) {
     /*
@@ -89,7 +89,7 @@ def codeClone() {
                         branch: revision,
                         url: repo
 
-                    Config.data.git_commit_id = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
+                    metis.getGetCommitID()
                 } catch (e) {
                     log.e 'Ops! Error occurred during git checkout'
                     throw e
@@ -151,7 +151,7 @@ def codeTest() {
 }
 
 def doDocker(){
-    // if (DEPLOY_MODE == 'Container') {}
+    if(DEPLOYMENT_MODE == 'Legacy') { return }
     stage('Docker') {
         node(STAGE_DOCKER) {
             dir(Config.data.base_dir) {
@@ -174,6 +174,7 @@ def doDocker(){
 }
 
 def doKubernetes(){
+    if(DEPLOYMENT_MODE == 'Legacy') { return }
     stage('Kubernetes') {
         node(STAGE_K8S) {
             dir(Config.data.base_dir) {
@@ -195,6 +196,16 @@ def doKubernetes(){
                 )
             }
         }
+    }
+}
+
+def doServer(List th=[]){
+    if(DEPLOYMENT_MODE == 'Container') { return }
+
+    def server = new Server()
+
+    for(host in th){
+        server.upload()
     }
 }
 

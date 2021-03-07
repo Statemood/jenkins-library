@@ -37,7 +37,7 @@ def yamlReader(String t, String f=null) {
 
 def deployment(
         String source_file = 
-            Config.data.k8s_yml_default_templates_dir + 
+            Config.data.base_templates_dir  + 
             Config.data.k8s_yml_default_dir + 
             Config.data.k8s_yml_default_deploy, 
         String dest_file =
@@ -49,11 +49,11 @@ def deployment(
         def private      yml = yamlReader(source_file)
         def private        s = yml.spec
         def private       md = yml.metadata
-                          ts = s.template.spec
+        def private       ts = s.template.spec
         def private        c = ts.containers[0]
         def private      res = c.resources
         def private      ssr = s.strategy.rollingUpdate
-        def private      ips = c.imagePullSecret
+        def private      ips = ts.imagePullSecrets
         def private        e = c.env
 
         md.name                             = cfg.base_name
@@ -70,12 +70,10 @@ def deployment(
         ssr.maxUnavailable                  = cfg.k8s_strategy_max_unavailable
 
         c.name                              = cfg.base_name
-        c.image                             = cfg.docker_img_name
+        c.image                             = cfg.docker_img_name + ':' + cfg.docker_img_tag
         c.imagePullPolicy                   = cfg.k8s_img_pull_policy
-
-        if (ips) {
-            ips[0].name                     = cfg.k8s_img_pull_secret
-        }
+        
+        ips[0].name                         = cfg.k8s_img_pull_secret
 
         if (e) {
             if(e.size() > 0){
@@ -102,7 +100,7 @@ def deployment(
 
 def service(
     String source_file = 
-        Config.data.k8s_yml_default_templates_dir + 
+        Config.data.base_templates_dir  + 
         Config.data.k8s_yml_default_dir + 
         Config.data.k8s_yml_default_svc, 
     String dest_file =
@@ -127,7 +125,7 @@ def service(
         writeYaml file: dest_file, data: yml, overwrite: true
     }
     catch (e) {
-        log.e "Oops! An error occurred during update serivce, file: " + dest_file
+        log.e 'Oops! An error occurred during update serivce, file: ' + dest_file
         throw e
     }
 }
