@@ -51,22 +51,19 @@ def private genDockerfile(String f=Config.data.docker_file,
     def private buid = Config.data.build_userid
     def private user = Config.data.run_user
     def private  cmd = Config.data.run_command
+    def private  rev = Config.data.git_revision
     def private dest = d + t
 
     if(Config.data.build_language == 'java'){
         dest = d + Config.data.base_name + '.' + metis.getFileNameInfo(s)
     }
 
-    println '----------------'
-    println cmd
-    println '----------------'
-
-    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$buid commit.id=$cid")
-    dfc.add("RUN  mkdir -p $d")
-    dfc.add("COPY $s $dest")
-    dfc.add("USER    $user")
-    dfc.add("WORKDIR $d")
-    dfc.add("CMD     $cmd")
+    dfc.add("LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$buid git.revision=$rev git.commit.id=$cid")
+    dfc.add("RUN   mkdir -p $d")
+    dfc.add("COPY    $s $dest")
+    dfc.add("USER       $user")
+    dfc.add("WORKDIR    $d")
+    dfc.add("CMD        [$cmd]")
 
     // Keep this line.
     sh("echo >> $f")
