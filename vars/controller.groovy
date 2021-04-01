@@ -7,7 +7,7 @@
    ##################################################
 */
 
-import io.rulin.artifact.Harbor
+import io.rulin.artifact.Registry
 import io.rulin.cd.Server
 import io.rulin.cd.WeixinMiniProgram
 import io.rulin.ci.Git
@@ -161,11 +161,11 @@ def qualityGate(){
 }
 
 def isImageExist(){
-    def private harbor = new Harbor()
+    def private harbor = new Registry()
     def private  found = false
     def private      d = Config.data
     def private    tag = d.git_revision + '-' + d.git_commit_id[0..8]
-    def private    res = harbor.artifactInfo(
+    def private    res = harbor.harborArtifactInfo(
                             tag,
                             d.docker_registry_basic_auth,
                             d.docker_registry,

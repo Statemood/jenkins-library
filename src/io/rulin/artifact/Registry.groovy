@@ -1,6 +1,6 @@
 package io.rulin.artifact 
 
-def artifactInfo(
+def harborArtifactInfo(
             String tag, 
             String _id, 
             String registry, 
