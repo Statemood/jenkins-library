@@ -1,4 +1,4 @@
-import io.fosun.ci.Git
+import io.rulin.ci.Git
 
 def getApplicationName(){
     return JOB_BASE_NAME.split('_')[1].toLowerCase()
