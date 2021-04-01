@@ -7,7 +7,7 @@
    ##################################################
 */
 
-package me.rulin.docker
+package io.rulin.docker
 
 def String cmd(String c){
     try {
@@ -23,43 +23,59 @@ def private genDockerfile(String f=Config.data.docker_file,
                           String t=Config.data.artifact_dest,
                           String d=Config.data.base_web_root, 
                           String c=null){
-    if (fileExists(Config.data.docker_ignore_file)) {
+
+    def data = Config.data
+
+    if (fileExists(data.docker_ignore_file)) {
         log.i 'Copy dockerignore file'
 
-        sh('cp -rf' + Config.data.docker_ignore_file + ' .')
+        sh('cp -rf' + data.docker_ignore_file + ' .')
     }
     else {
-        log.w 'File not found: ' + Config.data.docker_ignore_file + '. Skipped.'
+        log.w 'File not found: ' + data.docker_ignore_file + '. Skipped.'
     }
     
     // Test Dockerfile exist
     sh("rm -fv $f")
+    
+    def private  dfc = []
+    def private  cid = data.git_commit_id
+    def private buid = data.build_userid
+    def private user = data.run_user
+    def private  cmd = data.run_command
+    def private  rev = data.git_revision
+    def private dest = d + t
+
     if(!fileExists(f)){
-        log.i 'Using default Dockerfile for ' + Config.data.build_language
-        def private        dtf = Config.data.base_templates_dir + '/dockerfile/language/' + 
-                                 Config.data.build_language     + '/Dockerfile'
+        def private p2d = data.build_language 
+
+        if(data.build_language_version != 0){
+             p2d = data.build_language + '/' + data.build_language_version
+             log.a 'Dockerfile version: ' + p2d
+        }
+
+        if(data.hosted_by == 'nginx') {
+             p2d = 'static'
+            user = 0
+        }
+        
+        def private String dtf = data.base_templates_dir + 'dockerfile/language/' + p2d + '/Dockerfile'
         def private String txt = libraryResource(dtf)
 
+        log.i 'Using default Dockerfile for ' + data.build_language
         log.i 'Copied ' + f
 
         writeFile file: f, text: txt
     }
 
     check.file(f)
-    def private  dfc = []
-    def private  cid = Config.data.git_commit_id
-    def private buid = Config.data.build_userid
-    def private user = Config.data.run_user
-    def private  cmd = Config.data.run_command
-    def private  rev = Config.data.git_revision
-    def private dest = d + t
 
     def private labels 
                 labels  = "LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$buid "
                 labels += "git.revision=$rev git.commit.id=$cid "
 
-    if(Config.data.build_language == 'java'){
-        dest = d + Config.data.base_name + '.' + metis.getFileNameInfo(s)
+    if(data.build_language == 'java'){
+        dest = d + data.base_name + '.' + metis.getFileNameInfo(s)
     }
 
     dfc.add(labels)
@@ -67,7 +83,10 @@ def private genDockerfile(String f=Config.data.docker_file,
     dfc.add("COPY    $s $dest")
     dfc.add("USER       $user")
     dfc.add("WORKDIR    $d")
-    dfc.add("CMD        $cmd")
+
+    if(cmd) {
+        dfc.add("CMD    $cmd")
+    }
 
     // Keep this line.
     sh("echo >> $f")
@@ -110,7 +129,7 @@ def private push(String image_name){
     }
 }
 
-def login(String reg=DOCKER_REGISTRY, String opt=null){
+def login(String reg=Config.data.docker_registry, String opt=null){
     try {
         log.i 'Login to Docker Registry ' + reg
 

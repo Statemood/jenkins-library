@@ -11,16 +11,14 @@
 //      k8s.command("create", "deployment")
 //                             k8s.yaml
 
-package me.rulin.kubernetes
+package io.rulin.kubernetes
 
-def command(String cmd, String target=null){
+def command(String cmd, String target){
     if (!cmd in Config.data.k8s_allowed_commands) {
         log.err 'Command not allowed: ' + cmd
     }
 
-    if (target != null) {
-        check.file(target)
-    }
+    check.file(target)
 
     log.i cmd.toUpperCase() + ' ' + target
 

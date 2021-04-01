@@ -7,9 +7,9 @@
    ##################################################
 */
 
-package me.rulin.ci
+package io.rulin.ci
 
-def scanner(String o='') {
+def scanner(String cmd='sonar-scanner', String o='') {
     try {
         log.i 'Preparing SonarQube Scanner'
         withSonarQubeEnv(credentialsId: 'Sonar-Jenkins-Token'){
@@ -23,7 +23,7 @@ def scanner(String o='') {
                 
             sonar_opts  = ssc_k + ssc_n + ssc_v + ssc_d + ssc_l + ssc_s + ssc_b
             sonar_opts += o
-            sonar_exec  = 'sonar-scanner ' + sonar_opts  
+            sonar_exec  = cmd + sonar_opts  
 
             sh(sonar_exec)
         }

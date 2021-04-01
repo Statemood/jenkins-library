@@ -7,8 +7,8 @@
    ##################################################
 */
 
-package me.rulin.ci
-import  me.rulin.ci.Build
+package io.rulin.ci
+import  io.rulin.ci.Build
 
 def seletor(String tl){
     // tl, target language

@@ -7,7 +7,7 @@
    ##################################################
 */
 
-package me.rulin.ci
+package io.rulin.ci
 
 def build(String b_file=null){
 

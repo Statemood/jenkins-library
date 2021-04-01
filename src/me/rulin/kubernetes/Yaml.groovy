@@ -7,7 +7,7 @@
    ##################################################
 */
 
-package me.rulin.kubernetes
+package io.rulin.kubernetes
 
 def yamlReader(String t, String f=null) {
     try {
@@ -78,10 +78,29 @@ def deployment(
         if (e) {
             if(e.size() > 0){
                 int en = 0
-                e[en].name              = "ENVIRONMENT"
-                e[en].value             = ENVIRONMENT
+                e[en].name              = 'SPRING_PROFILES_ACTIVE'
+                e[en].value             = ENVIRONMENT.toLowerCase()
                 //do for
             }
+        }
+
+        // health check
+        if(cfg.k8s_hc_liveness_type == 'httpGet'){
+            def private  live =  c.livenessProbe
+
+            live.httpGet.port           = cfg.k8s_hc_liveness_port
+            live.httpGet.path           = cfg.k8s_hc_liveness_path
+            live.initialDelaySeconds    = cfg.k8s_hc_liveness_ids
+            live.timeoutSeconds         = cfg.k8s_hc_liveness_timeout_sec
+        }
+
+        if(cfg.k8s_hc_readiness_type == 'httpGet'){
+            def private ready = c.readinessProbe
+
+            ready.httpGet.port          = cfg.k8s_hc_readiness_port
+            ready.httpGet.path          = cfg.k8s_hc_readiness_path
+            ready.initialDelaySeconds   = cfg.k8s_hc_readiness_ids
+            ready.timeoutSeconds        = cfg.k8s_hc_readiness_timeout_sec
         }
 
         res.requests.cpu        = cfg.k8s_res_requests_cpu
