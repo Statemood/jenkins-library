@@ -1,14 +1,17 @@
 def call(Map config=[:]){
-    // Fetch config from remote
-    // Set default
+    node {
+        settings.config(config)
+    }
 
     pipeline {
         agent any
 
         options {
             //timestamps()
-            timeout(time: 30, unit: 'MINUTES')
-            buildDiscarder(logRotator(numToKeepStr: '10'))
+            skipDefaultCheckout()
+            parallelsAlwaysFailFast()
+            timeout(time: 60, unit: 'MINUTES')
+            buildDiscarder(logRotator(numToKeepStr: '30'))
         }
 
         parameters {
@@ -24,12 +27,12 @@ def call(Map config=[:]){
                 tagFilter: '*', 
                 type: 'PT_BRANCH_TAG', 
                 description: 'Please select a branch or tag to build',
-                useRepository: config.git_repo)
+                useRepository: Config.data.git_repo)
 
             choice(
                 name: 'ENVIRONMENT',
                 description: 'Please select Environment',
-                choices: 'DEV\nTEST\nUAT\nPRE\nPRD')
+                choices: 'dev\nqa\nuat\npre\nprd')
 
             choice(
                 name: 'ACTION',
@@ -43,11 +46,11 @@ def call(Map config=[:]){
         }
 
         stages {
-            stage ('Initial Stages') {
+            stage ('Initial Pipeline') {
                 steps {
                     script {
-                        log.i 'Call Pipeline'
-                        controller.entry(config)
+                        log.i 'Initiating Pipeline'
+                        controller.entry()
                     }
                 }
             }
@@ -56,42 +59,21 @@ def call(Map config=[:]){
         post {
             aborted {
                 script {
-                    log.i 'Post Action: aborted'
+                    dingTalk.markdown('DingTalk-AccessToken-' + Config.data.base_project)
                 }
             }
-
             always {
                 script {
-                    log.i 'Post Action: always'
+                    if(ENVIRONMENT == 'prd' || Config.data.notice_always){
+                        dingTalk.markdown('DingTalk-AccessToken-' + Config.data.base_project)
+                    }
                 }
             }
-
-            changed {
-                script {
-                    log.i 'Post Action: changed'
-                }
-            }
-
             failure {
                 script {
-                    currentBuild.result = 'FAILURE'
-                    log.i 'Post Action: failure'
-
-                    // Send mail
+                    dingTalk.markdown('DingTalk-AccessToken-' + Config.data.base_project)
                 }
             }
-
-            success {
-                script {
-                    log.i "Post Action: success"
-                }
-            }
-
-            unstable {
-                script {
-                    log.i "Post Action: unstable"
-                }
-            }  
         }
     }
 }

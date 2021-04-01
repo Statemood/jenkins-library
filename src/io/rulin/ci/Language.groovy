@@ -7,8 +7,8 @@
    ##################################################
 */
 
-package me.rulin.ci
-import  me.rulin.ci.Build
+package io.rulin.ci
+import  io.rulin.ci.Build
 
 def seletor(String tl){
     // tl, target language
@@ -21,15 +21,15 @@ def seletor(String tl){
             
         case "java":
             switch(Config.data.build_command) {
-                case "ant":
+                case 'ant':
                     b.build()
                     return
 
-                case "gradle":
+                case ['gradle', './gradlew']:
                     b.build('build.gradle')
                     return
 
-                case "mvn":
+                case 'mvn':
                     b.build('pom.xml')
                     return
 
