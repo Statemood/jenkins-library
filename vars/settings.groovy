@@ -60,7 +60,7 @@ def defaultSettings(){
         build_stage                     : 'master',
         build_user                      : metis.getBuildUserName(),
         build_userid                    : metis.getBuildUserNameID(),
-        check_permission                : true,
+        check_permission_by_gitlab      : false,
         docker_account                  : 'Registry-Jenkins',
         docker_file                     : 'Dockerfile.jenkins',
         docker_img_name                 : '',

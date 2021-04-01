@@ -105,7 +105,7 @@ def preProcess() {
                 // Set build info
                 // Check parameters
                 currentBuildInfo()
-                if(Config.data.check_permission){
+                if(Config.data.check_permission_by_gitlab){
                     check.permission(Config.data.build_userid)
                 }
                 log.i 'Stage Pre-Process OK'
