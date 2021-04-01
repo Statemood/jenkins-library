@@ -21,15 +21,15 @@ def seletor(String tl){
             
         case "java":
             switch(Config.data.build_command) {
-                case "ant":
+                case 'ant':
                     b.build()
                     return
 
-                case "gradle":
+                case ['gradle', './gradlew']:
                     b.build('build.gradle')
                     return
 
-                case "mvn":
+                case 'mvn':
                     b.build('pom.xml')
                     return
 

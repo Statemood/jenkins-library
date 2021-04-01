@@ -77,35 +77,45 @@ def preProcess() {
 
 def codeClone() {
     stage('Git Clone') {
-        node(STAGE_GIT) {
-            dir(Config.data.base_dir) {
-                try {
-                    def private revision = Config.data.git_revision
-                    def private     repo = Config.data.git_repo
+        if(!Config.data.skip_git){
+            node(STAGE_GIT) {
+                dir(Config.data.base_dir) {
+                    try {
+                        def private revision = Config.data.git_revision
+                        def private     repo = Config.data.git_repo
 
-                    log.i 'Git clone ' + revision + ' from ' + repo
+                        log.i 'Git clone ' + revision + ' from ' + repo
 
-                    git credentialsId: Config.data.git_credentials,
-                        branch: revision,
-                        url: repo
+                        git credentialsId: Config.data.git_credentials,
+                            branch: revision,
+                            url: repo
 
-                    metis.getGetCommitID()
-                } catch (e) {
-                    log.e 'Ops! Error occurred during git checkout'
-                    throw e
+                        metis.getGetCommitID()
+                    } catch (e) {
+                        log.e 'Ops! Error occurred during git checkout'
+                        throw e
+                    }
                 }
             }
+        }
+        else {
+            log.a 'Skipped stage git clone.'
         }
     }
 }
 
 def sonarScan() {
     stage('SonarQube Scanner') {
-        node(STAGE_SONAR) {
-            dir(Config.data.base_dir) {
-                def sonar = new SonarQube()
-                sonar.scanner()
+        if(!Config.data.skip_sonar){
+            node(STAGE_SONAR) {
+                dir(Config.data.base_dir) {
+                    def sonar = new SonarQube()
+                    sonar.scanner()
+                }
             }
+        }
+        else {
+            log.a 'Sikpped stage SonarQube Scan'
         }
     }
 }
@@ -124,9 +134,15 @@ def qualityGate(){
 
 def codeBuild() {
     stage('Build Code') {
-        lang = Config.data.build_language.toLowerCase()
+        def private      lang = Config.data.build_language.toLowerCase()
+        def private   version = Config.data.build_language_version
+        def private node_name = lang
 
-        node(lang) {
+        if(version != 0){ node_name = lang + '-' + version }
+
+        Config.data.build_node_name = node_name
+
+        node(node_name) {
             dir(Config.data.base_dir) {
                 def language = new Language()
                 language.seletor(lang)
@@ -137,9 +153,9 @@ def codeBuild() {
 
 def codeTest() {
     def private utc = Config.data.test_command + ' ' + Config.data.test_options
-    if (utc) {
+    if (!Config.data.skip_test) {
         stage('Test') {
-            node(STAGE_TEST) {
+            node(Config.data.build_node_name = node_name) {
                 dir(Config.data.base_dir) {
                     log.i 'Test by command: ' + utc
 

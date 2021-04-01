@@ -11,7 +11,7 @@ def merge(Map arguments=[:]){
     /*
     Order:
         1. Local Settings
-        2. Default Settings (@ settings.config)
+        2. Default Settings (@settings.config)
         2. .jenkins.yaml
         3. User Config
     */
@@ -49,9 +49,10 @@ def config(){
         build_command                   : 'mvn',
         build_dir                       : '.',
         build_language                  : 'java',
+        build_language_version          : 0,
         build_legacy                    : false,
-        build_options                   : '-ff -ntp -U clean -Dmaven.test.skip=true package dependency:tree',
-        build_skip                      : false,
+        build_node_name                 : '',
+        build_options                   : '',
         build_stage                     : 'master',
         build_user                      : metis.getBuildUserName(),
         build_userid                    : metis.getBuildUserNameID(),
@@ -69,7 +70,6 @@ def config(){
         git_credentials                 : 'GitLab-Jenkins-UP',
         git_repo                        : null,
         git_revision                    : GIT_REVISION,
-        git_skip                        : false,
         git_stage                       : 'master',
         k8s_allowed_commands            : ['apply', 'create', 'delete', 'get', 'autoscale'],
         k8s_config_dir                  : '/home/jenkins/.kube/',
@@ -93,6 +93,13 @@ def config(){
         notice_timeout                  : 15,
         run_command                     : '',
         run_user                        : 1000,
+        run_by_nginx                    : false,
+        skip_build                      : false,
+        skip_docker                     : false,
+        skip_git                        : false,
+        skip_k8s                        : false,
+        skip_sonar                      : true,
+        skip_test                       : true,
         ssh_host                        : null,
         ssh_speed_limit                 : 20480,
         ssh_user                        : 'www',
