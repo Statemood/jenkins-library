@@ -12,10 +12,10 @@ import io.rulin.cd.Server
 import io.rulin.cd.WeixinMiniProgram
 import io.rulin.ci.Git
 import io.rulin.ci.Language
-import io.rulin.ci.SonarQube
 import io.rulin.docker.Docker
 import io.rulin.kubernetes.Command
 import io.rulin.kubernetes.Yaml
+import io.rulin.security.SonarQube
 
 def entry() {
     /*
@@ -44,7 +44,7 @@ def entry() {
     } 
     else {
         d.docker_img_tag    = d.git_revision    + '-' + d.git_commit_id[0..8]
-        d.docker_img_name   = d.docker_registry + '/' + d.base_project + '/' + d.base_name
+        d.docker_img_name   = d.docker_registry + '/' + d.k8s_namespace + '/' + d.base_name
         d.docker_img        = d.docker_img_name + ':' + d.docker_img_tag
     }
 
@@ -52,13 +52,16 @@ def entry() {
         none_container      = true
     }
 
-    if(isImageExist()){
-        log.a 'Artifact version ' + d.docker_img_tag + ' already exist, skip build.'
-        d.skip_build        = true
-        d.skip_docker       = true
+    if(d.check_image_exist){
+        log.i 'Check image ' + d.docker_img_tag + ' exist.'
+        if(isImageExist()){
+            log.a 'Artifact version ' + d.docker_img_tag + ' already exist, skip build.'
+            d.skip_build        = true
+            d.skip_docker       = true
+        }
     }
-
-    if(none_container){
+    
+    if(none_container || d.build_only){
         d.skip_docker       = true 
         d.skip_k8s          = true
     }
@@ -66,26 +69,26 @@ def entry() {
     if(d.build_language in scan_after_build) {
         codeBuild()
     
-        parallel (
-            'Test'          : { codeTest()  },
-            'Sonar Scan'    : { sonarScan() },
-            'Docker'        : { doDocker()  }
-        )
+        tsd()
     }
     else {
         sonarScan()
         codeBuild()
-        parallel (
-            'Test'          : { codeTest()  },
-            'Sonar Scan'    : { sonarScan() },
-            'Docker'        : { doDocker()  }
-        )
+        tsd()
     }
 
     if(!d.skip_deploy){
         doKubernetes()
         deploy2MMP()
     }
+}
+
+def tsd(){
+    parallel(
+        'Test'          : { codeTest()  },
+        'Sonar Scan'    : { sonarScan() },
+        'Docker'        : { doDocker()  }
+    )
 }
 
 // Set build info
@@ -98,12 +101,9 @@ def currentBuildInfo(){
 }
 
 def preProcess() {
-    stage('Pre-Process') {
-        node(Config.data.stage_pre_process) {
+    stage('Pre-Process'){
+        node(Config.data.stage_pre_process){
             dir(Config.data.base_dir) {
-                // Set default info
-                // Set build info
-                // Check parameters
                 currentBuildInfo()
                 if(Config.data.check_permission_by_gitlab){
                     check.permission(Config.data.build_userid)
@@ -122,7 +122,8 @@ def codeClone() {
             node(d.stage_git) {
                 dir(d.base_dir) {
                     g.co(d.git_revision, d.git_repo, d.git_credentials_clone)
-                    metis.getGetCommitID()
+
+                    metis.setGetCommitID()
                 }
             }
         }
@@ -134,11 +135,18 @@ def codeClone() {
 
 def sonarScan() {
     stage('SonarQube Scanner') {
-        if(!Config.data.skip_sonar){
-            node(Config.data.build_node_name) {
-                dir(Config.data.base_dir) {
+        def d = Config.data
+        if(!d.skip_sonar){
+            node(d.build_node_name) {
+                dir(d.base_dir) {
                     def sonar = new SonarQube()
-                    sonar.scanner(Config.data.sonar_scanner)
+                    sonar.scanner(
+                        JOB_NAME,
+                        d.git_revision,
+                        d.build_language,
+                        d.sonar_scanner,
+                        d.sonar_options
+                    )
                 }
             }
         }
@@ -156,7 +164,7 @@ def qualityGate(){
                     waitForQualityGate abortPipeline: true
                 }
             }
-        }
+        }   
     }
 }
 
@@ -169,21 +177,29 @@ def isImageExist(){
                             tag,
                             d.docker_registry_basic_auth,
                             d.docker_registry,
-                            d.base_project,
+                            d.base_company + '-' + d.base_project,
                             d.base_name
                         )
-                        
-    res.each{
-        t = it['tags']
-        if(t != 'null'){
-            t.each{lists->
-                if(lists['name'] == tag){
-                    found = true
-                    return true 
+
+    try{
+        if(res.size() == 0){ return found }
+
+        res.each{
+            t = it['tags']
+            if(t != 'null'){
+                t.each{lists->
+                    if(lists['name'] == tag){
+                        found = true
+                        return true 
+                    }
+                    return false
                 }
-                return false
             }
         }
+    }
+    catch(e){
+        log.e 'Error occurred during check image exist.'
+        throw e
     }
     return found
 }
@@ -275,26 +291,28 @@ def deploy2MMP(String dist='./dist/'){
     if(Config.data.hosted_by == 'mmp' && Config.data.build_language == 'nodejs'){
         stage('Deploy to MiniProgram'){
             node(Config.data.build_node_name){
-                def private project_config = 'dist/project.config.json'
+                dir(Config.data.base_dir) {
+                    def private project_config = 'dist/project.config.json'
 
-                check.file(project_config)
+                    check.file(project_config)
 
-                def private  cfg = readJSON file: project_config
-                def private  mmp = new WeixinMiniProgram()
-                def private  cid = 'Private-Key-' + Config.data.base_name + '-' + Config.data.base_project + '-' + ENVIRONMENT
-                def private desc = 'Upload by '   + Config.data.build_user + ', Jenkins ID #' + BUILD_NUMBER + 
-                                    '. Version '  + Config.data.git_revision + ', commit id: ' + Config.data.git_commit_id + '.'
+                    def private  cfg = readJSON file: project_config
+                    def private  mmp = new WeixinMiniProgram()
+                    def private  cid = 'Private-Key-' + Config.data.base_name + '-' + Config.data.base_project + '-' + ENVIRONMENT
+                    def private desc = 'Upload by '   + Config.data.build_user + ', Jenkins ID #' + BUILD_NUMBER + 
+                                        '. Version '  + Config.data.git_revision + ', commit id: ' + Config.data.git_commit_id + '.'
 
-                withCredentials([file(credentialsId: cid, variable: 'MMP_PRIVATE_KEY')]){
-                    check.file(MMP_PRIVATE_KEY)
-                    mmp.upload(
-                        dist,
-                        MMP_PRIVATE_KEY,
-                        cfg['appid'],
-                        Config.data.git_revision + '.' + ENVIRONMENT.toLowerCase(),
-                        cfg.setting['es6'],
-                        desc
-                    )
+                    withCredentials([file(credentialsId: cid, variable: 'MMP_PRIVATE_KEY')]){
+                        check.file(MMP_PRIVATE_KEY)
+                        mmp.upload(
+                            dist,
+                            MMP_PRIVATE_KEY,
+                            cfg['appid'],
+                            Config.data.git_revision + '.' + ENVIRONMENT.toLowerCase(),
+                            cfg.setting['es6'],
+                            desc
+                        )
+                    }
                 }
             }
         }
