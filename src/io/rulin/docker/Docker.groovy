@@ -26,14 +26,13 @@ def private genDockerfile(String f=Config.data.docker_file,
 
     def data = Config.data
 
-    if (fileExists(data.docker_ignore_file)) {
-        log.i 'Copy dockerignore file'
+    def private  ignore = '.dockerignore'
+    def private di_file = data.docker_templates_resources + 'dockerfile/' + ignore
+    def private ig_text = libraryResource(di_file)
 
-        sh('cp -rf' + data.docker_ignore_file + ' .')
-    }
-    else {
-        log.w 'File not found: ' + data.docker_ignore_file + '. Skipped.'
-    }
+    log.i 'Using default ' + ignore
+
+    writeFile file: ignore, text: ig_text
     
     // Test Dockerfile exist
     sh("rm -fv $f")
@@ -45,6 +44,13 @@ def private genDockerfile(String f=Config.data.docker_file,
     def private  cmd = data.run_command
     def private  rev = data.git_revision
     def private dest = d + t
+    def private base = data.base_company + '/' + data.base_project + '/' + data.base_name
+    def private temp = data.docker_templates_local + base + '/Dockerfiles'
+
+    if(fileExists(temp)){
+        log.i 'Use exist project templates.'
+        sh("cp -rf $temp/* .")
+    }
 
     if(!fileExists(f)){
         def private p2d = data.build_language 
@@ -59,8 +65,8 @@ def private genDockerfile(String f=Config.data.docker_file,
             user = 0
         }
         
-        def private String dtf = data.base_templates_dir + 'dockerfile/language/' + p2d + '/Dockerfile'
-        def private String txt = libraryResource(dtf)
+        def private dtf = data.docker_templates_resources + 'dockerfile/language/' + p2d + '/Dockerfile'
+        def private txt = libraryResource(dtf)
 
         log.i 'Using default Dockerfile for ' + data.build_language
         log.i 'Copied ' + f
@@ -70,8 +76,7 @@ def private genDockerfile(String f=Config.data.docker_file,
 
     check.file(f)
 
-    def private labels 
-                labels  = "LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$buid "
+    def private labels  = "LABEL made.by=Jenkins job.name=$JOB_NAME build.user.id=$buid "
                 labels += "git.revision=$rev git.commit.id=$cid "
 
     if(data.build_language == 'java'){

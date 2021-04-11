@@ -7,23 +7,31 @@
    ##################################################
 */
 
-package io.rulin.ci
+package io.rulin.security
 
-def scanner(String cmd='sonar-scanner', String o='') {
+def scanner(
+    String name,
+    String version,
+    String lang,
+    String cmd,
+    String o='') {
     try {
         log.i 'Preparing SonarQube Scanner'
         withSonarQubeEnv(credentialsId: 'Sonar-Jenkins-Token'){
-            private ssc_k = ' -Dsonar.projectKey='       + Config.data.base_name
-            private ssc_n = ' -Dsonar.projectName='      + Config.data.base_name
-            private ssc_v = ' -Dsonar.projectVersion='   + Config.data.git_revision
-            private ssc_l = ' -Dsonar.language='         + Config.data.build_language
-            private ssc_d = ' -Dsonar.projectBaseDir=.'
-            private ssc_s = ' -Dsonar.sources=.'
-            private ssc_b = ' -Dsonar.java.binaries=.'
-                
-            sonar_opts  = ssc_k + ssc_n + ssc_v + ssc_d + ssc_l + ssc_s + ssc_b
-            sonar_opts += o
-            sonar_exec  = cmd + sonar_opts  
+            def private opts 
+
+            opts  = ' -Dsonar.projectKey='       + name
+            opts += ' -Dsonar.projectName='      + name
+            opts += ' -Dsonar.projectVersion='   + version
+            opts += ' -Dsonar.language='         + lang
+            opts += ' -Dsonar.projectBaseDir=.'
+            opts += ' -Dsonar.sources=.'
+            opts += ' -Dsonar.java.binaries=.'
+            //opts += ' -Dsonar.java.coveragePlugin=jacoco'
+            //opts += ' -Dsonar.jacoco.reportPath=jacoco.exec'
+            //opts += ' -Dsonar.jacoco.itReportPath=jacoco.exec'
+
+            sonar_exec  = cmd + opts + ' ' + o
 
             sh(sonar_exec)
         }

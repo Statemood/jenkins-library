@@ -18,11 +18,51 @@ def config(Map args=[:]){
 
     defaultSettings()
 
-    def private       d = metis.getGitRepoInfo(args.git_repo_id)
-    args.git_repo       = d['http_url_to_repo']
-    args.git_name       = d['name']
-    args.git_branches   = metis.getGitRepoInfo(args.git_repo_id, '/repository/branches/' + GIT_REVISION)['name']
-    Config.data         = Config.settings + args
+    if(Config.data.check_permission_by_gitlab){
+        def private       s = Config.settings
+        def private       d = metis.getGitRepoInfo(args.git_repo_id)
+        args.git_repo       = d['http_url_to_repo']
+        args.git_name       = d['name']
+        args.git_branches   = metis.getGitRepoInfo(args.git_repo_id, '/repository/branches/' + GIT_REVISION)['name']
+    }
+
+    def private request_cpu, request_memory, limits_cpu, limits_memory
+
+    requests_cpu    = '0.2'
+    requests_memory = '256Mi'
+    limits_cpu      = '0.3'
+    limits_memory   = '512Mi'
+
+    if(ENVIRONMENT == 'prd'){
+        if(s.build_language == 'java'){
+            requests_cpu    = '1'
+            requests_memory = '4Gi'
+            limits_cpu      = requests_cpu
+            limits_memory   = requests_memory
+        }
+        else {
+            requests_cpu    = '0.3'
+            requests_memory = '512Mi'
+            limits_cpu      = requests_cpu
+            limits_memory   = requests_memory
+        }
+    }
+    else {
+        // Java 
+        if(s.build_language == 'java'){
+            requests_cpu    = '0.3'
+            requests_memory = '512Mi'
+            limits_cpu      = '0.5'
+            limits_memory   = '2Gi'
+        }
+    }
+
+    s.k8s_res_limits_cpu        = limits_cpu
+    s.k8s_res_limits_memory     = limits_memory 
+    s.k8s_res_requests_cpu      = requests_cpu
+    s.k8s_res_requests_memory   = requests_memory 
+
+    Config.data                 = s + args
 }
 
 def defaultSettings(){
@@ -42,12 +82,13 @@ def defaultSettings(){
         artifact_src                    : '.',
         artifact_dest                   : '.',
         base_action                     : ACTION,
-        base_dir                        : metis.getFirstDirectory(),
+        base_company                    : metis.companyName(),
+        base_dir                        : pwd(),
         base_env                        : ENVIRONMENT.toLowerCase(),
-        base_name                       : metis.getApplicationName(),
-        base_port                       : metis.getDefaultPort(),
-        base_project                    : metis.getFrojectName(),
-        base_templates_dir              : 'io/rulin/templates/',
+        base_envs                       : [],
+        base_name                       : metis.appName(),
+        base_port                       : 8080,
+        base_project                    : metis.projectName(),
         base_web_root                   : '/data/app/',
         base_workspace                  : JENKINS_HOME + '/workspace/' + JOB_NAME.toLowerCase(),
         build_command                   : 'mvn',
@@ -56,10 +97,12 @@ def defaultSettings(){
         build_language_version          : 0,
         build_legacy                    : false,
         build_node_name                 : '',
+        build_only                      : false,
         build_options                   : '',
         build_stage                     : 'master',
-        build_user                      : metis.getBuildUserName(),
-        build_userid                    : metis.getBuildUserNameID(),
+        build_user                      : metis.buildUserName(),
+        build_userid                    : metis.buildUserNameID(),
+        check_image_exist               : false,
         check_permission_by_gitlab      : false,
         docker_account                  : 'Registry-Jenkins',
         docker_file                     : 'Dockerfile.jenkins',
@@ -68,15 +111,16 @@ def defaultSettings(){
         docker_img_build_timeout        : 1800,
         docker_img_build_options        : '',
         docker_img_push_timeout         : 600,
-        docker_ignore_file              : '.dockerignore',
         docker_login_timeout            : 15,
         docker_registry                 : 'registry.rulin.io',
-        docker_registry_basic_auth      : 'Jenkins-Login-2-Registry',
+        docker_registry_basic_auth      : 'Jenkins-Basic-Auth-2-Registry',
+        docker_templates_resources      : 'io/rulin/templates/',
+        docker_templates_local          : '/data/jenkins/projects/',
         git_commit_length               : 8,
         git_commit_id                   : '',
         git_credentials_api_token       : 'gitlab-api-token',
         git_credentials_clone           : 'GitLab-Jenkins-UP',
-        git_hosts                       : 'https://gitlab.rulin.io',
+        git_hosts                       : 'https://git.rulin.io',
         git_repo                        : null,
         git_repo_id                     : 0,
         git_revision                    : GIT_REVISION,
@@ -86,26 +130,22 @@ def defaultSettings(){
         k8s_allowed_commands            : ['apply', 'create', 'delete', 'get', 'autoscale'],
         k8s_config_dir                  : '/home/jenkins/.kube/',
         k8s_dashboard_url               : metis.k8sDashboardURL(),
-        k8s_hc_liveness_type            : metis.getDefaultHealthCheckType('live'),
+        k8s_hc_liveness_type            : metis.defaultHealthCheckType('live'),
         k8s_hc_liveness_path            : '/',
-        k8s_hc_liveness_port            : metis.getDefaultPort(),
+        k8s_hc_liveness_port            : 8080,
         k8s_hc_liveness_ids             : 60,
-        k8s_hc_liveness_timeout_sec     : 5,
-        k8s_hc_readiness_ids            : 60,
-        k8s_hc_readiness_timeout_sec    : 5,
-        k8s_hc_readiness_type           : metis.getDefaultHealthCheckType('readi'),
-        k8s_hc_readiness_path           : '/',
-        k8s_hc_readiness_port           : metis.getDefaultPort(),
+        k8s_hc_liveness_timeout         : 5,
+        k8s_hc_readiness_ids            : null,
+        k8s_hc_readiness_timeout        : null,
+        k8s_hc_readiness_type           : '',
+        k8s_hc_readiness_path           : '',
+        k8s_hc_readiness_path           : null,
         k8s_img_pull_policy             : 'Always',
-        k8s_img_pull_secret             : 'images-puller-' + metis.getFrojectName(),
+        k8s_img_pull_secret             : 'images-puller-' + metis.companyName() + '-' + metis.projectName(),
         k8s_min_ready_seconds           : 60,
-        k8s_namespace                   : metis.getFrojectName(),
+        k8s_namespace                   : metis.k8sNamespace(),
         k8s_progress_deadline_sec       : 300,
-        k8s_replicas                    : metis.getReplicasNumber(),
-        k8s_res_limits_cpu              : metis.getKubernetesResources('limits', 'cpu'),
-        k8s_res_limits_memory           : metis.getKubernetesResources('limits', 'memory'),
-        k8s_res_requests_cpu            : metis.getKubernetesResources('requests', 'cpu'),
-        k8s_res_requests_memory         : metis.getKubernetesResources('requests', 'memory'),,
+        k8s_replicas                    : metis.k8sReplicas(),
         k8s_rev_history_limit           : 10,
         k8s_strategy_max_surge          : '25%',
         k8s_strategy_max_unavailable    : '25%',
@@ -125,6 +165,7 @@ def defaultSettings(){
         skip_sonar                      : false,
         skip_test                       : true,
         sonar_scanner                   : '/data/jenkins/tools/sonar-scanner/bin/sonar-scanner',
+        sonar_options                   : '',
         ssh_host                        : null,
         ssh_speed_limit                 : 20480,
         ssh_user                        : 'www',

@@ -1,1 +1,1 @@
-package me.rulin.notifications
+package me.rulin.jira
