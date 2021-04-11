@@ -10,22 +10,13 @@
 def config(Map args=[:]){
     /*
     Order:
-        1. Local Settings
-        2. Default Settings (@settings.config)
-        2. .jenkins.yaml
-        3. User Config
+        1. Default Settings (@settings.config)
+        2. User Config
     */
 
     defaultSettings()
 
-    if(Config.data.check_permission_by_gitlab){
-        def private       s = Config.settings
-        def private       d = metis.getGitRepoInfo(args.git_repo_id)
-        args.git_repo       = d['http_url_to_repo']
-        args.git_name       = d['name']
-        args.git_branches   = metis.getGitRepoInfo(args.git_repo_id, '/repository/branches/' + GIT_REVISION)['name']
-    }
-
+    def private   s = Config.settings
     def private request_cpu, request_memory, limits_cpu, limits_memory
 
     requests_cpu    = '0.2'
@@ -61,6 +52,13 @@ def config(Map args=[:]){
     s.k8s_res_limits_memory     = limits_memory 
     s.k8s_res_requests_cpu      = requests_cpu
     s.k8s_res_requests_memory   = requests_memory 
+
+    if(s.check_permission_by_gitlab){
+        def private     d = metis.getGitRepoInfo(args.git_repo_id)
+        args.git_repo     = d['http_url_to_repo']
+        args.git_name     = d['name']
+        args.git_branches = metis.getGitRepoInfo(args.git_repo_id, '/repository/branches/' + GIT_REVISION)['name']
+    }
 
     Config.data                 = s + args
 }

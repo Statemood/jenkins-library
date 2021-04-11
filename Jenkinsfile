@@ -1,3 +1,3 @@
 @Library('github.com/Statemood/jenkins-library@dev') _
 
-entry(["repo": 'https://github.com/Statemood/simple-java-maven-app.git'])
+entry([git_repo: 'https://github.com/Statemood/simple-java-maven-app.git'])
