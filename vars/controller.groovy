@@ -106,7 +106,7 @@ def preProcess() {
             dir(Config.data.base_dir) {
                 currentBuildInfo()
                 if(Config.data.check_permission_by_gitlab){
-                    check.permission(Config.data.build_userid)
+                    security.permission(Config.data.build_userid)
                 }
                 log.i 'Stage Pre-Process OK'
             }

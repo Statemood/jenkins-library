@@ -1,0 +1,3 @@
+Cmnd_Alias  DOCKER_CMDS = /usr/bin/docker login, /usr/bin/docker build, /usr/bin/docker pull, /usr/bin/docker push, /usr/bin/docker images
+
+jenkins     ALL=(ALL)  NOPASSWD: DOCKER_CMDS
