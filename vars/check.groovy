@@ -7,7 +7,7 @@
    ##################################################
 */
 
-import io.rulin.ci.Git
+import io.rulin.dso.ci.Git
 
 def file(String f) {
     if (!fileExists(f)) {
@@ -16,7 +16,7 @@ def file(String f) {
     }
 }
 
-def isdir(String d) {
+def isDir(String d) {
     def directory = new File(d)
     if (!directory.exists() || ! directory.isDirectory()) {
         log.err directory + ' does not exist or is not a directory.'

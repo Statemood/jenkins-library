@@ -7,15 +7,15 @@
    ##################################################
 */
 
-import io.rulin.artifact.Registry
-import io.rulin.cd.Server
-import io.rulin.cd.WeixinMiniProgram
-import io.rulin.ci.Git
-import io.rulin.ci.Language
-import io.rulin.docker.Docker
-import io.rulin.kubernetes.Command
-import io.rulin.kubernetes.Yaml
-import io.rulin.security.SonarQube
+import io.rulin.dso.artifact.Harbor
+import io.rulin.dso.cd.FileOperation
+import io.rulin.dso.cd.WeixinMiniProgram
+import io.rulin.dso.ci.Git
+import io.rulin.dso.ci.Language
+import io.rulin.dso.docker.Docker
+import io.rulin.dso.kubernetes.Command
+import io.rulin.dso.kubernetes.Yaml
+import io.rulin.dso.security.SonarQube
 
 def entry() {
     /*
@@ -31,17 +31,17 @@ def entry() {
     def private scan_after_build = ['java']
     def                        d = Config.data
     def private   none_container = false
-    def private             lang = Config.data.build_language.toLowerCase()
-    def private          version = Config.data.build_language_version
+    def private             lang = d.build_language.toLowerCase()
+    def private          version = d.build_language_version
     def private        node_name = lang
 
-    if(version != 0){ node_name = lang + '-' + version }
+    if(version != 0){  node_name = lang + '-' + version }
 
     d.build_node_name = node_name
 
     if(d.hosted_by.toLowerCase() != 'container' && DEPLOYMENT_MODE.toLowerCase() == 'legacy' ){
         none_container      = true 
-    } 
+    }
     else {
         d.docker_img_tag    = d.git_revision    + '-' + d.git_commit_id[0..8]
         d.docker_img_name   = d.docker_registry + '/' + d.k8s_namespace + '/' + d.base_name
@@ -54,8 +54,8 @@ def entry() {
 
     if(d.check_image_exist){
         log.i 'Check image ' + d.docker_img_tag + ' exist.'
-        if(isImageExist()){
-            log.a 'Artifact version ' + d.docker_img_tag + ' already exist, skip build.'
+        if(isDockerImageExist()){
+            log.a 'Image version ' + d.docker_img_tag + ' already exist, skip build.'
             d.skip_build        = true
             d.skip_docker       = true
         }
@@ -168,16 +168,16 @@ def qualityGate(){
     }
 }
 
-def isImageExist(){
-    def private harbor = new Registry()
+def isDockerImageExist(){
+    def private harbor = new Harbor()
     def private  found = false
     def private      d = Config.data
-    def private    tag = d.git_revision + '-' + d.git_commit_id[0..8]
-    def private    res = harbor.harborArtifactInfo(
+    def private    tag = docker_img_tag
+    def private    res = harbor.artifactInfo(
                             tag,
                             d.docker_registry_basic_auth,
                             d.docker_registry,
-                            d.base_company + '-' + d.base_project,
+                            d.k8s_namespace,
                             d.base_name
                         )
 
@@ -304,7 +304,7 @@ def deploy2MMP(String dist='./dist/'){
 
                     withCredentials([file(credentialsId: cid, variable: 'MMP_PRIVATE_KEY')]){
                         check.file(MMP_PRIVATE_KEY)
-                        mmp.upload(
+                        mmp.deploy(
                             dist,
                             MMP_PRIVATE_KEY,
                             cfg['appid'],

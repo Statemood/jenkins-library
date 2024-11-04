@@ -1,4 +1,5 @@
-import io.rulin.ci.Git
+import io.rulin.dso.ci.Git
+import io.rulin.dso.ci.Gitlab
 
 def appName(){
     return JOB_BASE_NAME.split('_')[2].toLowerCase()
