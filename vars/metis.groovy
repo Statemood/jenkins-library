@@ -50,8 +50,8 @@ def getFileNameInfo(String f, String t='suffix'){
 }
 
 def getGitRepoInfo(int id, String target='/'){
-    def g    = new Git()
-    def data = g.gitlabProjectInfo(
+    def g    = new Gilab()
+    def data = g.getProjectInfo(
         Config.settings.git_hosts,
         Config.settings.git_credentials_api_token,
         Config.settings.git_timeout_seconds,

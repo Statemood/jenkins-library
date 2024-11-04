@@ -9,7 +9,7 @@
 
 package io.rulin.dso.ci
 
-def projectInfo(String  host, 
+def getProjectInfo(String  host, 
                 String  token, 
                 Integer timeoutsec, 
                 Integer id,

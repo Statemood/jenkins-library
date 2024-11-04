@@ -7,8 +7,6 @@
    ##################################################
 */
 
-import io.rulin.dso.ci.Git
-
 def file(String f) {
     if (!fileExists(f)) {
         log.err 'File ' + f + ' does not exist.'
